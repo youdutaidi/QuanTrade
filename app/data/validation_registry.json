@@ -1,0 +1,365 @@
+{
+  "policy": {
+    "policyVersion": "1.0.0",
+    "minimumAnnualizedReturn": 1.0,
+    "minimumSharpe": 1.5,
+    "maximumDrawdown": -0.35,
+    "minimumDataYears": 5.0,
+    "minimumOutOfSampleYears": 1.0,
+    "minimumWalkForwardFolds": 3,
+    "minimumForwardPaperDays": 60,
+    "requirePointInTimeUniverse": true,
+    "requireNoLookaheadTest": true,
+    "requireTransactionCosts": true,
+    "requireCorporateActions": true,
+    "requireIndependentReplay": true,
+    "requireMultipleTestingControl": true
+  },
+  "summary": {
+    "assessed": 3,
+    "verified": 0,
+    "rejected": 3
+  },
+  "verified": [],
+  "rejected": [
+    {
+      "strategyId": "AH-01-ROBUST-CANDIDATE",
+      "label": "momentum-L252-S1-R5-N3-equal-M200",
+      "timeframe": "daily",
+      "annualizedReturn": 1.4422573586749206,
+      "sharpe": 1.7888473403285876,
+      "maxDrawdown": -0.3540203837587267,
+      "dataYears": 1.0,
+      "outOfSampleYears": 0.5,
+      "walkForwardFolds": 1,
+      "forwardPaperDays": 0,
+      "pointInTimeUniverse": false,
+      "noLookaheadTest": true,
+      "transactionCosts": true,
+      "corporateActions": false,
+      "independentReplay": false,
+      "multipleTestingControl": false,
+      "evidencePath": "app/data/backtest.json",
+      "status": "rejected",
+      "checks": [
+        {
+          "name": "年化收益",
+          "key": "annualizedReturn",
+          "passed": true,
+          "actual": 1.4422573586749206,
+          "required": 1.0
+        },
+        {
+          "name": "Sharpe",
+          "key": "sharpe",
+          "passed": true,
+          "actual": 1.7888473403285876,
+          "required": 1.5
+        },
+        {
+          "name": "数据年限",
+          "key": "dataYears",
+          "passed": false,
+          "actual": 1.0,
+          "required": 5.0
+        },
+        {
+          "name": "样本外年限",
+          "key": "outOfSampleYears",
+          "passed": false,
+          "actual": 0.5,
+          "required": 1.0
+        },
+        {
+          "name": "滚动样本外折数",
+          "key": "walkForwardFolds",
+          "passed": false,
+          "actual": 1,
+          "required": 3
+        },
+        {
+          "name": "前向模拟天数",
+          "key": "forwardPaperDays",
+          "passed": false,
+          "actual": 0,
+          "required": 60
+        },
+        {
+          "name": "最大回撤",
+          "key": "maxDrawdown",
+          "passed": false,
+          "actual": -0.3540203837587267,
+          "required": -0.35
+        },
+        {
+          "name": "历史点时股票池",
+          "key": "pointInTimeUniverse",
+          "passed": false,
+          "actual": false,
+          "required": true
+        },
+        {
+          "name": "未来函数反证测试",
+          "key": "noLookaheadTest",
+          "passed": true,
+          "actual": true,
+          "required": true
+        },
+        {
+          "name": "真实交易摩擦",
+          "key": "transactionCosts",
+          "passed": true,
+          "actual": true,
+          "required": true
+        },
+        {
+          "name": "公司行动处理",
+          "key": "corporateActions",
+          "passed": false,
+          "actual": false,
+          "required": true
+        },
+        {
+          "name": "独立账本复算",
+          "key": "independentReplay",
+          "passed": false,
+          "actual": false,
+          "required": true
+        },
+        {
+          "name": "多重检验控制",
+          "key": "multipleTestingControl",
+          "passed": false,
+          "actual": false,
+          "required": true
+        }
+      ]
+    },
+    {
+      "strategyId": "QF-DAILY-FACTOR-LEADER",
+      "label": "momentum_20_5",
+      "timeframe": "daily",
+      "annualizedReturn": 0.4642444638671299,
+      "sharpe": 1.1787737923960313,
+      "maxDrawdown": -0.23770894917354002,
+      "dataYears": 1.0,
+      "outOfSampleYears": 0.5,
+      "walkForwardFolds": 1,
+      "forwardPaperDays": 0,
+      "pointInTimeUniverse": false,
+      "noLookaheadTest": true,
+      "transactionCosts": true,
+      "corporateActions": true,
+      "independentReplay": false,
+      "multipleTestingControl": false,
+      "evidencePath": "app/data/factor_backtest.json",
+      "status": "rejected",
+      "checks": [
+        {
+          "name": "年化收益",
+          "key": "annualizedReturn",
+          "passed": false,
+          "actual": 0.4642444638671299,
+          "required": 1.0
+        },
+        {
+          "name": "Sharpe",
+          "key": "sharpe",
+          "passed": false,
+          "actual": 1.1787737923960313,
+          "required": 1.5
+        },
+        {
+          "name": "数据年限",
+          "key": "dataYears",
+          "passed": false,
+          "actual": 1.0,
+          "required": 5.0
+        },
+        {
+          "name": "样本外年限",
+          "key": "outOfSampleYears",
+          "passed": false,
+          "actual": 0.5,
+          "required": 1.0
+        },
+        {
+          "name": "滚动样本外折数",
+          "key": "walkForwardFolds",
+          "passed": false,
+          "actual": 1,
+          "required": 3
+        },
+        {
+          "name": "前向模拟天数",
+          "key": "forwardPaperDays",
+          "passed": false,
+          "actual": 0,
+          "required": 60
+        },
+        {
+          "name": "最大回撤",
+          "key": "maxDrawdown",
+          "passed": true,
+          "actual": -0.23770894917354002,
+          "required": -0.35
+        },
+        {
+          "name": "历史点时股票池",
+          "key": "pointInTimeUniverse",
+          "passed": false,
+          "actual": false,
+          "required": true
+        },
+        {
+          "name": "未来函数反证测试",
+          "key": "noLookaheadTest",
+          "passed": true,
+          "actual": true,
+          "required": true
+        },
+        {
+          "name": "真实交易摩擦",
+          "key": "transactionCosts",
+          "passed": true,
+          "actual": true,
+          "required": true
+        },
+        {
+          "name": "公司行动处理",
+          "key": "corporateActions",
+          "passed": true,
+          "actual": true,
+          "required": true
+        },
+        {
+          "name": "独立账本复算",
+          "key": "independentReplay",
+          "passed": false,
+          "actual": false,
+          "required": true
+        },
+        {
+          "name": "多重检验控制",
+          "key": "multipleTestingControl",
+          "passed": false,
+          "actual": false,
+          "required": true
+        }
+      ]
+    },
+    {
+      "strategyId": "QF-5M-PILOT-01",
+      "label": "Close Strength · Top 3",
+      "timeframe": "5-minute",
+      "annualizedReturn": -0.36956107185932296,
+      "sharpe": -1.879467724137493,
+      "maxDrawdown": -0.4645693082071848,
+      "dataYears": 1.0,
+      "outOfSampleYears": 0.5,
+      "walkForwardFolds": 1,
+      "forwardPaperDays": 0,
+      "pointInTimeUniverse": false,
+      "noLookaheadTest": true,
+      "transactionCosts": true,
+      "corporateActions": false,
+      "independentReplay": true,
+      "multipleTestingControl": true,
+      "evidencePath": "app/data/minute_system.json",
+      "status": "rejected",
+      "checks": [
+        {
+          "name": "年化收益",
+          "key": "annualizedReturn",
+          "passed": false,
+          "actual": -0.36956107185932296,
+          "required": 1.0
+        },
+        {
+          "name": "Sharpe",
+          "key": "sharpe",
+          "passed": false,
+          "actual": -1.879467724137493,
+          "required": 1.5
+        },
+        {
+          "name": "数据年限",
+          "key": "dataYears",
+          "passed": false,
+          "actual": 1.0,
+          "required": 5.0
+        },
+        {
+          "name": "样本外年限",
+          "key": "outOfSampleYears",
+          "passed": false,
+          "actual": 0.5,
+          "required": 1.0
+        },
+        {
+          "name": "滚动样本外折数",
+          "key": "walkForwardFolds",
+          "passed": false,
+          "actual": 1,
+          "required": 3
+        },
+        {
+          "name": "前向模拟天数",
+          "key": "forwardPaperDays",
+          "passed": false,
+          "actual": 0,
+          "required": 60
+        },
+        {
+          "name": "最大回撤",
+          "key": "maxDrawdown",
+          "passed": false,
+          "actual": -0.4645693082071848,
+          "required": -0.35
+        },
+        {
+          "name": "历史点时股票池",
+          "key": "pointInTimeUniverse",
+          "passed": false,
+          "actual": false,
+          "required": true
+        },
+        {
+          "name": "未来函数反证测试",
+          "key": "noLookaheadTest",
+          "passed": true,
+          "actual": true,
+          "required": true
+        },
+        {
+          "name": "真实交易摩擦",
+          "key": "transactionCosts",
+          "passed": true,
+          "actual": true,
+          "required": true
+        },
+        {
+          "name": "公司行动处理",
+          "key": "corporateActions",
+          "passed": false,
+          "actual": false,
+          "required": true
+        },
+        {
+          "name": "独立账本复算",
+          "key": "independentReplay",
+          "passed": true,
+          "actual": true,
+          "required": true
+        },
+        {
+          "name": "多重检验控制",
+          "key": "multipleTestingControl",
+          "passed": true,
+          "actual": true,
+          "required": true
+        }
+      ]
+    }
+  ]
+}

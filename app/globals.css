@@ -74,6 +74,10 @@ h1 em { color: var(--acid); font-style: normal; }
 .truth-banner strong { font-size: 16px; line-height: 1.5; font-weight: 600; }
 .truth-banner p { margin: 0; color: #b59d95; font-size: 12px; line-height: 1.7; }
 
+.registry-empty { margin-top: 70px; padding: 48px; display: grid; grid-template-columns: 150px 130px 1fr; gap: 26px; align-items: center; border: 1px solid rgba(246,189,92,.34); background: rgba(246,189,92,.035); }
+.registry-empty > span { color: var(--amber); font: 10px/1 monospace; letter-spacing: .1em; }.registry-empty > strong { color: var(--paper); font: 500 82px/.85 Arial; }.registry-empty h3 { margin: 0 0 8px; font-size: 25px; }.registry-empty p { margin: 0; color: #8e8370; font-size: 11px; }
+.policy-grid { display: grid; grid-template-columns: repeat(3,1fr); margin-top: 28px; border-top: 1px solid var(--line); border-left: 1px solid var(--line); }.policy-grid article { min-height: 165px; padding: 21px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }.policy-grid span { color: #596b61; font: 9px/1 monospace; }.policy-grid h3 { margin: 25px 0 10px; font-size: 17px; }.policy-grid p { margin: 0; color: #75867d; font-size: 10px; line-height: 1.6; }
+
 .section-shell { max-width: 1480px; margin: 0 auto; padding: 110px 48px; border-top: 1px solid var(--line); }
 .section-kicker { color: var(--acid); font: 11px/1 monospace; letter-spacing: .14em; }
 .section-heading h2 { margin: 18px 0 0; max-width: 570px; font-size: clamp(38px, 4.3vw, 61px); line-height: 1.05; letter-spacing: -.06em; font-weight: 520; }
@@ -158,6 +162,7 @@ h1 em { color: var(--acid); font-style: normal; }
   .hero { padding: 76px 26px 62px; grid-template-columns: 1fr; gap: 50px; }.hero::before { inset: 0 26px; }.signal-card { max-width: 660px; }
   .metrics-strip { padding: 0 26px 75px; grid-template-columns: repeat(2, 1fr); }.metrics-strip > div:nth-child(2) { border-right: 1px solid var(--line); }.metrics-strip > div:nth-child(-n+2) { border-bottom: 0; }
   .truth-banner { margin: 0 26px 80px; grid-template-columns: 1fr 2fr; }.truth-banner p { grid-column: 2; }
+  .policy-grid { grid-template-columns: repeat(2,1fr); }
   .section-shell { padding: 86px 26px; }.split-heading { align-items: start; }
   .chart-metrics { grid-template-columns: repeat(3, 1fr); }.chart-metrics div:nth-child(3) { border-right: 0; }.chart-metrics div:nth-child(n+4) { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--line); }
   .engine-overview { grid-template-columns: 1fr; }.engine-verdict { grid-template-columns: 120px 1fr; }.engine-verdict p { grid-column: 2; }
@@ -173,6 +178,7 @@ h1 em { color: var(--acid); font-style: normal; }
   .signal-card { min-height: 380px; padding: 21px; }.target-row { margin: 43px 0 35px; }.target-row strong { font-size: 62px; }.mini-summary { grid-template-columns: repeat(2, 1fr); row-gap: 18px; }.mini-summary div:nth-child(2) { border-right: 0; }.mini-summary div:nth-child(n+3) { padding-top: 16px; border-top: 1px solid var(--line); }
   .metrics-strip { grid-template-columns: 1fr; }.metrics-strip > div { border-right: 1px solid var(--line); border-bottom: 0; }.metrics-strip > div:last-child { border-bottom: 1px solid var(--line); }
   .truth-banner { grid-template-columns: 1fr; gap: 14px; }.truth-banner p { grid-column: auto; }
+  .registry-empty { grid-template-columns: 1fr; padding: 28px; }.policy-grid { grid-template-columns: 1fr; }
   .split-heading { display: block; }.split-heading > p { margin-top: 24px; }
   .strategy-tabs { grid-template-columns: 1fr; }.strategy-tabs button { min-height: 78px; }.chart-panel { padding: 19px; }.chart-header { display: block; }.chart-legend { margin-top: 18px; }.chart-metrics { grid-template-columns: repeat(2, 1fr); }.chart-metrics div { margin-top: 0 !important; padding: 15px 10px !important; border-top: 1px solid var(--line); }.chart-metrics div:nth-child(even) { border-right: 0; }
   .trade-ledger { grid-template-columns: 1fr; gap: 32px; }.trade-row { grid-template-columns: 90px 1fr; }

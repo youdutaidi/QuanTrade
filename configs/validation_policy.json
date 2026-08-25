@@ -1,0 +1,16 @@
+{
+  "policyVersion": "1.0.0",
+  "minimumAnnualizedReturn": 1.0,
+  "minimumSharpe": 1.5,
+  "maximumDrawdown": -0.35,
+  "minimumDataYears": 5.0,
+  "minimumOutOfSampleYears": 1.0,
+  "minimumWalkForwardFolds": 3,
+  "minimumForwardPaperDays": 60,
+  "requirePointInTimeUniverse": true,
+  "requireNoLookaheadTest": true,
+  "requireTransactionCosts": true,
+  "requireCorporateActions": true,
+  "requireIndependentReplay": true,
+  "requireMultipleTestingControl": true
+}

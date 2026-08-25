@@ -138,6 +138,72 @@ successor_goal:
     allow: [source, configs, database schema, logs, metrics, reports, small manifests]
     deny: [credentials, broker tokens, live orders, large raw database commits]
   status: active
+next_goal:
+  goal_id: QF-VALIDATION-GATE-01
+  decision: Replace performance-first website claims with a machine-enforced strategy admission registry; no strategy may be presented as verified unless every frozen evidence gate passes.
+  non_goals:
+    - guaranteeing or fabricating a 100 percent annualized return
+    - changing strategy definitions or searching parameters inside this experiment
+    - routing live orders or connecting a broker
+  owner_session: /root
+  verified_active_baseline:
+    location: qforge daily engine, qforge/minute paper engine, and local site
+    code_identity: 1485bffcdcd7fa3e1d254d9d301a16140251c36d
+    frozen_commands:
+      - .venv/bin/python -m pytest -q
+      - .venv/bin/qforge minute status --config configs/minute_5m.json
+      - npm run build
+  candidate:
+    location: qforge/validation.py and app validation surfaces
+    state: candidate
+    allowed_files:
+      - qforge/validation.py
+      - tests/test_validation.py
+      - configs/validation_policy.json
+      - research/validation_workflows/**
+      - research/README.md
+      - research/evidence/QF-VALIDATION-GATE-01/**
+      - app/data/validation_registry.json
+      - app/page.tsx
+      - app/globals.css
+    scientific_choice_axis: immutable strategy evidence-admission policy
+  admission:
+    structure_command: .venv/bin/python /Users/cailingling/.codex/skills/research-code-evolution-guard/scripts/structure_gate.py . --package qforge --scripts research/validation_workflows --json-out research/evidence/QF-VALIDATION-GATE-01/structure_report.json
+    semantic_commands:
+      - .venv/bin/python -m pytest -q
+      - .venv/bin/python research/validation_workflows/build_registry.py
+      - npm run build
+    prior_behavior_map:
+      - all existing daily and minute engine tests retained unchanged
+      - existing local launch command retained
+      - rejected strategies remain recoverable as research evidence but are removed from the verified registry
+    permissions:
+      local_checks: authorized by user request
+      external_data_download: deferred to successor data experiment
+      live_order_routing: forbidden without separate explicit authorization
+    results:
+      structure: pass, 0 findings, 2062 package lines
+      semantics: 17 passed including retained daily and minute tests
+      registry: 3 assessed, 0 verified, 3 rejected
+      site: production build passed and local HTTP smoke returned 200
+      scientific_verdict: performance-only evidence is insufficient; every existing candidate remains rejected
+  cutover:
+    criteria:
+      - validation policy rejects both current daily high-return candidates and the failed minute candidate
+      - website reports zero verified strategies until evidence actually passes
+      - structure gate, retained tests, registry build, and site build pass
+    rollback_target: 1485bffcdcd7fa3e1d254d9d301a16140251c36d
+    bounded_exceptions:
+      - legacy scripts research/build_factor_catalog.py, research/fetch_market_data.py, and research/run_backtests.py retain pre-existing size findings and are outside this goal's write surface; the candidate workflow has its own gated directory
+  artifact_policy:
+    allow: [source, configs, logs, metrics, reports, small manifests]
+    deny: [credentials, broker tokens, live orders, large raw database commits]
+  status: admitted
+planned_successor:
+  goal_id: QF-DATA-EXPANSION-01
+  decision: Expand legally obtainable A-share and Hong Kong market history into local databases, then run pre-registered daily and minute strategy candidates through the admitted validation gate.
+  scientific_choice_axis: point-in-time data coverage and frozen candidate family
+  status: pending
 ```
 
 ## Local quick start

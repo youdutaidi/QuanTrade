@@ -5,6 +5,7 @@ import factorsJson from "./data/factors.json";
 import backtestJson from "./data/backtest.json";
 import factorBacktestJson from "./data/factor_backtest.json";
 import minuteSystemJson from "./data/minute_system.json";
+import validationRegistryJson from "./data/validation_registry.json";
 
 type Factor = {
   id: string;
@@ -31,6 +32,7 @@ const factors = factorsJson as Factor[];
 const backtest = backtestJson;
 const factorBacktest = factorBacktestJson;
 const minuteSystem = minuteSystemJson;
+const validationRegistry = validationRegistryJson;
 
 const strategyAtlas = [
   ["截面动量", "买强、避弱", "趋势拥挤后急反转", "月度→周度稳定性"],
@@ -178,13 +180,10 @@ function EquityChart({ strategy }: { strategy: Strategy }) {
 }
 
 export default function Home() {
-  const [strategyIndex, setStrategyIndex] = useState(2);
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("全部");
   const [grade, setGrade] = useState("全部");
   const [selectedFactor, setSelectedFactor] = useState<string | null>(null);
-  const strategy = backtest.strategies[strategyIndex];
-
   const categoryCounts = useMemo(() => {
     const counts = new Map<string, number>();
     factors.forEach((factor) => counts.set(factor.economicGroup, (counts.get(factor.economicGroup) ?? 0) + 1));
@@ -205,7 +204,7 @@ export default function Home() {
   const predictors = factors.filter((factor) => factor.signalType === "Predictor").length;
   const directFactors = factors.filter((factor) => factor.ahStatus === "可直接首测").length;
   const strongEvidence = factors.filter((factor) => factor.grade === "A" || factor.grade === "B").length;
-  const failedGates = backtest.gates.filter((gate) => gate.status === "fail").length;
+  const policy = validationRegistry.policy;
 
   return (
     <main id="top">
@@ -214,91 +213,58 @@ export default function Home() {
         <div className="nav-links">
           <a href="#backtest">回测</a><a href="#engine">因子引擎</a><a href="#minute">分钟交易</a><a href="#audit">风险审计</a>
         </div>
-        <div className="status-chip"><span /> DRAFT · 不接实盘</div>
+        <div className="status-chip"><span /> {validationRegistry.summary.verified} VERIFIED · 本地研究</div>
       </nav>
 
       <header className="hero">
         <div className="hero-copy">
-          <div className="eyebrow"><span>AH-01</span> A 股首轮候选 · 截至 {backtest.asOf}</div>
-          <h1>先证明它不是幻觉，<br /><em>再追求翻倍。</em></h1>
-          <p className="hero-lead">INTP 拆机制、找反例，INTJ 冻结目标、门槛与止损。我们筛过 {backtest.testedStrategies.toLocaleString()} 组价格策略，找到超过 100% 的历史候选；但幸存者偏差与实盘门禁仍未通过。</p>
+          <div className="eyebrow"><span>POLICY 1.0</span> 已验证策略注册表 · 截至 {backtest.asOf}</div>
+          <h1>先通过验证，<br /><em>再谈翻倍。</em></h1>
+          <p className="hero-lead">年化 100% 是准入门槛，不是宣传口号。点时股票池、多年份样本外、真实交易摩擦、独立复算和前向模拟缺一不可；未通过的历史高收益不会出现在可信策略列表。</p>
           <div className="hero-actions">
-            <a className="button primary" href="#backtest">查看真实回测 <span>↘</span></a>
-            <a className="button ghost" href="#audit">为什么还不能实盘</a>
+            <a className="button primary" href="#backtest">查看验证门禁 <span>↘</span></a>
+            <a className="button ghost" href="#audit">查看研究边界</a>
           </div>
         </div>
-        <aside className="signal-card" aria-label="首轮候选结果">
-          <div className="card-topline"><span>CANDIDATE / NOT VALIDATED</span><span className="candidate-dot">HIT</span></div>
-          <div className="target-row"><strong>{pct(strategy.metrics.totalReturn)}</strong><span>一年历史<br />净收益候选</span></div>
+        <aside className="signal-card" aria-label="已验证策略数量">
+          <div className="card-topline"><span>VERIFIED STRATEGIES ONLY</span><span className="candidate-dot">ENFORCED</span></div>
+          <div className="target-row"><strong>{validationRegistry.summary.verified}</strong><span>当前通过<br />完整门禁</span></div>
           <div className="mini-summary">
-            <div><small>目标</small><b>+100.0%</b></div><div><small>最大回撤</small><b className="loss">{pct(strategy.metrics.maxDrawdown)}</b></div>
-            <div><small>Sharpe</small><b>{number(strategy.metrics.sharpe)}</b></div><div><small>状态</small><b className="warn">DRAFT</b></div>
+            <div><small>年化门槛</small><b>≥100%</b></div><div><small>回撤上限</small><b>≤35%</b></div>
+            <div><small>最低数据</small><b>{policy.minimumDataYears} 年</b></div><div><small>前向模拟</small><b>{policy.minimumForwardPaperDays} 日</b></div>
           </div>
-          <div className="verdict-line"><span>{failedGates} 个硬门槛失败</span><p>收益目标命中 ≠ 策略可信</p></div>
+          <div className="verdict-line"><span>{validationRegistry.summary.rejected} 个候选已拒绝</span><p>没有通过者，就明确显示零</p></div>
         </aside>
       </header>
 
       <section className="metrics-strip">
-        <div><small>因子档案</small><strong>{factors.length}</strong><p>原始定义与复现证据</p></div>
-        <div><small>明确预测因子</small><strong>{predictors}</strong><p>其余含 placebo 与 drop</p></div>
-        <div><small>A/B 证据等级</small><strong>{strongEvidence}</strong><p>仍非 A/H 股本土验证</p></div>
-        <div><small>可直接首测</small><strong>{directFactors}</strong><p>价格与交易类数据</p></div>
+        <div><small>已验证策略</small><strong>{validationRegistry.summary.verified}</strong><p>只有完整通过门禁才计数</p></div>
+        <div><small>已审查候选</small><strong>{validationRegistry.summary.assessed}</strong><p>当前全部留在研究层</p></div>
+        <div><small>最低数据年限</small><strong>{policy.minimumDataYears}</strong><p>覆盖不同市场状态</p></div>
+        <div><small>滚动样本外</small><strong>{policy.minimumWalkForwardFolds}</strong><p>至少三折且参数冻结</p></div>
       </section>
 
       <section className="truth-banner">
-        <span className="truth-code">INTP / COUNTEREXAMPLE</span>
-        <strong>最强反例：回测使用 2026-08-24 的当前 CSI 800 成份股倒推历史。</strong>
-        <p>这会漏掉已退市或被调出的失败者，因此 +143.5% 只能是“值得继续查”的候选，不能是“去年真的能做到”的结论。</p>
+        <span className="truth-code">ENFORCED / NO EXCEPTIONS</span>
+        <strong>历史高收益候选已经从可信展示中撤下。</strong>
+        <p>收益再高，只要存在幸存者偏差、样本外不足或没有前向模拟，状态就只能是 REJECTED。</p>
       </section>
 
       <section className="section-shell backtest-section" id="backtest">
         <div className="section-heading split-heading">
-          <div><span className="section-kicker">01 / BACKTEST LAB</span><h2>三个答案，<br />三种证据身份。</h2></div>
-          <p>同一条曲线必须交代它是全窗搜索、设计窗选择，还是跨两段都为正。我们不把搜索结果伪装成样本外结果。</p>
+          <div><span className="section-kicker">01 / VALIDATION REGISTRY</span><h2>当前没有策略<br />获得可信认证。</h2></div>
+          <p>这不是空白，而是门禁正常工作。只有所有检查同时通过，策略名称、收益曲线和回测指标才会进入本区域。</p>
         </div>
-
-        <div className="strategy-tabs" role="tablist" aria-label="回测候选">
-          {backtest.strategies.map((item, index) => (
-            <button key={item.label} className={strategyIndex === index ? "active" : ""} onClick={() => setStrategyIndex(index)} role="tab" aria-selected={strategyIndex === index}>
-              <span>0{index + 1}</span><b>{item.role}</b><em>{pct(item.metrics.totalReturn)}</em>
-            </button>
-          ))}
-        </div>
-
-        <div className="chart-panel">
-          <div className="chart-header">
-            <div><span className="label">SELECTED MODEL</span><h3>{familyName(strategy.parameters.family)} · {strategy.parameters.lookback} 日回看 · Top {strategy.parameters.topN}</h3></div>
-            <div className="chart-legend"><span className="candidate-line">候选</span><span className="benchmark-line">上证综指</span></div>
-          </div>
-          <div className="chart-canvas"><EquityChart strategy={strategy} /></div>
-          <div className="chart-metrics">
-            <div><small>全窗净收益</small><b>{pct(strategy.metrics.totalReturn)}</b></div>
-            <div><small>设计窗</small><b>{pct(strategy.metrics.designReturn)}</b></div>
-            <div><small>后半窗</small><b>{pct(strategy.metrics.holdoutReturn)}</b></div>
-            <div><small>最大回撤</small><b className="loss">{pct(strategy.metrics.maxDrawdown)}</b></div>
-            <div><small>总换手</small><b>{number(strategy.metrics.turnover, 1)}×</b></div>
-            <div><small>调仓次数</small><b>{strategy.metrics.rebalanceCount}</b></div>
-          </div>
-        </div>
-
-        <div className="result-table-wrap">
-          <table className="result-table">
-            <thead><tr><th>证据身份</th><th>全窗</th><th>设计窗</th><th>后半窗</th><th>最大回撤</th><th>判断</th></tr></thead>
-            <tbody>{backtest.strategies.map((item, index) => (
-              <tr key={item.label} onClick={() => setStrategyIndex(index)} className={strategyIndex === index ? "active" : ""}>
-                <td><b>{item.role}</b><small>{familyName(item.parameters.family)} / Top {item.parameters.topN}</small></td>
-                <td>{pct(item.metrics.totalReturn)}</td><td>{pct(item.metrics.designReturn)}</td><td className={item.metrics.holdoutReturn < 0 ? "loss" : ""}>{pct(item.metrics.holdoutReturn)}</td><td className="loss">{pct(item.metrics.maxDrawdown)}</td>
-                <td><span className={`verdict-pill verdict-${index}`}>{index === 0 ? "上界" : index === 1 ? "过拟合警报" : "继续验证"}</span></td>
-              </tr>
-            ))}</tbody>
-          </table>
-        </div>
-
-        <div className="trade-ledger">
-          <div className="trade-intro"><span className="section-kicker">RECENT ALLOCATIONS</span><h3>这条曲线到底买过什么？</h3><p>展示最近调仓后的目标持仓；空列表表示 200 日市场过滤器切换为现金。</p></div>
-          <div className="trade-list">{strategy.trades.slice(-4).reverse().map((trade) => (
-            <div className="trade-row" key={trade.date}><time>{trade.date}</time><div>{trade.holdings.length ? trade.holdings.map((holding) => <span key={holding.symbol}>{holding.name}<small>{Math.round(holding.weight * 100)}%</small></span>) : <span className="cash">现金 100%</span>}</div></div>
-          ))}</div>
+        <div className="registry-empty"><span>VERIFIED REGISTRY</span><strong>0</strong><h3>暂无通过者</h3><p>系统不会用历史搜索冠军填补这个空位。</p></div>
+        <div className="policy-grid">
+          {[
+            ["01", "点时股票池", "不允许用今天的成份股倒推历史"],
+            ["02", "多年份样本外", `${policy.minimumDataYears} 年数据 · ${policy.minimumWalkForwardFolds} 折走步`],
+            ["03", "交易真实性", "成本、滑点、涨跌停、T+1 与容量"],
+            ["04", "独立复算", "从成交账本重建现金与持仓"],
+            ["05", "多重检验", "控制搜参与因子挖掘偏差"],
+            ["06", "前向模拟", `至少 ${policy.minimumForwardPaperDays} 个未来交易日`],
+          ].map((item) => <article key={item[0]}><span>{item[0]}</span><h3>{item[1]}</h3><p>{item[2]}</p></article>)}
         </div>
       </section>
 
@@ -333,21 +299,15 @@ export default function Home() {
         </div>
 
         <div className="engine-table-wrap">
-          <div className="engine-table-head"><div><span className="section-kicker">REAL RUN / {factorBacktest.experimentId}</span><h3>当前可计算因子结果</h3></div><p>按组合净收益排序；Mean IC 与组合收益可能因市场状态过滤、持仓尾部和成本产生分歧。</p></div>
-          <table className="result-table engine-table">
-            <thead><tr><th>因子</th><th>Mean IC</th><th>ICIR</th><th>组合净收益</th><th>最大回撤</th><th>Sharpe</th></tr></thead>
-            <tbody>{factorBacktest.ranking.slice(0, 7).map((item) => (
-              <tr key={item.factor}><td><b>{item.factor}</b></td><td className={item.meanIC < 0 ? "loss" : ""}>{number(item.meanIC, 3)}</td><td className={item.icIR < 0 ? "loss" : ""}>{number(item.icIR, 2)}</td><td>{pct(item.totalReturn)}</td><td className="loss">{pct(item.maxDrawdown)}</td><td>{number(item.sharpe)}</td></tr>
-            ))}</tbody>
-          </table>
-          <div className="engine-verdict"><span>ENGINE VERDICT</span><b>代码闭环已通过；研究证据仍是 DRAFT。</b><p>当前最佳通用因子组合收益为 {pct(factorBacktest.ranking[0].totalReturn)}，低于专项参数搜索的 +143.5%；这正是防止把“搜参上界”误当成“稳定因子能力”的必要分离。</p></div>
+          <div className="engine-table-head"><div><span className="section-kicker">RESEARCH ENGINE / {factorBacktest.experimentId}</span><h3>计算能力不等于策略认证</h3></div><p>因子结果仍保留在本地研究证据中，但未通过统一门禁前，网站不公开候选收益排名。</p></div>
+          <div className="engine-verdict"><span>ENGINE STATUS</span><b>代码闭环可运行；可信策略注册表仍为空。</b><p>{factorBacktest.factorCount} 个可执行因子只用于生成待验证假设，不能自动升级为投资策略。</p></div>
         </div>
       </section>
 
       <section className="section-shell minute-section" id="minute">
         <div className="section-heading split-heading">
-          <div><span className="section-kicker">03 / MINUTE DATA & PAPER BROKER</span><h2>数据链路已打通，<br />第一条策略被证伪。</h2></div>
-          <p>BaoStock 5 分钟数据已经真实落入本机 SQLite；订单只在本地账本中模拟撮合。负收益不是系统故障，而是“每日追逐临近收盘强势股”没有覆盖换手与摩擦成本。</p>
+          <div><span className="section-kicker">03 / MINUTE DATA & PAPER BROKER</span><h2>分钟基础设施可用，<br />尚无认证策略。</h2></div>
+          <p>BaoStock 5 分钟数据已经真实落入本机 SQLite；失败实验保留在本地证据中，但不会作为可用策略展示。</p>
         </div>
 
         <div className="minute-status-grid">
@@ -365,11 +325,11 @@ export default function Home() {
 
         <div className="minute-result-grid">
           <article className="minute-verdict-card">
-            <div><span>CANDIDATE EVIDENCE</span><em>FALSIFIED 01</em></div>
-            <strong>{pct(minuteSystem.metrics.totalReturn)}</strong>
-            <h3>Close Strength · Top 3</h3>
-            <p>每天 14:50 用已完成 K 线计算当日收益与 VWAP 强度，14:55 模拟成交；遵守 T+1 和 100 股整数手。</p>
-            <dl><div><dt>最大回撤</dt><dd>{pct(minuteSystem.metrics.maxDrawdown)}</dd></div><div><dt>Sharpe</dt><dd>{number(minuteSystem.metrics.sharpe)}</dd></div><div><dt>试点等权</dt><dd>{pct(minuteSystem.benchmark.totalReturn)}</dd></div><div><dt>显式成本</dt><dd>¥{Math.round(minuteSystem.ledger.explicitCosts).toLocaleString()}</dd></div></dl>
+            <div><span>VALIDATION STATUS</span><em>REJECTED</em></div>
+            <strong>0</strong>
+            <h3>分钟认证策略</h3>
+            <p>当前分钟候选没有通过收益、回撤、数据年限、点时股票池和前向模拟门禁，因此不发布其收益曲线。</p>
+            <dl><div><dt>本地K线</dt><dd>{minuteSystem.database.barCount.toLocaleString()}</dd></div><div><dt>交易日</dt><dd>{minuteSystem.database.tradeDays}</dd></div><div><dt>模拟订单</dt><dd>{minuteSystem.ledger.orderCount.toLocaleString()}</dd></div><div><dt>通过策略</dt><dd>0</dd></div></dl>
           </article>
           <div className="minute-command-card">
             <div><span>LOCAL COMMANDS</span><em>不连接券商</em></div>
@@ -443,29 +403,36 @@ export default function Home() {
 
       <section className="section-shell audit-section" id="audit">
         <div className="section-heading split-heading">
-          <div><span className="section-kicker">06 / EVIDENCE GATES</span><h2>收益达标，<br />可信度不达标。</h2></div>
-          <div className="audit-verdict"><span>VERDICT</span><b>DRAFT</b><p>{failedGates} fail · {backtest.gates.length - failedGates} partial · 0 pass</p></div>
+          <div><span className="section-kicker">06 / EVIDENCE GATES</span><h2>没有通过验证，<br />就不发布策略。</h2></div>
+          <div className="audit-verdict"><span>VERDICT</span><b>{validationRegistry.summary.verified} VERIFIED</b><p>{validationRegistry.summary.rejected} rejected · policy {policy.policyVersion}</p></div>
         </div>
-        <div className="gate-grid">{backtest.gates.map((gate, index) => (
-          <article key={gate.name} className={`gate gate-${gate.status}`}><div><span>G{index + 1}</span><em>{gate.status.toUpperCase()}</em></div><h3>{gate.name}</h3><p>{gate.note}</p></article>
+        <div className="gate-grid">{[
+          ["年化收益", `样本外年化必须 ≥ ${pct(policy.minimumAnnualizedReturn)}`],
+          ["风险约束", `最大回撤必须优于 ${pct(policy.maximumDrawdown)}`],
+          ["点时数据", "股票池、公司行动和字段可用时间必须可追溯"],
+          ["滚动样本外", `至少 ${policy.minimumWalkForwardFolds} 折，累计样本外不少于 ${policy.minimumOutOfSampleYears} 年`],
+          ["独立复算", "必须从订单与成交账本重建现金、持仓和净值"],
+          ["前向模拟", `冻结后连续运行不少于 ${policy.minimumForwardPaperDays} 个交易日`],
+        ].map((gate, index) => (
+          <article key={gate[0]} className="gate gate-partial"><div><span>G{index + 1}</span><em>REQUIRED</em></div><h3>{gate[0]}</h3><p>{gate[1]}</p></article>
         ))}</div>
         <div className="research-contract">
-          <div><span className="section-kicker">FROZEN CONTRACT / AH-01</span><h3>首轮口径</h3></div>
+          <div><span className="section-kicker">FROZEN POLICY / 1.0</span><h3>可信准入口径</h3></div>
           <dl>
-            <div><dt>窗口</dt><dd>{backtest.window.start} → {backtest.window.end}</dd></div>
-            <div><dt>股票池</dt><dd>{backtest.universe.name} · {backtest.universe.count} 只</dd></div>
-            <div><dt>成交</dt><dd>{backtest.costModel.execution}</dd></div>
-            <div><dt>成本</dt><dd>买入 {(backtest.costModel.buy * 10000).toFixed(0)} bps / 卖出 {(backtest.costModel.sell * 10000).toFixed(0)} bps</dd></div>
-            <div><dt>限制</dt><dd>长仓、日线、无杠杆；成交额后 30% 剔除</dd></div>
-            <div><dt>硬禁令</dt><dd>风险承受参数未填前，不输出无条件实盘买卖表</dd></div>
+            <div><dt>收益门槛</dt><dd>样本外年化 ≥ {pct(policy.minimumAnnualizedReturn)}</dd></div>
+            <div><dt>风险门槛</dt><dd>最大回撤 ≥ {pct(policy.maximumDrawdown)} · Sharpe ≥ {policy.minimumSharpe}</dd></div>
+            <div><dt>数据门槛</dt><dd>至少 {policy.minimumDataYears} 年且使用历史点时股票池</dd></div>
+            <div><dt>验证门槛</dt><dd>{policy.minimumWalkForwardFolds} 折走步 · 多重检验控制</dd></div>
+            <div><dt>前向门槛</dt><dd>至少 {policy.minimumForwardPaperDays} 个未来交易日</dd></div>
+            <div><dt>硬禁令</dt><dd>任一门禁失败，不在网站发布为可信策略</dd></div>
           </dl>
         </div>
         <div className="minute-roadmap">
-          <div><span className="section-kicker">MINUTE DATA ROUTE</span><h3>第一阶段已经落地。</h3><p>116,160 根真实 5 分钟 K 线已入本地库；第一条策略失败，下一轮应先降低换手，再扩充股票池。</p></div>
-          <ol><li><span>01</span><b>日线发现</b><p>CSI 800 全市场筛候选</p></li><li><span>02</span><b>BaoStock 5m</b><p>已接入 · 10 股一年</p></li><li><span>03</span><b>本地模拟撮合</b><p>已接入 · T+1 与成本</p></li><li><span>04</span><b>前向影子盘</b><p>尚未开始</p></li></ol>
+          <div><span className="section-kicker">DATA EXPANSION ROUTE</span><h3>数据先于策略。</h3><p>现有分钟试点将扩展到多年份、点时股票池和本地增量数据库，再进入冻结候选回测。</p></div>
+          <ol><li><span>01</span><b>点时股票池</b><p>历史每日证券列表</p></li><li><span>02</span><b>多年行情</b><p>日线发现 · 分钟执行</p></li><li><span>03</span><b>严格回测</b><p>走步 · 成本 · 复算</p></li><li><span>04</span><b>前向影子盘</b><p>通过后才计时</p></li></ol>
         </div>
         <div className="decision-ladder">
-          {[["D0", "候选筛选", "现在"], ["D1", "历史成份点时化", "下一步"], ["D2", "多年份滚动样本外", "待完成"], ["D3", "仿真盘含涨跌停", "待完成"], ["D4", "小资金影子盘", "未授权"]].map((item, index) => <div key={item[0]} className={index === 0 ? "active" : ""}><span>{item[0]}</span><b>{item[1]}</b><em>{item[2]}</em></div>)}
+          {[["D0", "可信门禁", "已启用"], ["D1", "扩展本地数据", "进行中"], ["D2", "滚动样本外", "待数据"], ["D3", "独立复算", "待候选"], ["D4", "前向模拟", "待通过"]].map((item, index) => <div key={item[0]} className={index === 0 ? "active" : ""}><span>{item[0]}</span><b>{item[1]}</b><em>{item[2]}</em></div>)}
         </div>
       </section>
 
