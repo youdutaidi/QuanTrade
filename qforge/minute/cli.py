@@ -41,9 +41,9 @@ def run_minute_command(args: argparse.Namespace, root: Path) -> int:
 
 
 def _summary(payload: dict[str, object]) -> dict[str, object]:
-    return {
+    summary = {
         key: payload[key]
         for key in ("state", "experimentId", "runId", "database", "metrics", "ledger", "artifacts")
         if key in payload
     }
-
+    return summary or payload
