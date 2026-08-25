@@ -31,7 +31,8 @@ class BaoStockMarketProvider:
 
     def __exit__(self, *_: object) -> None:
         if self.module is not None:
-            self.module.logout()
+            with _deadline(self.timeout_seconds):
+                self.module.logout()
 
     def trade_calendar(self, start: str, end: str) -> pd.DataFrame:
         with _deadline(self.timeout_seconds):

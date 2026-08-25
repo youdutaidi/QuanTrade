@@ -56,27 +56,9 @@ def download_daily(
     planned = store.prepare_daily_tasks(config)
     tasks = store.claim_tasks(config.retries, max_tasks)
     run_id = store.begin_run(config, "download-daily")
-    rows_written = 0
-    failures = 0
+    rows_written = failures = 0
     try:
-        for offset in range(0, len(tasks), config.batch_size):
-            batch = tasks[offset : offset + config.batch_size]
-            with BaoStockMarketProvider(timeout_seconds=config.request_timeout_seconds) as provider:
-                for batch_index, task in enumerate(batch, start=1):
-                    index = offset + batch_index
-                    key = str(task["task_key"])
-                    try:
-                        bars = provider.daily_bars(str(task["code"]), str(task["start_date"]), str(task["end_date"]), config.adjustflag)
-                        adjustments = provider.adjustment_factors(str(task["code"]), str(task["start_date"]), str(task["end_date"]))
-                        written = store.upsert_daily_bars(bars) + store.upsert_adjustments(adjustments)
-                        store.finish_task(key, written)
-                        rows_written += written
-                    except Exception as error:
-                        failures += 1
-                        store.finish_task(key, 0, repr(error))
-                    print(json.dumps({"progress": index, "selectedTasks": len(tasks), "code": task["code"], "rowsWritten": rows_written, "failures": failures}, ensure_ascii=False), flush=True)
-            if offset + len(batch) < len(tasks):
-                time.sleep(config.batch_pause_seconds)
+        rows_written, failures = _run_daily_tasks(config, store, tasks)
         store.finish_run(run_id, rows_written)
     except KeyboardInterrupt:
         store.finish_run(run_id, rows_written, "interrupted by operator")
@@ -87,6 +69,38 @@ def download_daily(
     payload = {"state": "daily-downloaded", "runId": run_id, "plannedTasks": planned, "selectedTasks": len(tasks), "rowsWritten": rows_written, "failures": failures, **store.status()}
     _write_inventory(config, root, payload)
     return payload
+
+
+def _run_daily_tasks(
+    config: MarketDataConfig,
+    store: MarketDataStore,
+    tasks: list[dict[str, object]],
+) -> tuple[int, int]:
+    index = rows_written = failures = 0
+    while index < len(tasks):
+        session_tasks = 0
+        session_failed = False
+        with BaoStockMarketProvider(timeout_seconds=config.request_timeout_seconds) as provider:
+            while index < len(tasks) and session_tasks < config.batch_size:
+                task = tasks[index]
+                index += 1
+                session_tasks += 1
+                try:
+                    bars = provider.daily_bars(str(task["code"]), str(task["start_date"]), str(task["end_date"]), config.adjustflag)
+                    factors = provider.adjustment_factors(str(task["code"]), str(task["start_date"]), str(task["end_date"]))
+                    written = store.upsert_daily_bars(bars) + store.upsert_adjustments(factors)
+                    store.finish_task(str(task["task_key"]), written)
+                    rows_written += written
+                except Exception as error:
+                    failures += 1
+                    store.finish_task(str(task["task_key"]), 0, repr(error))
+                    session_failed = True
+                print(json.dumps({"progress": index, "selectedTasks": len(tasks), "code": task["code"], "rowsWritten": rows_written, "failures": failures}, ensure_ascii=False), flush=True)
+                if session_failed:
+                    break
+        if index < len(tasks):
+            time.sleep(config.batch_pause_seconds)
+    return rows_written, failures
 
 
 def market_status(config: MarketDataConfig, root: Path) -> dict[str, object]:
