@@ -280,6 +280,34 @@ planned_strategy_goal:
     - 20-to-60-day low idiosyncratic volatility
     - 20-day low maximum daily return
     - equal-weight standardized composite of the four families
+  frozen_parameter_grid:
+    residual_momentum:
+      lookback_days: [60, 120, 252]
+      skip_days: [5, 21]
+      rebalance_days: [5, 10, 20]
+      top_n: [10, 20, 50]
+      candidates: 54
+    short_reversal:
+      lookback_days: [5, 10, 20]
+      rebalance_days: [5, 10, 20]
+      top_n: [10, 20, 50]
+      candidates: 27
+    low_idiosyncratic_volatility:
+      lookback_days: [20, 60]
+      rebalance_days: [5, 10, 20]
+      top_n: [10, 20, 50]
+      candidates: 18
+    low_maximum_return:
+      lookback_days: [20, 60]
+      rebalance_days: [5, 10, 20]
+      top_n: [10, 20, 50]
+      candidates: 18
+    fixed_equal_composite:
+      windows: [short, medium, long]
+      rebalance_days: [5, 10, 20]
+      top_n: [10, 20, 50]
+      candidates: 27
+    total_candidates: 144
   frozen_walk_forward:
     discovery: 2020-08-25 to 2022-08-24
     fold_1: train through 2022-08-24, test 2022-08-25 to 2023-08-24
@@ -293,10 +321,11 @@ planned_strategy_goal:
     portfolio: long-only, equal weight, no leverage, maximum 10 percent per stock
     frictions: board lots, minimum commission, stamp duty, transfer fee, slippage, price limits, and T+1
   search_control:
-    - parameter grid and count must be written before the first outcome is computed
+    - the 144-candidate grid above is immutable before the first outcome is computed
     - candidate selection uses only discovery and the three walk-forward folds
     - untouched holdout is opened once for the selected candidate
     - family-wise performance receives a stationary-bootstrap multiple-testing correction
+    - selection maximizes median fold CAGR subject to every fold being positive and no fold drawdown breaching -35 percent
   admission:
     - validation policy 1.0 passes every conjunctive gate
     - annualized out-of-sample return is at least 100 percent
