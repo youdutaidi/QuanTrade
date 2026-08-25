@@ -15,7 +15,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-data = ["akshare>=1.16", "yfinance>=0.2"]
+data = ["akshare>=1.16", "yfinance>=0.2", "baostock>=0.9.3"]
 test = ["pytest>=8"]
 
 [project.scripts]
@@ -27,4 +27,3 @@ include = ["qforge*"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-ra"
-

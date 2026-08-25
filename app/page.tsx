@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import factorsJson from "./data/factors.json";
 import backtestJson from "./data/backtest.json";
 import factorBacktestJson from "./data/factor_backtest.json";
+import minuteSystemJson from "./data/minute_system.json";
 
 type Factor = {
   id: string;
@@ -29,6 +30,7 @@ type Strategy = (typeof backtestJson.strategies)[number];
 const factors = factorsJson as Factor[];
 const backtest = backtestJson;
 const factorBacktest = factorBacktestJson;
+const minuteSystem = minuteSystemJson;
 
 const strategyAtlas = [
   ["截面动量", "买强、避弱", "趋势拥挤后急反转", "月度→周度稳定性"],
@@ -210,7 +212,7 @@ export default function Home() {
       <nav className="nav-shell">
         <a className="brand" href="#top"><span className="brand-mark">Q</span><span>Q-FORGE</span></a>
         <div className="nav-links">
-          <a href="#backtest">回测</a><a href="#engine">本地引擎</a><a href="#factors">因子库</a><a href="#audit">风险审计</a>
+          <a href="#backtest">回测</a><a href="#engine">因子引擎</a><a href="#minute">分钟交易</a><a href="#audit">风险审计</a>
         </div>
         <div className="status-chip"><span /> DRAFT · 不接实盘</div>
       </nav>
@@ -342,9 +344,62 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="section-shell minute-section" id="minute">
+        <div className="section-heading split-heading">
+          <div><span className="section-kicker">03 / MINUTE DATA & PAPER BROKER</span><h2>数据链路已打通，<br />第一条策略被证伪。</h2></div>
+          <p>BaoStock 5 分钟数据已经真实落入本机 SQLite；订单只在本地账本中模拟撮合。负收益不是系统故障，而是“每日追逐临近收盘强势股”没有覆盖换手与摩擦成本。</p>
+        </div>
+
+        <div className="minute-status-grid">
+          <div><small>5分钟 K 线</small><strong>{minuteSystem.database.barCount.toLocaleString()}</strong><p>{minuteSystem.database.tradeDays} 个交易日</p></div>
+          <div><small>固定试点股票</small><strong>{minuteSystem.database.symbolCount}</strong><p>沪深主板、创业板、科创板</p></div>
+          <div><small>本地数据库</small><strong>{number(minuteSystem.database.databaseBytes / 1024 / 1024, 1)} MB</strong><p>SQLite · WAL · 幂等写入</p></div>
+          <div><small>模拟订单</small><strong>{minuteSystem.ledger.orderCount.toLocaleString()}</strong><p>{minuteSystem.ledger.fillCount.toLocaleString()} 笔成交</p></div>
+        </div>
+
+        <div className="minute-pipeline">
+          {[["01", "BAOSTOCK", "匿名下载 5m OHLCV"], ["02", "SQLITE", "主键去重与下载审计"], ["03", "SIGNAL", "14:50 完成 K 线"], ["04", "PAPER BROKER", "14:55 次根开盘撮合"], ["05", "LEDGER", "订单·成交·持仓·净值"]].map((item) => (
+            <div key={item[0]}><span>{item[0]}</span><b>{item[1]}</b><p>{item[2]}</p></div>
+          ))}
+        </div>
+
+        <div className="minute-result-grid">
+          <article className="minute-verdict-card">
+            <div><span>CANDIDATE EVIDENCE</span><em>FALSIFIED 01</em></div>
+            <strong>{pct(minuteSystem.metrics.totalReturn)}</strong>
+            <h3>Close Strength · Top 3</h3>
+            <p>每天 14:50 用已完成 K 线计算当日收益与 VWAP 强度，14:55 模拟成交；遵守 T+1 和 100 股整数手。</p>
+            <dl><div><dt>最大回撤</dt><dd>{pct(minuteSystem.metrics.maxDrawdown)}</dd></div><div><dt>Sharpe</dt><dd>{number(minuteSystem.metrics.sharpe)}</dd></div><div><dt>试点等权</dt><dd>{pct(minuteSystem.benchmark.totalReturn)}</dd></div><div><dt>显式成本</dt><dd>¥{Math.round(minuteSystem.ledger.explicitCosts).toLocaleString()}</dd></div></dl>
+          </article>
+          <div className="minute-command-card">
+            <div><span>LOCAL COMMANDS</span><em>不连接券商</em></div>
+            <pre><code>{`.venv/bin/qforge minute init \\
+  --config configs/minute_5m.json
+.venv/bin/qforge minute download \\
+  --config configs/minute_5m.json
+.venv/bin/qforge minute backtest \\
+  --config configs/minute_5m.json
+.venv/bin/qforge minute status \\
+  --config configs/minute_5m.json`}</code></pre>
+            <ul>{minuteSystem.rules.map((rule) => <li key={rule}>{rule}</li>)}</ul>
+          </div>
+        </div>
+
+        <div className="minute-ledger">
+          <div className="engine-table-head"><div><span className="section-kicker">LOCAL ORDER LEDGER</span><h3>最近模拟订单</h3></div><p>数据库保留请求数量、成交数量、拒单原因和费用；这些记录不是券商委托。</p></div>
+          <div className="result-table-wrap"><table className="result-table"><thead><tr><th>时间</th><th>证券</th><th>方向</th><th>请求</th><th>成交</th><th>状态</th></tr></thead><tbody>{minuteSystem.recentOrders.slice(0, 8).map((order, index) => (
+            <tr key={`${order.bar_time}-${order.symbol}-${index}`}><td><b>{order.bar_time}</b></td><td>{order.symbol}</td><td className={order.side === "SELL" ? "loss" : ""}>{order.side}</td><td>{order.requested_qty}</td><td>{order.filled_qty}</td><td>{order.status}</td></tr>
+          ))}</tbody></table></div>
+        </div>
+
+        <div className="minute-gates">{minuteSystem.gates.map((gate) => (
+          <article key={gate.name} className={`gate-${gate.status}`}><span>{gate.status.toUpperCase()}</span><h3>{gate.name}</h3><p>{gate.note}</p></article>
+        ))}</div>
+      </section>
+
       <section className="section-shell factor-section" id="factors">
         <div className="section-heading split-heading">
-          <div><span className="section-kicker">03 / FACTOR LIBRARY</span><h2>{factors.length} 个因子，<br />先分清数据债。</h2></div>
+          <div><span className="section-kicker">04 / FACTOR LIBRARY</span><h2>{factors.length} 个因子，<br />先分清数据债。</h2></div>
           <p>这里不是一张“都能赚钱”的清单。每个条目保留原始证据等级、数据类型，以及迁移到 A/H 股时最先遇到的口径障碍。</p>
         </div>
 
@@ -378,7 +433,7 @@ export default function Home() {
 
       <section className="section-shell strategy-section" id="strategies">
         <div className="section-heading split-heading">
-          <div><span className="section-kicker">04 / STRATEGY ATLAS</span><h2>12 条母路径，<br />每条都有死法。</h2></div>
+          <div><span className="section-kicker">05 / STRATEGY ATLAS</span><h2>12 条母路径，<br />每条都有死法。</h2></div>
           <p>INTP 不问“它看起来聪明吗”，先问“什么情形会让它失效”；INTJ 则把最便宜的反证实验放进下一轮队列。</p>
         </div>
         <div className="atlas-grid">{strategyAtlas.map((item, index) => (
@@ -388,7 +443,7 @@ export default function Home() {
 
       <section className="section-shell audit-section" id="audit">
         <div className="section-heading split-heading">
-          <div><span className="section-kicker">05 / EVIDENCE GATES</span><h2>收益达标，<br />可信度不达标。</h2></div>
+          <div><span className="section-kicker">06 / EVIDENCE GATES</span><h2>收益达标，<br />可信度不达标。</h2></div>
           <div className="audit-verdict"><span>VERDICT</span><b>DRAFT</b><p>{failedGates} fail · {backtest.gates.length - failedGates} partial · 0 pass</p></div>
         </div>
         <div className="gate-grid">{backtest.gates.map((gate, index) => (
@@ -406,8 +461,8 @@ export default function Home() {
           </dl>
         </div>
         <div className="minute-roadmap">
-          <div><span className="section-kicker">MINUTE DATA ROUTE</span><h3>免费分钟数据，不做大而全。</h3><p>日线先把 800 只压缩到小池，再把稀缺分钟额度花在可成交性反证上。</p></div>
-          <ol><li><span>01</span><b>日线发现</b><p>CSI 800 全市场筛候选</p></li><li><span>02</span><b>BaoStock 5m</b><p>A 股近 5 年成交与滑点</p></li><li><span>03</span><b>Futu 1m/5m</b><p>A/H 最终 ≤100 只复核</p></li><li><span>04</span><b>影子成交</b><p>涨跌停、盘口与冲击成本</p></li></ol>
+          <div><span className="section-kicker">MINUTE DATA ROUTE</span><h3>第一阶段已经落地。</h3><p>116,160 根真实 5 分钟 K 线已入本地库；第一条策略失败，下一轮应先降低换手，再扩充股票池。</p></div>
+          <ol><li><span>01</span><b>日线发现</b><p>CSI 800 全市场筛候选</p></li><li><span>02</span><b>BaoStock 5m</b><p>已接入 · 10 股一年</p></li><li><span>03</span><b>本地模拟撮合</b><p>已接入 · T+1 与成本</p></li><li><span>04</span><b>前向影子盘</b><p>尚未开始</p></li></ol>
         </div>
         <div className="decision-ladder">
           {[["D0", "候选筛选", "现在"], ["D1", "历史成份点时化", "下一步"], ["D2", "多年份滚动样本外", "待完成"], ["D3", "仿真盘含涨跌停", "待完成"], ["D4", "小资金影子盘", "未授权"]].map((item, index) => <div key={item[0]} className={index === 0 ? "active" : ""}><span>{item[0]}</span><b>{item[1]}</b><em>{item[2]}</em></div>)}
@@ -415,7 +470,7 @@ export default function Home() {
       </section>
 
       <section className="section-shell source-section">
-        <div className="section-heading"><span className="section-kicker">06 / PROVENANCE</span><h2>能定位，才能反驳。</h2></div>
+        <div className="section-heading"><span className="section-kicker">07 / PROVENANCE</span><h2>能定位，才能反驳。</h2></div>
         <div className="source-list">{sources.map((source, index) => <a key={source[0]} href={source[2]} target="_blank" rel="noreferrer"><span>0{index + 1}</span><div><small>{source[0]}</small><b>{source[1]}</b></div><i>↗</i></a>)}</div>
       </section>
 

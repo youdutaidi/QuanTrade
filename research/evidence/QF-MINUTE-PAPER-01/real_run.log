@@ -1,0 +1,47 @@
+{
+  "state": "candidate_evidence",
+  "experimentId": "QF-5M-PILOT-01",
+  "runId": "strategy-43c1d870a9dc4e279944c8f1f870c8ac",
+  "database": {
+    "barCount": 116160,
+    "symbolCount": 10,
+    "firstBar": "2025-08-25 09:35:00",
+    "lastBar": "2026-08-24 15:00:00",
+    "tradeDays": 242,
+    "databaseBytes": 29782016,
+    "lastDownload": {
+      "run_id": "download-942fe34fde2d44c79dc95989237777be",
+      "status": "succeeded",
+      "rows_written": 116160,
+      "completed_at": "2026-08-25T07:47:39.259553+00:00",
+      "error": null
+    },
+    "lastStrategy": {
+      "run_id": "strategy-43c1d870a9dc4e279944c8f1f870c8ac",
+      "status": "succeeded",
+      "completed_at": "2026-08-25T07:51:02.315401+00:00",
+      "error": null
+    }
+  },
+  "metrics": {
+    "totalReturn": -0.36956107185932296,
+    "maxDrawdown": -0.4645693082071848,
+    "sharpe": -1.879467724137493,
+    "designReturn": -0.14459398333168505,
+    "holdoutReturn": -0.25745718518689054,
+    "finalEquity": 630438.928140677
+  },
+  "ledger": {
+    "orderCount": 1125,
+    "filledShares": 6655100,
+    "rejectedOrders": 1,
+    "partialOrders": 1,
+    "fillCount": 1124,
+    "grossTurnover": 280133235.059,
+    "explicitCosts": 156914.60885934
+  },
+  "artifacts": {
+    "json": "/Users/cailingling/Library/Mobile Documents/iCloud~md~obsidian/Documents/LinneaCai/2026/07_Hobbies/Investment/quant-intelligence-lab/research/output/minute_engine/results.json",
+    "html": "/Users/cailingling/Library/Mobile Documents/iCloud~md~obsidian/Documents/LinneaCai/2026/07_Hobbies/Investment/quant-intelligence-lab/research/output/minute_engine/report.html"
+  }
+}

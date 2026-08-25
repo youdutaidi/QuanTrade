@@ -67,6 +67,63 @@ artifact_policy:
   allow: [source, configs, logs, metrics, reports, small demo data]
   deny: [weights, checkpoints, optimizer_state, large_model_cache]
 status: active
+successor_goal:
+  goal_id: QF-MINUTE-PAPER-01
+  decision: Add a BaoStock 5-minute local database and next-bar A-share paper-trading engine while preserving the admitted daily engine.
+  non_goals:
+    - connecting a live broker account or transmitting real orders
+    - claiming tick-level or order-book execution from 5-minute bars
+    - scaling to the full A-share market before a small fixed-universe pilot passes
+  owner_session: /root
+  verified_active_baseline:
+    location: qforge daily factor engine and local site
+    code_identity: f710badb1e32d2acac576a8fda981bb67f6dc08f
+    frozen_commands:
+      - .venv/bin/python -m pytest -q
+      - .venv/bin/qforge run --config configs/price_factors.json
+      - npm run build
+  candidate:
+    location: qforge/minute
+    allowed_files:
+      - qforge/minute/**
+      - qforge/cli.py
+      - qforge/__init__.py
+      - configs/minute_5m.json
+      - tests/test_minute_*.py
+      - pyproject.toml
+      - research/README.md
+      - research/evidence/QF-MINUTE-PAPER-01/**
+      - app/data/minute_system.json
+      - app/page.tsx
+      - app/globals.css
+    scientific_choice_axis: completed 5-minute cross-sectional close-strength signal executed at the next bar under A-share paper-trading constraints
+  admission:
+    structure_command: .venv/bin/python /Users/cailingling/.codex/skills/research-code-evolution-guard/scripts/structure_gate.py . --package qforge --json-out research/evidence/QF-MINUTE-PAPER-01/structure_report.json
+    semantic_commands:
+      - .venv/bin/python -m pytest -q
+      - .venv/bin/qforge minute init --config configs/minute_5m.json
+      - .venv/bin/qforge minute download --config configs/minute_5m.json
+      - .venv/bin/qforge minute backtest --config configs/minute_5m.json
+      - .venv/bin/qforge run --config configs/price_factors.json
+      - npm run build
+    prior_behavior_map:
+      - existing seven daily-engine tests retained unchanged
+      - daily factor CLI and local website build rerun before cutover
+    permissions:
+      local_checks: authorized by user request
+      external_data_download: BaoStock anonymous historical data authorized by user request
+      live_order_routing: forbidden without a separate explicit authorization and broker account scope
+  cutover:
+    criteria:
+      - local schema and idempotent upsert tests pass
+      - T+1, board-lot, minimum-commission and participation-limit tests pass
+      - real BaoStock 5-minute pilot is stored and replayed with recoverable evidence
+      - daily baseline and local website remain runnable
+    rollback_target: f710badb1e32d2acac576a8fda981bb67f6dc08f
+  artifact_policy:
+    allow: [source, configs, database schema, logs, metrics, reports, small manifests]
+    deny: [credentials, broker tokens, live orders, large raw database commits]
+  status: candidate
 ```
 
 ## Local quick start
