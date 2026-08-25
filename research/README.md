@@ -199,11 +199,63 @@ next_goal:
     allow: [source, configs, logs, metrics, reports, small manifests]
     deny: [credentials, broker tokens, live orders, large raw database commits]
   status: admitted
-planned_successor:
+data_goal:
   goal_id: QF-DATA-EXPANSION-01
-  decision: Expand legally obtainable A-share and Hong Kong market history into local databases, then run pre-registered daily and minute strategy candidates through the admitted validation gate.
-  scientific_choice_axis: point-in-time data coverage and frozen candidate family
-  status: pending
+  decision: Build a resumable BaoStock-backed A-share research database with point-in-time universe membership, security lifecycle, corporate actions, and multi-year daily bars before any new strategy search.
+  non_goals:
+    - claiming the database or a discovery backtest is already a verified strategy
+    - mixing Hong Kong data from a source without equivalent point-in-time provenance
+    - transmitting live orders or storing broker credentials
+  owner_session: /root
+  verified_active_baseline:
+    location: qforge daily engine, qforge/minute paper engine, validation registry, and local site
+    code_identity: 8ed8c9e
+    frozen_commands:
+      - .venv/bin/python -m pytest -q
+      - .venv/bin/qforge minute status --config configs/minute_5m.json
+      - .venv/bin/python research/validation_workflows/build_registry.py
+      - npm run build
+  candidate:
+    location: qforge/marketdata and research/data_workflows
+    state: candidate
+    allowed_files:
+      - qforge/marketdata/**
+      - qforge/cli.py
+      - configs/market_data.json
+      - tests/test_marketdata_*.py
+      - research/data_workflows/**
+      - research/README.md
+      - research/evidence/QF-DATA-EXPANSION-01/**
+      - app/data/data_inventory.json
+      - app/page.tsx
+      - app/globals.css
+    scientific_choice_axis: point-in-time A-share data coverage; no strategy parameters change in this experiment
+  admission:
+    structure_command: .venv/bin/python /Users/cailingling/.codex/skills/research-code-evolution-guard/scripts/structure_gate.py . --package qforge --scripts research/data_workflows --json-out research/evidence/QF-DATA-EXPANSION-01/structure_report.json
+    semantic_commands:
+      - .venv/bin/python -m pytest -q
+      - .venv/bin/qforge market init --config configs/market_data.json
+      - .venv/bin/qforge market download-reference --config configs/market_data.json
+      - .venv/bin/qforge market status --config configs/market_data.json
+      - npm run build
+    prior_behavior_map:
+      - all validation, daily-engine, and minute-engine tests remain unchanged
+      - verified strategy count remains zero after data ingestion
+    permissions:
+      local_checks: authorized by user request
+      external_data_download: BaoStock anonymous historical data authorized by user request
+      live_order_routing: forbidden without separate explicit authorization
+  cutover:
+    criteria:
+      - SQLite schema, idempotent upserts, checkpoint resume, and source normalization tests pass
+      - historical trade calendar, full security lifecycle, and point-in-time universe samples persist locally
+      - every download run and failure is recoverable from the database
+      - retained baseline tests and local website build pass
+    rollback_target: 8ed8c9e
+  artifact_policy:
+    allow: [source, configs, schema, logs, metrics, small manifests]
+    deny: [credentials, broker tokens, live orders, committing the large local database]
+  status: candidate
 ```
 
 ## Local quick start
