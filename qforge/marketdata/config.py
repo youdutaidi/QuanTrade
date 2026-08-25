@@ -23,6 +23,10 @@ class MarketDataConfig:
     request_timeout_seconds: int = 90
     batch_size: int = 200
     batch_pause_seconds: float = 2.0
+    source_sample_size: int = 20
+    audit_output: str = "research/evidence/QF-DATA-EXPANSION-01/data_audit.json"
+    verification_output: str = "research/evidence/QF-DATA-EXPANSION-01/source_sample_replay.json"
+    research_panel_output: str = "research/data/qforge_daily_panel.parquet"
     app_output: str | None = None
 
     @classmethod
@@ -49,6 +53,8 @@ class MarketDataConfig:
             raise ValueError("retries, request timeout, and batch size must be positive")
         if self.batch_pause_seconds < 0:
             raise ValueError("batch pause must not be negative")
+        if self.source_sample_size < 1:
+            raise ValueError("source sample size must be positive")
         for value in self.audit_dates:
             audit = date.fromisoformat(value)
             if audit < start or audit > end:

@@ -253,8 +253,12 @@ data_goal:
         evidence: research/evidence/QF-DATA-EXPANSION-01/concurrency_reset.log
       - id: QF-DATA-EXPANSION-01-A2
         change: one BaoStock session, refreshed every 200 securities with a two-second batch pause
-        result: running with zero failures at the latest checkpoint
+        result: interrupted after 811 successes when one query call stopped responding before the full-call timeout patch was loaded
         evidence: research/evidence/QF-DATA-EXPANSION-01/daily_single_verified.log
+      - id: QF-DATA-EXPANSION-01-A3
+        change: bound the full query call and row stream to 90 seconds; discard and recreate a session after every request error
+        result: active; preserved 811 stock checkpoints, added four benchmark indexes, and recovered both previously slow symbols on a fresh session
+        evidence: research/evidence/QF-DATA-EXPANSION-01/daily_single_resume_2.log
   cutover:
     criteria:
       - SQLite schema, idempotent upserts, checkpoint resume, and source normalization tests pass

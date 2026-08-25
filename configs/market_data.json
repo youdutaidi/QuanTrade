@@ -12,5 +12,9 @@
   "request_timeout_seconds": 90,
   "batch_size": 200,
   "batch_pause_seconds": 2.0,
+  "source_sample_size": 20,
+  "audit_output": "research/evidence/QF-DATA-EXPANSION-01/data_audit.json",
+  "verification_output": "research/evidence/QF-DATA-EXPANSION-01/source_sample_replay.json",
+  "research_panel_output": "research/data/qforge_daily_panel.parquet",
   "app_output": "app/data/data_inventory.json"
 }
