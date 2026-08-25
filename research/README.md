@@ -245,6 +245,16 @@ data_goal:
       local_checks: authorized by user request
       external_data_download: BaoStock anonymous historical data authorized by user request
       live_order_routing: forbidden without separate explicit authorization
+    attempts:
+      - id: QF-DATA-EXPANSION-01-A1
+        change: four concurrent BaoStock sessions with atomic SQLite task claiming
+        result: protocol-invalid after the provider session began failing repeatedly
+        recovery: deleted only 339616 daily bars and 1203 adjustment factors; retained reference tables; reset all daily checkpoints
+        evidence: research/evidence/QF-DATA-EXPANSION-01/concurrency_reset.log
+      - id: QF-DATA-EXPANSION-01-A2
+        change: one BaoStock session, refreshed every 200 securities with a two-second batch pause
+        result: running with zero failures at the latest checkpoint
+        evidence: research/evidence/QF-DATA-EXPANSION-01/daily_single_verified.log
   cutover:
     criteria:
       - SQLite schema, idempotent upserts, checkpoint resume, and source normalization tests pass
@@ -256,6 +266,39 @@ data_goal:
     allow: [source, configs, schema, logs, metrics, small manifests]
     deny: [credentials, broker tokens, live orders, committing the large local database]
   status: candidate
+planned_strategy_goal:
+  goal_id: QF-WALKFORWARD-01
+  decision: Test a frozen A-share family combining residual momentum, short-term reversal, low idiosyncratic volatility, and lottery-stock avoidance on the completed point-in-time database.
+  hypothesis: a low-turnover composite that avoids high-MAX and high-idiosyncratic-volatility stocks is more stable than conventional raw momentum in the retail-dominated A-share market.
+  candidate_families:
+    - residual momentum after rolling market-beta removal
+    - 5-to-20-day reversal
+    - 20-to-60-day low idiosyncratic volatility
+    - 20-day low maximum daily return
+    - equal-weight standardized composite of the four families
+  frozen_walk_forward:
+    discovery: 2020-08-25 to 2022-08-24
+    fold_1: train through 2022-08-24, test 2022-08-25 to 2023-08-24
+    fold_2: train through 2023-08-24, test 2023-08-25 to 2024-08-24
+    fold_3: train through 2024-08-24, test 2024-08-25 to 2025-08-24
+    untouched_holdout: 2025-08-25 to 2026-08-24
+  frozen_execution:
+    signal_cutoff: completed close at t
+    fill: next tradable open at t+1
+    eligibility: listed at t, at least 120 trading days old, non-ST, tradable, lagged 20-day median amount floor
+    portfolio: long-only, equal weight, no leverage, maximum 10 percent per stock
+    frictions: board lots, minimum commission, stamp duty, transfer fee, slippage, price limits, and T+1
+  search_control:
+    - parameter grid and count must be written before the first outcome is computed
+    - candidate selection uses only discovery and the three walk-forward folds
+    - untouched holdout is opened once for the selected candidate
+    - family-wise performance receives a stationary-bootstrap multiple-testing correction
+  admission:
+    - validation policy 1.0 passes every conjunctive gate
+    - annualized out-of-sample return is at least 100 percent
+    - Sharpe is at least 1.5 and maximum drawdown is no worse than -35 percent
+    - an independent order-ledger replay matches cash, positions, costs, and equity
+  status: pending until QF-DATA-EXPANSION-01 is admitted
 ```
 
 ## Local quick start
@@ -318,6 +361,37 @@ The minute pipeline is local-only and never routes an order to a broker:
 - First scientific verdict: the daily close-strength rotation is falsified in
   this pilot (`-36.96%` total return, `-46.46%` maximum drawdown). The engine is
   admitted; the strategy is not promoted.
+
+## Point-in-time A-share database
+
+The multi-year daily database is local-only and uses resumable per-security
+checkpoints. Run exactly one BaoStock download process at a time: the provider's
+own download guidance warns that concurrent sessions can corrupt compressed
+responses.
+
+```bash
+.venv/bin/qforge market init --config configs/market_data.json
+.venv/bin/qforge market download-reference --config configs/market_data.json
+.venv/bin/qforge market download-daily --config configs/market_data.json --recover
+.venv/bin/qforge market status --config configs/market_data.json
+.venv/bin/python research/data_workflows/audit_market_database.py \
+  --config configs/market_data.json \
+  --output research/evidence/QF-DATA-EXPANSION-01/data_audit.json
+.venv/bin/python research/data_workflows/export_research_panel.py \
+  --config configs/market_data.json \
+  --output research/data/qforge_daily_panel.parquet
+```
+
+- Database: `research/data/qforge_market.sqlite` (ignored by Git).
+- Reference layer: trade calendar, full security lifecycle, sampled historical
+  universe observations, and zero-difference lifecycle reconstruction audits.
+- Market layer: unadjusted daily OHLCV, exchange pre-close and percentage
+  change, trading status, ST flag, turnover, amount, and adjustment factors.
+- Research export: a synthetic total-return OHLC series uses BaoStock's
+  exchange-adjusted `preclose`/`pctChg` fields so ex-dates do not create false
+  price crashes; raw amount and trading-state fields remain available.
+- Recovery: interrupted tasks return to `pending` with `--recover`; succeeded
+  tasks are never fetched twice and all writes are idempotent.
 
 ## AH-01 baseline
 

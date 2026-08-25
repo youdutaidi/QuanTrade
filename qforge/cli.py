@@ -9,6 +9,7 @@ from pathlib import Path
 from .config import BacktestConfig
 from .demo import create_demo
 from .factors import factor_catalog
+from .marketdata.cli import register_market_commands, run_market_command
 from .minute.cli import register_minute_commands, run_minute_command
 from .pipeline import run_experiment
 
@@ -23,6 +24,7 @@ def parser() -> argparse.ArgumentParser:
     catalog = commands.add_parser("catalog", help="list implemented factor functions")
     catalog.add_argument("--json", action="store_true")
     register_minute_commands(commands)
+    register_market_commands(commands)
     return root
 
 
@@ -31,6 +33,8 @@ def main(argv: list[str] | None = None) -> int:
     root = Path(args.root).resolve()
     if args.command == "minute":
         return run_minute_command(args, root)
+    if args.command == "market":
+        return run_market_command(args, root)
     if args.command == "catalog":
         _print_catalog(args.json)
         return 0

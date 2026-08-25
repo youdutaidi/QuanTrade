@@ -5,6 +5,7 @@ import factorsJson from "./data/factors.json";
 import backtestJson from "./data/backtest.json";
 import factorBacktestJson from "./data/factor_backtest.json";
 import minuteSystemJson from "./data/minute_system.json";
+import marketInventoryJson from "./data/data_inventory.json";
 import validationRegistryJson from "./data/validation_registry.json";
 
 type Factor = {
@@ -32,6 +33,7 @@ const factors = factorsJson as Factor[];
 const backtest = backtestJson;
 const factorBacktest = factorBacktestJson;
 const minuteSystem = minuteSystemJson;
+const marketInventory = marketInventoryJson;
 const validationRegistry = validationRegistryJson;
 
 const strategyAtlas = [
@@ -205,6 +207,8 @@ export default function Home() {
   const directFactors = factors.filter((factor) => factor.ahStatus === "可直接首测").length;
   const strongEvidence = factors.filter((factor) => factor.grade === "A" || factor.grade === "B").length;
   const policy = validationRegistry.policy;
+  const marketTaskTotal = marketInventory.tasks.reduce((sum, task) => sum + task.taskCount, 0);
+  const marketTasksDone = marketInventory.tasks.find((task) => task.status === "succeeded")?.taskCount ?? 0;
 
   return (
     <main id="top">
@@ -426,6 +430,12 @@ export default function Home() {
             <div><dt>前向门槛</dt><dd>至少 {policy.minimumForwardPaperDays} 个未来交易日</dd></div>
             <div><dt>硬禁令</dt><dd>任一门禁失败，不在网站发布为可信策略</dd></div>
           </dl>
+        </div>
+        <div className="minute-status-grid" aria-label="本地点时数据库存">
+          <div><small>证券生命周期</small><strong>{marketInventory.stockCount.toLocaleString()}</strong><p>含 {marketInventory.delistedStockCount} 只退市股票</p></div>
+          <div><small>历史股票池核对</small><strong>{marketInventory.audits.filter((audit) => audit.status === "pass").length}/{marketInventory.audits.length}</strong><p>抽样日期与源数据零差异</p></div>
+          <div><small>多年日线任务</small><strong>{marketTasksDone}/{marketTaskTotal}</strong><p>{marketInventory.dailyBarCount.toLocaleString()} 根 · 下载任务可恢复</p></div>
+          <div><small>本地 SQLite</small><strong>{number(marketInventory.databaseBytes / 1024 / 1024, 1)} MB</strong><p>WAL · 幂等写入 · 不上传云端</p></div>
         </div>
         <div className="minute-roadmap">
           <div><span className="section-kicker">DATA EXPANSION ROUTE</span><h3>数据先于策略。</h3><p>现有分钟试点将扩展到多年份、点时股票池和本地增量数据库，再进入冻结候选回测。</p></div>
