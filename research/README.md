@@ -11,13 +11,21 @@ non_goals:
   - promising a 100 percent return or treating the current-constituent screen as live evidence
 owner_session: /root
 active_baseline:
+  location: qforge
+  code_identity: 53f382a5657f6cefd7de1889f6cd3d1b294b5816
+  frozen_command: .venv/bin/qforge run --config configs/price_factors.json
+  required_tests:
+    - .venv/bin/python -m pytest -q
+    - .venv/bin/qforge demo
+    - .venv/bin/qforge run --config configs/price_factors.json
+retained_baseline:
   location: research/run_backtests.py
   code_identity: fcb441f754daa9ff83843187d763c748f7fa9040
   frozen_command: .venv/bin/python research/run_backtests.py
-  required_tests:
-    - preserves next-open execution, explicit costs, and existing app/data/backtest.json output
+  continuity: rerun passed after factor-engine admission
 candidate:
   location: qforge
+  state: active
   allowed_files:
     - qforge/**
     - configs/**
@@ -41,6 +49,12 @@ admission:
     local_checks: authorized by user request
     remote_execution: not required
     artifact_download: no weights or checkpoints
+  results:
+    structure: pass, 0 findings, 952 package lines
+    semantics: 7 passed
+    demo: end-to-end JSON CSV HTML generated
+    real_data: 11 factor and composite candidates evaluated on 800 symbols
+    retained_baseline: 1116 strategy search rerun passed
 cutover:
   criteria:
     - structure gate passes
@@ -48,10 +62,11 @@ cutover:
     - real-data factor report is generated
     - frozen baseline still passes
   rollback_target: fcb441f754daa9ff83843187d763c748f7fa9040
+  promoted_entrypoint: qforge.cli:main
 artifact_policy:
   allow: [source, configs, logs, metrics, reports, small demo data]
   deny: [weights, checkpoints, optimizer_state, large_model_cache]
-status: candidate
+status: active
 ```
 
 ## Local quick start
