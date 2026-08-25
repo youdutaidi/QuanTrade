@@ -1,0 +1,22 @@
+{
+  "experimentId": "QF-CSI800-DAILY-01",
+  "factorCount": 11,
+  "leader": {
+    "factor": "momentum_20_5",
+    "meanIC": -0.013617745971770236,
+    "icIR": -1.0164062680717318,
+    "icPositiveRate": 0.4779116465863454,
+    "totalReturn": 0.4623347791124961,
+    "annualizedReturn": 0.4642444638671299,
+    "maxDrawdown": -0.23770894917354002,
+    "sharpe": 1.1787737923960313,
+    "volatility": 0.40827956646380176,
+    "turnover": 37.93279112196771,
+    "observations": 242
+  },
+  "artifacts": {
+    "json": "/Users/cailingling/Library/Mobile Documents/iCloud~md~obsidian/Documents/LinneaCai/2026/07_Hobbies/Investment/quant-intelligence-lab/research/output/factor_engine/results.json",
+    "html": "/Users/cailingling/Library/Mobile Documents/iCloud~md~obsidian/Documents/LinneaCai/2026/07_Hobbies/Investment/quant-intelligence-lab/research/output/factor_engine/report.html",
+    "csv": "/Users/cailingling/Library/Mobile Documents/iCloud~md~obsidian/Documents/LinneaCai/2026/07_Hobbies/Investment/quant-intelligence-lab/research/output/factor_engine/factor_summary.csv"
+  }
+}

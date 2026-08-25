@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "qforge-factor-engine"
+version = "0.1.0"
+description = "Point-in-time daily cross-sectional factor research for A/H equities"
+readme = "research/README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "numpy>=1.26",
+  "pandas>=2.2",
+  "pyarrow>=15",
+]
+
+[project.optional-dependencies]
+data = ["akshare>=1.16", "yfinance>=0.2"]
+test = ["pytest>=8"]
+
+[project.scripts]
+qforge = "qforge.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["qforge*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+

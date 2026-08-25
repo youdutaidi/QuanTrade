@@ -1,0 +1,644 @@
+{
+  "engineVersion": "0.1.0",
+  "experimentId": "QF-CSI800-DAILY-01",
+  "factorCount": 11,
+  "config": {
+    "experiment_id": "QF-CSI800-DAILY-01",
+    "data_path": "research/data/csi800_ohlcv.parquet",
+    "start": "2025-08-25",
+    "end": "2026-08-24",
+    "factors": [
+      "momentum_20_5",
+      "momentum_60_5",
+      "momentum_252_21",
+      "reversal_5",
+      "low_volatility_20",
+      "max_return_20",
+      "amihud_20",
+      "volume_trend_20",
+      "breakout_252",
+      "price_to_ma_120"
+    ],
+    "membership_path": "research/data/csi800_membership_snapshot.csv",
+    "benchmark_symbol": "000001.SS",
+    "design_end": "2026-02-24",
+    "include_composite": true,
+    "rebalance_days": 5,
+    "top_quantile": 0.1,
+    "quantiles": 5,
+    "liquidity_floor_pct": 0.3,
+    "winsor_mad": 5.0,
+    "buy_cost_bps": 15.0,
+    "sell_cost_bps": 20.0,
+    "market_regime_days": 200,
+    "simulate_locked_limits": true,
+    "limit_pct": 0.095,
+    "output_dir": "research/output/factor_engine",
+    "app_output": "app/data/factor_backtest.json",
+    "metadata": {}
+  },
+  "dataAudit": {
+    "firstDate": "2024-07-01",
+    "lastDate": "2026-08-25",
+    "dates": 524,
+    "symbols": 800,
+    "duplicateKeys": 0
+  },
+  "ranking": [
+    {
+      "factor": "momentum_20_5",
+      "meanIC": -0.013617745971770236,
+      "icIR": -1.0164062680717318,
+      "icPositiveRate": 0.4779116465863454,
+      "totalReturn": 0.4623347791124961,
+      "annualizedReturn": 0.4642444638671299,
+      "maxDrawdown": -0.23770894917354002,
+      "sharpe": 1.1787737923960313,
+      "volatility": 0.40827956646380176,
+      "turnover": 37.93279112196771,
+      "observations": 242
+    },
+    {
+      "factor": "price_to_ma_120",
+      "meanIC": -0.018309880323035387,
+      "icIR": -1.282431104551085,
+      "icPositiveRate": 0.46898263027295284,
+      "totalReturn": 0.44934167476453757,
+      "annualizedReturn": 0.45118991394053265,
+      "maxDrawdown": -0.28113720370377937,
+      "sharpe": 1.0753797425176808,
+      "volatility": 0.4603389902265686,
+      "turnover": 22.89526117848535,
+      "observations": 242
+    },
+    {
+      "factor": "momentum_252_21",
+      "meanIC": 0.008705737449233347,
+      "icIR": 0.5154216697795414,
+      "icPositiveRate": 0.52,
+      "totalReturn": 0.4171802016275574,
+      "annualizedReturn": 0.41887808253240766,
+      "maxDrawdown": -0.23698736814836507,
+      "sharpe": 1.1091917713814194,
+      "volatility": 0.4022411489863155,
+      "turnover": 13.973752867973728,
+      "observations": 242
+    },
+    {
+      "factor": "momentum_60_5",
+      "meanIC": -0.012574661126237334,
+      "icIR": -0.8611010507764805,
+      "icPositiveRate": 0.5043668122270742,
+      "totalReturn": 0.40798847682806905,
+      "annualizedReturn": 0.40964384565923573,
+      "maxDrawdown": -0.25846790952177756,
+      "sharpe": 1.0244516745032344,
+      "volatility": 0.4482809645397885,
+      "turnover": 23.228138994506516,
+      "observations": 242
+    },
+    {
+      "factor": "equal_composite",
+      "meanIC": 0.009940434281961757,
+      "icIR": 0.8413286708167987,
+      "icPositiveRate": 0.536779324055666,
+      "totalReturn": 0.3718684042612104,
+      "annualizedReturn": 0.3733587344258875,
+      "maxDrawdown": -0.26231746815894497,
+      "sharpe": 1.0144792533229898,
+      "volatility": 0.40914308040307,
+      "turnover": 37.558847295419596,
+      "observations": 242
+    },
+    {
+      "factor": "volume_trend_20",
+      "meanIC": -0.009099992806982206,
+      "icIR": -0.9782429317295556,
+      "icPositiveRate": 0.4906832298136646,
+      "totalReturn": 0.25862592634142456,
+      "annualizedReturn": 0.2596205151210522,
+      "maxDrawdown": -0.14667810310635165,
+      "sharpe": 0.9642225236460379,
+      "volatility": 0.2943756299383998,
+      "turnover": 34.45791518959389,
+      "observations": 242
+    },
+    {
+      "factor": "breakout_252",
+      "meanIC": -0.004970361044184306,
+      "icIR": -0.4640722094526321,
+      "icPositiveRate": 0.5129151291512916,
+      "totalReturn": 0.20111616252517184,
+      "annualizedReturn": 0.2018722590933577,
+      "maxDrawdown": -0.24115543103372106,
+      "sharpe": 0.7506754918524406,
+      "volatility": 0.32640639377859665,
+      "turnover": 50.21154844499921,
+      "observations": 242
+    },
+    {
+      "factor": "amihud_20",
+      "meanIC": 0.0036403073562135064,
+      "icIR": 0.49879389688013653,
+      "icPositiveRate": 0.5258964143426295,
+      "totalReturn": 0.09262884393157012,
+      "annualizedReturn": 0.09296128545727544,
+      "maxDrawdown": -0.1491933540590955,
+      "sharpe": 0.48991503738498954,
+      "volatility": 0.25625181897556637,
+      "turnover": 11.127179521286092,
+      "observations": 242
+    },
+    {
+      "factor": "low_volatility_20",
+      "meanIC": 0.018376832375756956,
+      "icIR": 0.9866518960933071,
+      "icPositiveRate": 0.5079681274900398,
+      "totalReturn": -0.10028903764486274,
+      "annualizedReturn": -0.10061549970044226,
+      "maxDrawdown": -0.1558102064339536,
+      "sharpe": -0.9908534687807872,
+      "volatility": 0.10586404929676879,
+      "turnover": 18.042865449326786,
+      "observations": 242
+    },
+    {
+      "factor": "max_return_20",
+      "meanIC": 0.02151586685755868,
+      "icIR": 1.3918907095708377,
+      "icPositiveRate": 0.5219123505976095,
+      "totalReturn": -0.12915923545245755,
+      "annualizedReturn": -0.12957271526331993,
+      "maxDrawdown": -0.16863726772418597,
+      "sharpe": -1.2282777036652366,
+      "volatility": 0.11255441489519039,
+      "turnover": 26.84595969234966,
+      "observations": 242
+    },
+    {
+      "factor": "reversal_5",
+      "meanIC": 0.03044289052979587,
+      "icIR": 2.4654248088298973,
+      "icPositiveRate": 0.5526838966202783,
+      "totalReturn": -0.1303660742874606,
+      "annualizedReturn": -0.13078312059969632,
+      "maxDrawdown": -0.23403966150570232,
+      "sharpe": -0.3919471857147278,
+      "volatility": 0.2754850969107508,
+      "turnover": 78.78468924248068,
+      "observations": 242
+    }
+  ],
+  "factors": [
+    {
+      "name": "momentum_20_5",
+      "description": "20日动量，跳过最近5日",
+      "diagnostics": {
+        "meanIC": -0.013617745971770236,
+        "icIR": -1.0164062680717318,
+        "icPositiveRate": 0.4779116465863454,
+        "coverage": 0.662478530534351,
+        "icObservations": 498
+      },
+      "metrics": {
+        "totalReturn": 0.4623347791124961,
+        "annualizedReturn": 0.4642444638671299,
+        "maxDrawdown": -0.23770894917354002,
+        "sharpe": 1.1787737923960313,
+        "volatility": 0.40827956646380176,
+        "turnover": 37.93279112196771,
+        "observations": 242
+      },
+      "designMetrics": {
+        "totalReturn": 0.4011017327359139,
+        "annualizedReturn": 0.9603745455633486,
+        "maxDrawdown": -0.11514662885759874,
+        "sharpe": 2.0061086708384543,
+        "volatility": 0.4031238670064922,
+        "turnover": 21.401622676972483,
+        "observations": 118
+      },
+      "holdoutMetrics": {
+        "totalReturn": 0.03438430961989325,
+        "annualizedReturn": 0.07100641263567353,
+        "maxDrawdown": -0.2377089491735399,
+        "sharpe": 0.37384892603496994,
+        "volatility": 0.41528918882755933,
+        "turnover": 16.531168444995227,
+        "observations": 124
+      }
+    },
+    {
+      "name": "momentum_60_5",
+      "description": "60日动量，跳过最近5日",
+      "diagnostics": {
+        "meanIC": -0.012574661126237334,
+        "icIR": -0.8611010507764805,
+        "icPositiveRate": 0.5043668122270742,
+        "coverage": 0.6091507633587785,
+        "icObservations": 458
+      },
+      "metrics": {
+        "totalReturn": 0.40798847682806905,
+        "annualizedReturn": 0.40964384565923573,
+        "maxDrawdown": -0.25846790952177756,
+        "sharpe": 1.0244516745032344,
+        "volatility": 0.4482809645397885,
+        "turnover": 23.228138994506516,
+        "observations": 242
+      },
+      "designMetrics": {
+        "totalReturn": 0.35822827878785723,
+        "annualizedReturn": 0.8424705991204673,
+        "maxDrawdown": -0.13989193021371782,
+        "sharpe": 1.7445812246134778,
+        "volatility": 0.4320912078555602,
+        "turnover": 12.76107507325177,
+        "observations": 118
+      },
+      "holdoutMetrics": {
+        "totalReturn": 0.021284868394809253,
+        "annualizedReturn": 0.04366370191294111,
+        "maxDrawdown": -0.25846790952177756,
+        "sharpe": 0.3264409675196073,
+        "volatility": 0.4655468506876752,
+        "turnover": 10.467063921254743,
+        "observations": 124
+      }
+    },
+    {
+      "name": "momentum_252_21",
+      "description": "12-1月动量",
+      "diagnostics": {
+        "meanIC": 0.008705737449233347,
+        "icIR": 0.5154216697795414,
+        "icPositiveRate": 0.52,
+        "coverage": 0.3331059160305343,
+        "icObservations": 250
+      },
+      "metrics": {
+        "totalReturn": 0.4171802016275574,
+        "annualizedReturn": 0.41887808253240766,
+        "maxDrawdown": -0.23698736814836507,
+        "sharpe": 1.1091917713814194,
+        "volatility": 0.4022411489863155,
+        "turnover": 13.973752867973728,
+        "observations": 242
+      },
+      "designMetrics": {
+        "totalReturn": 0.2049297260289853,
+        "annualizedReturn": 0.45074681937445016,
+        "maxDrawdown": -0.1428518896483596,
+        "sharpe": 1.307460688037,
+        "volatility": 0.3557396903520804,
+        "turnover": 7.4732331180450196,
+        "observations": 118
+      },
+      "holdoutMetrics": {
+        "totalReturn": 0.1502099929070404,
+        "annualizedReturn": 0.3283941037140956,
+        "maxDrawdown": -0.23698736814836496,
+        "sharpe": 0.8685399679710697,
+        "volatility": 0.44390969898334226,
+        "turnover": 6.500519749928707,
+        "observations": 124
+      }
+    },
+    {
+      "name": "reversal_5",
+      "description": "5日短期反转",
+      "diagnostics": {
+        "meanIC": 0.03044289052979587,
+        "icIR": 2.4654248088298973,
+        "icPositiveRate": 0.5526838966202783,
+        "coverage": 0.669212786259542,
+        "icObservations": 503
+      },
+      "metrics": {
+        "totalReturn": -0.1303660742874606,
+        "annualizedReturn": -0.13078312059969632,
+        "maxDrawdown": -0.23403966150570232,
+        "sharpe": -0.3919471857147278,
+        "volatility": 0.2754850969107508,
+        "turnover": 78.78468924248068,
+        "observations": 242
+      },
+      "designMetrics": {
+        "totalReturn": 0.10361170468195824,
+        "annualizedReturn": 0.21746677802001968,
+        "maxDrawdown": -0.10773246500188383,
+        "sharpe": 0.8940749057700473,
+        "volatility": 0.2819483972534129,
+        "turnover": 42.72039717780751,
+        "observations": 118
+      },
+      "holdoutMetrics": {
+        "totalReturn": -0.2279601587711253,
+        "annualizedReturn": -0.4084353004401242,
+        "maxDrawdown": -0.2279601587711253,
+        "sharpe": -1.8436107402600765,
+        "volatility": 0.2677750637234791,
+        "turnover": 36.06429206467317,
+        "observations": 124
+      }
+    },
+    {
+      "name": "low_volatility_20",
+      "description": "20日低波动",
+      "diagnostics": {
+        "meanIC": 0.018376832375756956,
+        "icIR": 0.9866518960933071,
+        "icPositiveRate": 0.5079681274900398,
+        "coverage": 0.6678649809160305,
+        "icObservations": 502
+      },
+      "metrics": {
+        "totalReturn": -0.10028903764486274,
+        "annualizedReturn": -0.10061549970044226,
+        "maxDrawdown": -0.1558102064339536,
+        "sharpe": -0.9908534687807872,
+        "volatility": 0.10586404929676879,
+        "turnover": 18.042865449326786,
+        "observations": 242
+      },
+      "designMetrics": {
+        "totalReturn": -0.060215903337578425,
+        "annualizedReturn": -0.1165810243863179,
+        "maxDrawdown": -0.07356283741552128,
+        "sharpe": -1.3661911026208176,
+        "volatility": 0.09463281312294332,
+        "turnover": 10.856292121955121,
+        "observations": 118
+      },
+      "holdoutMetrics": {
+        "totalReturn": -0.041367871696238456,
+        "annualizedReturn": -0.0821561342049788,
+        "maxDrawdown": -0.11421891545069418,
+        "sharpe": -0.6863945521026448,
+        "volatility": 0.11629922073196021,
+        "turnover": 7.186573327371667,
+        "observations": 124
+      }
+    },
+    {
+      "name": "max_return_20",
+      "description": "低极端单日收益偏好",
+      "diagnostics": {
+        "meanIC": 0.02151586685755868,
+        "icIR": 1.3918907095708377,
+        "icPositiveRate": 0.5219123505976095,
+        "coverage": 0.6678649809160305,
+        "icObservations": 502
+      },
+      "metrics": {
+        "totalReturn": -0.12915923545245755,
+        "annualizedReturn": -0.12957271526331993,
+        "maxDrawdown": -0.16863726772418597,
+        "sharpe": -1.2282777036652366,
+        "volatility": 0.11255441489519039,
+        "turnover": 26.84595969234966,
+        "observations": 242
+      },
+      "designMetrics": {
+        "totalReturn": -0.03169742753986127,
+        "annualizedReturn": -0.062266345250472144,
+        "maxDrawdown": -0.05230147112897365,
+        "sharpe": -0.6703163759588796,
+        "volatility": 0.0965835102381422,
+        "turnover": 14.496943408534788,
+        "observations": 118
+      },
+      "holdoutMetrics": {
+        "totalReturn": -0.10219915482997377,
+        "annualizedReturn": -0.19648417078853675,
+        "maxDrawdown": -0.1442865084961682,
+        "sharpe": -1.6825895199615697,
+        "volatility": 0.1264854086159162,
+        "turnover": 12.34901628381487,
+        "observations": 124
+      }
+    },
+    {
+      "name": "amihud_20",
+      "description": "20日Amihud流动性代理",
+      "diagnostics": {
+        "meanIC": 0.0036403073562135064,
+        "icIR": 0.49879389688013653,
+        "icPositiveRate": 0.5258964143426295,
+        "coverage": 0.6621183206106871,
+        "icObservations": 502
+      },
+      "metrics": {
+        "totalReturn": 0.09262884393157012,
+        "annualizedReturn": 0.09296128545727544,
+        "maxDrawdown": -0.1491933540590955,
+        "sharpe": 0.48991503738498954,
+        "volatility": 0.25625181897556637,
+        "turnover": 11.127179521286092,
+        "observations": 242
+      },
+      "designMetrics": {
+        "totalReturn": 0.06008950334457519,
+        "annualizedReturn": 0.12352102950003063,
+        "maxDrawdown": -0.09030938038491854,
+        "sharpe": 0.6921240290004573,
+        "volatility": 0.21485089315902334,
+        "turnover": 5.898014782656843,
+        "observations": 118
+      },
+      "holdoutMetrics": {
+        "totalReturn": 0.020854471541755126,
+        "annualizedReturn": 0.04277141135376694,
+        "maxDrawdown": -0.1491933540590954,
+        "sharpe": 0.2906178012097307,
+        "volatility": 0.29172769690329425,
+        "turnover": 5.229164738629246,
+        "observations": 124
+      }
+    },
+    {
+      "name": "volume_trend_20",
+      "description": "短长成交量趋势",
+      "diagnostics": {
+        "meanIC": -0.009099992806982206,
+        "icIR": -0.9782429317295556,
+        "icPositiveRate": 0.4906832298136646,
+        "coverage": 0.6423974236641221,
+        "icObservations": 483
+      },
+      "metrics": {
+        "totalReturn": 0.25862592634142456,
+        "annualizedReturn": 0.2596205151210522,
+        "maxDrawdown": -0.14667810310635165,
+        "sharpe": 0.9642225236460379,
+        "volatility": 0.2943756299383998,
+        "turnover": 34.45791518959389,
+        "observations": 242
+      },
+      "designMetrics": {
+        "totalReturn": 0.2922883928579838,
+        "annualizedReturn": 0.6682552336223162,
+        "maxDrawdown": -0.10221012905281113,
+        "sharpe": 1.8435700886819097,
+        "volatility": 0.32907434340309083,
+        "turnover": 18.863996588474098,
+        "observations": 118
+      },
+      "holdoutMetrics": {
+        "totalReturn": -0.03443161951468443,
+        "annualizedReturn": -0.06863000459583257,
+        "maxDrawdown": -0.12528085522271437,
+        "sharpe": -0.15004704721320133,
+        "volatility": 0.2580268056924393,
+        "turnover": 15.593918601119789,
+        "observations": 124
+      }
+    },
+    {
+      "name": "breakout_252",
+      "description": "距252日高点",
+      "diagnostics": {
+        "meanIC": -0.004970361044184306,
+        "icIR": -0.4640722094526321,
+        "icPositiveRate": 0.5129151291512916,
+        "coverage": 0.3611020992366412,
+        "icObservations": 271
+      },
+      "metrics": {
+        "totalReturn": 0.20111616252517184,
+        "annualizedReturn": 0.2018722590933577,
+        "maxDrawdown": -0.24115543103372106,
+        "sharpe": 0.7506754918524406,
+        "volatility": 0.32640639377859665,
+        "turnover": 50.21154844499921,
+        "observations": 242
+      },
+      "designMetrics": {
+        "totalReturn": 0.214924572678588,
+        "annualizedReturn": 0.4748644872249186,
+        "maxDrawdown": -0.1391624333857534,
+        "sharpe": 1.4540601208026398,
+        "volatility": 0.3246648249414501,
+        "turnover": 28.063267547506364,
+        "observations": 118
+      },
+      "holdoutMetrics": {
+        "totalReturn": -0.014799357711613892,
+        "annualizedReturn": -0.02980170006390248,
+        "maxDrawdown": -0.24115543103372095,
+        "sharpe": 0.072391325327335,
+        "volatility": 0.33009234622786626,
+        "turnover": 22.148280897492846,
+        "observations": 124
+      }
+    },
+    {
+      "name": "price_to_ma_120",
+      "description": "价格相对120日均线",
+      "diagnostics": {
+        "meanIC": -0.018309880323035387,
+        "icIR": -1.282431104551085,
+        "icPositiveRate": 0.46898263027295284,
+        "coverage": 0.5361545801526717,
+        "icObservations": 403
+      },
+      "metrics": {
+        "totalReturn": 0.44934167476453757,
+        "annualizedReturn": 0.45118991394053265,
+        "maxDrawdown": -0.28113720370377937,
+        "sharpe": 1.0753797425176808,
+        "volatility": 0.4603389902265686,
+        "turnover": 22.89526117848535,
+        "observations": 242
+      },
+      "designMetrics": {
+        "totalReturn": 0.2899100580535685,
+        "annualizedReturn": 0.6621328999682341,
+        "maxDrawdown": -0.13997771155692507,
+        "sharpe": 1.4464772237967742,
+        "volatility": 0.44925477434916766,
+        "turnover": 13.233312508367835,
+        "observations": 118
+      },
+      "holdoutMetrics": {
+        "totalReturn": 0.108160673595048,
+        "annualizedReturn": 0.2317040821588887,
+        "maxDrawdown": -0.28113720370377937,
+        "sharpe": 0.6823316133213119,
+        "volatility": 0.473779701447131,
+        "turnover": 9.661948670117512,
+        "observations": 124
+      }
+    },
+    {
+      "name": "equal_composite",
+      "description": "等权标准化复合因子",
+      "diagnostics": {
+        "meanIC": 0.009940434281961757,
+        "icIR": 0.8413286708167987,
+        "icPositiveRate": 0.536779324055666,
+        "coverage": 0.669212786259542,
+        "icObservations": 503
+      },
+      "metrics": {
+        "totalReturn": 0.3718684042612104,
+        "annualizedReturn": 0.3733587344258875,
+        "maxDrawdown": -0.26231746815894497,
+        "sharpe": 1.0144792533229898,
+        "volatility": 0.40914308040307,
+        "turnover": 37.558847295419596,
+        "observations": 242
+      },
+      "designMetrics": {
+        "totalReturn": 0.3392917265758424,
+        "annualizedReturn": 0.7915560163386659,
+        "maxDrawdown": -0.11069160428208458,
+        "sharpe": 1.8149163566779287,
+        "volatility": 0.38887997206401975,
+        "turnover": 21.49577526648385,
+        "observations": 118
+      },
+      "holdoutMetrics": {
+        "totalReturn": 0.010514854980976596,
+        "annualizedReturn": 0.02145185130180627,
+        "maxDrawdown": -0.26231746815894486,
+        "sharpe": 0.26516549983032167,
+        "volatility": 0.42957491979067275,
+        "turnover": 16.06307202893575,
+        "observations": 124
+      }
+    }
+  ],
+  "gates": [
+    {
+      "name": "未来函数",
+      "status": "partial",
+      "note": "因子只读取前一收盘及更早数据并在次日开盘执行；复权因子的点时可得性仍需外部核验。"
+    },
+    {
+      "name": "幸存者偏差",
+      "status": "fail",
+      "note": "当前配置使用当前CSI800成份股快照；必须接入历史成份区间表后才能升级证据。"
+    },
+    {
+      "name": "交易摩擦",
+      "status": "partial",
+      "note": "买卖成本为15/20bps，并近似模拟一字涨跌停；最低佣金与冲击函数未建模。"
+    },
+    {
+      "name": "样本外",
+      "status": "partial",
+      "note": "提供设计窗/后半窗拆分，但该单年区间不等于多周期滚动样本外。"
+    },
+    {
+      "name": "因子覆盖",
+      "status": "partial",
+      "note": "当前实现10个OHLCV因子和等权复合；324因子目录中财务/事件/分析师因子需点时数据适配器。"
+    },
+    {
+      "name": "实盘",
+      "status": "fail",
+      "note": "没有模拟盘前向记录，也没有用户资金期限和最大回撤约束；禁止直接转为下单。"
+    }
+  ]
+}

@@ -39,6 +39,8 @@ next-env.d.ts
 
 # local quantitative-research artifacts
 /.venv/
+/*.egg-info/
 /research/data/
 /research/source/
 /research/output/
+/research/demo/

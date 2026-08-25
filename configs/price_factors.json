@@ -1,0 +1,35 @@
+{
+  "experiment_id": "QF-CSI800-DAILY-01",
+  "data_path": "research/data/csi800_ohlcv.parquet",
+  "membership_path": "research/data/csi800_membership_snapshot.csv",
+  "benchmark_symbol": "000001.SS",
+  "start": "2025-08-25",
+  "end": "2026-08-24",
+  "design_end": "2026-02-24",
+  "factors": [
+    "momentum_20_5",
+    "momentum_60_5",
+    "momentum_252_21",
+    "reversal_5",
+    "low_volatility_20",
+    "max_return_20",
+    "amihud_20",
+    "volume_trend_20",
+    "breakout_252",
+    "price_to_ma_120"
+  ],
+  "include_composite": true,
+  "rebalance_days": 5,
+  "top_quantile": 0.1,
+  "quantiles": 5,
+  "liquidity_floor_pct": 0.3,
+  "winsor_mad": 5.0,
+  "buy_cost_bps": 15.0,
+  "sell_cost_bps": 20.0,
+  "market_regime_days": 200,
+  "simulate_locked_limits": true,
+  "limit_pct": 0.095,
+  "output_dir": "research/output/factor_engine",
+  "app_output": "app/data/factor_backtest.json"
+}
+

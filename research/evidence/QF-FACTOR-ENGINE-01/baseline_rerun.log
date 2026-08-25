@@ -1,0 +1,56 @@
+tested 200/1116
+tested 400/1116
+tested 600/1116
+tested 800/1116
+tested 1000/1116
+{
+  "tested": 1116,
+  "oracle": {
+    "config": "risk_adjusted_momentum-L20-S5-R20-N1-equal-M0",
+    "totalReturn": 2.7587584581380935,
+    "annualizedReturn": 2.775888478261729,
+    "maxDrawdown": -0.5325930178501539,
+    "sharpe": 1.99787990689688,
+    "volatility": 0.888891454363878,
+    "turnover": 25.0,
+    "rebalanceCount": 13,
+    "designReturn": 0.9294127067880562,
+    "holdoutReturn": 0.9043342730314006,
+    "holdoutDrawdown": -0.5325930178501539
+  },
+  "designPick": {
+    "config": "momentum-L20-S5-R20-N1-equal-M200",
+    "totalReturn": 1.4296815239455243,
+    "annualizedReturn": 1.4371000190596757,
+    "maxDrawdown": -0.4572891186008782,
+    "sharpe": 1.4450608100350617,
+    "volatility": 0.9394246881765486,
+    "turnover": 22.0,
+    "rebalanceCount": 12,
+    "designReturn": 1.6857711416044006,
+    "holdoutReturn": -0.0848776446062478,
+    "holdoutDrawdown": -0.4572891186008782
+  },
+  "robustPick": {
+    "config": "momentum-L252-S1-R5-N3-equal-M200",
+    "totalReturn": 1.4348055498499015,
+    "annualizedReturn": 1.4422573586749206,
+    "maxDrawdown": -0.3540203837587267,
+    "sharpe": 1.7888473403285876,
+    "volatility": 0.6329226859880629,
+    "turnover": 16.666666666666664,
+    "rebalanceCount": 23,
+    "designReturn": 0.048345313235196974,
+    "holdoutReturn": 1.1939352021427534,
+    "holdoutDrawdown": -0.24825251811694138
+  },
+  "benchmark": {
+    "totalReturn": -0.0004001365430591486,
+    "annualizedReturn": -0.00040151036243707416,
+    "maxDrawdown": -0.11276574048828691,
+    "sharpe": 0.07075735026443328,
+    "volatility": 0.14724306596261652,
+    "turnover": 0.0,
+    "rebalanceCount": 0
+  }
+}

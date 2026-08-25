@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import factorsJson from "./data/factors.json";
 import backtestJson from "./data/backtest.json";
+import factorBacktestJson from "./data/factor_backtest.json";
 
 type Factor = {
   id: string;
@@ -27,6 +28,7 @@ type Strategy = (typeof backtestJson.strategies)[number];
 
 const factors = factorsJson as Factor[];
 const backtest = backtestJson;
+const factorBacktest = factorBacktestJson;
 
 const strategyAtlas = [
   ["截面动量", "买强、避弱", "趋势拥挤后急反转", "月度→周度稳定性"],
@@ -208,7 +210,7 @@ export default function Home() {
       <nav className="nav-shell">
         <a className="brand" href="#top"><span className="brand-mark">Q</span><span>Q-FORGE</span></a>
         <div className="nav-links">
-          <a href="#backtest">回测</a><a href="#factors">因子库</a><a href="#strategies">策略图谱</a><a href="#audit">风险审计</a>
+          <a href="#backtest">回测</a><a href="#engine">本地引擎</a><a href="#factors">因子库</a><a href="#audit">风险审计</a>
         </div>
         <div className="status-chip"><span /> DRAFT · 不接实盘</div>
       </nav>
@@ -298,9 +300,51 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="section-shell engine-section" id="engine">
+        <div className="section-heading split-heading">
+          <div><span className="section-kicker">02 / LOCAL FACTOR ENGINE</span><h2>不是结果截图，<br />是可运行代码库。</h2></div>
+          <p>统一完成数据校验、因子计算、横截面清洗、IC 与五分组、Top 组合、交易摩擦、设计窗/后半窗和本地报告；新增因子只需注册一个纯函数。</p>
+        </div>
+
+        <div className="engine-overview">
+          <div className="pipeline-map">
+            {[["01", "DATA", "长表 OHLCV / 成份区间"], ["02", "FACTOR", "纯函数注册表 / 滞后信号"], ["03", "CROSS-SECTION", "流动性 / MAD / Z-score"], ["04", "EVIDENCE", "IC / 分层 / 组合净值"], ["05", "REPORT", "JSON / CSV / HTML"]].map((item) => (
+              <div key={item[0]}><span>{item[0]}</span><b>{item[1]}</b><p>{item[2]}</p></div>
+            ))}
+          </div>
+          <div className="run-card">
+            <div><span>LOCAL RUN</span><em>Python 3.11+</em></div>
+            <pre><code>{`python3 -m venv .venv
+.venv/bin/pip install -e '.[test,data]'
+.venv/bin/qforge demo
+.venv/bin/qforge run \\
+  --config configs/price_factors.json`}</code></pre>
+            <p>演示命令不联网；真实命令读取本地 Parquet，并生成独立 HTML、JSON 与 CSV。</p>
+          </div>
+        </div>
+
+        <div className="engine-stats">
+          <div><small>可执行因子/复合</small><strong>{factorBacktest.factorCount}</strong><p>10 个 OHLCV + 1 个等权复合</p></div>
+          <div><small>真实股票</small><strong>{factorBacktest.dataAudit.symbols}</strong><p>{factorBacktest.dataAudit.dates} 个交易日数据</p></div>
+          <div><small>语义测试</small><strong>7/7</strong><p>含未来数据扰动反证</p></div>
+          <div><small>报告格式</small><strong>3</strong><p>HTML · JSON · CSV</p></div>
+        </div>
+
+        <div className="engine-table-wrap">
+          <div className="engine-table-head"><div><span className="section-kicker">REAL RUN / {factorBacktest.experimentId}</span><h3>当前可计算因子结果</h3></div><p>按组合净收益排序；Mean IC 与组合收益可能因市场状态过滤、持仓尾部和成本产生分歧。</p></div>
+          <table className="result-table engine-table">
+            <thead><tr><th>因子</th><th>Mean IC</th><th>ICIR</th><th>组合净收益</th><th>最大回撤</th><th>Sharpe</th></tr></thead>
+            <tbody>{factorBacktest.ranking.slice(0, 7).map((item) => (
+              <tr key={item.factor}><td><b>{item.factor}</b></td><td className={item.meanIC < 0 ? "loss" : ""}>{number(item.meanIC, 3)}</td><td className={item.icIR < 0 ? "loss" : ""}>{number(item.icIR, 2)}</td><td>{pct(item.totalReturn)}</td><td className="loss">{pct(item.maxDrawdown)}</td><td>{number(item.sharpe)}</td></tr>
+            ))}</tbody>
+          </table>
+          <div className="engine-verdict"><span>ENGINE VERDICT</span><b>代码闭环已通过；研究证据仍是 DRAFT。</b><p>当前最佳通用因子组合收益为 {pct(factorBacktest.ranking[0].totalReturn)}，低于专项参数搜索的 +143.5%；这正是防止把“搜参上界”误当成“稳定因子能力”的必要分离。</p></div>
+        </div>
+      </section>
+
       <section className="section-shell factor-section" id="factors">
         <div className="section-heading split-heading">
-          <div><span className="section-kicker">02 / FACTOR LIBRARY</span><h2>{factors.length} 个因子，<br />先分清数据债。</h2></div>
+          <div><span className="section-kicker">03 / FACTOR LIBRARY</span><h2>{factors.length} 个因子，<br />先分清数据债。</h2></div>
           <p>这里不是一张“都能赚钱”的清单。每个条目保留原始证据等级、数据类型，以及迁移到 A/H 股时最先遇到的口径障碍。</p>
         </div>
 
@@ -334,7 +378,7 @@ export default function Home() {
 
       <section className="section-shell strategy-section" id="strategies">
         <div className="section-heading split-heading">
-          <div><span className="section-kicker">03 / STRATEGY ATLAS</span><h2>12 条母路径，<br />每条都有死法。</h2></div>
+          <div><span className="section-kicker">04 / STRATEGY ATLAS</span><h2>12 条母路径，<br />每条都有死法。</h2></div>
           <p>INTP 不问“它看起来聪明吗”，先问“什么情形会让它失效”；INTJ 则把最便宜的反证实验放进下一轮队列。</p>
         </div>
         <div className="atlas-grid">{strategyAtlas.map((item, index) => (
@@ -344,7 +388,7 @@ export default function Home() {
 
       <section className="section-shell audit-section" id="audit">
         <div className="section-heading split-heading">
-          <div><span className="section-kicker">04 / EVIDENCE GATES</span><h2>收益达标，<br />可信度不达标。</h2></div>
+          <div><span className="section-kicker">05 / EVIDENCE GATES</span><h2>收益达标，<br />可信度不达标。</h2></div>
           <div className="audit-verdict"><span>VERDICT</span><b>DRAFT</b><p>{failedGates} fail · {backtest.gates.length - failedGates} partial · 0 pass</p></div>
         </div>
         <div className="gate-grid">{backtest.gates.map((gate, index) => (
@@ -371,7 +415,7 @@ export default function Home() {
       </section>
 
       <section className="section-shell source-section">
-        <div className="section-heading"><span className="section-kicker">05 / PROVENANCE</span><h2>能定位，才能反驳。</h2></div>
+        <div className="section-heading"><span className="section-kicker">06 / PROVENANCE</span><h2>能定位，才能反驳。</h2></div>
         <div className="source-list">{sources.map((source, index) => <a key={source[0]} href={source[2]} target="_blank" rel="noreferrer"><span>0{index + 1}</span><div><small>{source[0]}</small><b>{source[1]}</b></div><i>↗</i></a>)}</div>
       </section>
 
