@@ -84,6 +84,8 @@ successor_goal:
       - npm run build
   candidate:
     location: qforge/minute
+    state: active
+    admitted_code_identity: e01960de2e0d7c9235482579f97b921678a76c8a
     allowed_files:
       - qforge/minute/**
       - qforge/cli.py
@@ -113,6 +115,13 @@ successor_goal:
       local_checks: authorized by user request
       external_data_download: BaoStock anonymous historical data authorized by user request
       live_order_routing: forbidden without a separate explicit authorization and broker account scope
+    results:
+      structure: pass, 0 findings, 1968 package lines
+      semantics: 13 passed including retained daily tests
+      data: 116160 real BaoStock 5-minute bars, 10 symbols, 242 trading days
+      paper_replay: succeeded with 1125 orders and 1124 fills
+      scientific_verdict: close-strength candidate falsified at -36.96 percent net return and -46.46 percent max drawdown
+      continuity: daily factor engine and local site build passed
   cutover:
     criteria:
       - local schema and idempotent upsert tests pass
@@ -120,10 +129,15 @@ successor_goal:
       - real BaoStock 5-minute pilot is stored and replayed with recoverable evidence
       - daily baseline and local website remain runnable
     rollback_target: f710badb1e32d2acac576a8fda981bb67f6dc08f
+    promoted_entrypoints:
+      - qforge minute init
+      - qforge minute download
+      - qforge minute backtest
+      - qforge minute status
   artifact_policy:
     allow: [source, configs, database schema, logs, metrics, reports, small manifests]
     deny: [credentials, broker tokens, live orders, large raw database commits]
-  status: candidate
+  status: active
 ```
 
 ## Local quick start
@@ -164,6 +178,28 @@ Input data must contain `date, symbol, open, high, low, close, volume`. To add a
 factor, implement a pure `MarketPanel -> DataFrame` function and register one
 `FactorSpec` in `qforge/factors.py`; all diagnostics and reports then run without
 adding another experiment script.
+
+## Minute local system
+
+The minute pipeline is local-only and never routes an order to a broker:
+
+```bash
+.venv/bin/qforge minute init --config configs/minute_5m.json
+.venv/bin/qforge minute download --config configs/minute_5m.json
+.venv/bin/qforge minute backtest --config configs/minute_5m.json
+.venv/bin/qforge minute status --config configs/minute_5m.json
+```
+
+- Market database: `research/data/qforge_minute.sqlite` (ignored by Git).
+- Source: BaoStock unadjusted 5-minute OHLCV, fixed ten-symbol pilot.
+- Coverage: 116,160 bars from 2025-08-25 through 2026-08-24.
+- Ledger: local signals, orders, fills, T+1 positions and equity snapshots.
+- Execution: completed 14:50 bar signal, next 14:55 bar open, 100-share
+  board lots, T+1, minimum commission, sell stamp duty, transfer fee, slippage
+  and five-percent bar-volume participation.
+- First scientific verdict: the daily close-strength rotation is falsified in
+  this pilot (`-36.96%` total return, `-46.46%` maximum drawdown). The engine is
+  admitted; the strategy is not promoted.
 
 ## AH-01 baseline
 
