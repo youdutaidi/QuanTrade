@@ -9,6 +9,7 @@ from pathlib import Path
 from .config import BacktestConfig
 from .actions.cli import register_action_commands, run_action_command
 from .demo import create_demo
+from .delivery.cli import register_delivery_commands, run_delivery_command
 from .factors import factor_catalog
 from .marketdata.cli import register_market_commands, run_market_command
 from .minute.cli import register_minute_commands, run_minute_command
@@ -29,6 +30,7 @@ def parser() -> argparse.ArgumentParser:
     register_market_commands(commands)
     register_walkforward_commands(commands)
     register_action_commands(commands)
+    register_delivery_commands(commands)
     return root
 
 
@@ -43,6 +45,8 @@ def main(argv: list[str] | None = None) -> int:
         return run_walkforward_command(args, root)
     if args.command == "actions":
         return run_action_command(args, root)
+    if args.command == "archive":
+        return run_delivery_command(args, root)
     if args.command == "catalog":
         _print_catalog(args.json)
         return 0

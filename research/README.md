@@ -13,11 +13,34 @@
 - Inspect and preserve remote history; no force push or replacement of unrelated
   remote files. Code uses normal Git; database bundles may use the same repo's
   Releases because regular Git rejects individual files over 100 MiB.
-- Upload remains pending. Verify remote commit identity and downloaded asset
-  hashes/restore integrity before reporting delivery complete.
+- Data upload remains pending. Verify remote commit identity and downloaded
+  asset hashes/restore integrity before reporting delivery complete.
 - Read-only remote check on 2026-08-26: repository is private, empty and the
   current account has ADMIN permission; SSH access succeeds. Local `origin`
-  points to the requested repository. No code or data has been pushed yet.
+  points to the requested repository. The first normal Git push of `main`
+  succeeded at `21c816f89c7c42a2192bc6799452c985aa8cd003`; the remote
+  `refs/heads/main` was read back and matches exactly.
+- Delivery preparation D1 (non-empirical infrastructure, baseline `21c816f`):
+  add bounded local snapshot, integrity verification and non-overwriting restore
+  utilities. Allowed files: `qforge/delivery/**`, `qforge/cli.py`,
+  `tests/test_delivery_*.py`, root `README.md`, this canonical record, and
+  `research/evidence/DELIVERY-01/**`; generated bundles stay under the ignored
+  `research/output/delivery/` tree or another explicitly excluded destination.
+  The fixed source allowlist is `research/data`, `research/source`,
+  `research/output` excluding `delivery`, `research/demo`, and `research/evidence`.
+  Capture SQLite via online backup, not a bare live-file copy; exclude transient
+  WAL/SHM, lock files, credentials and dependency caches. Preserve all source data.
+- D1 cheapest falsifier: retain committed WAL rows, detect a changed byte,
+  reject archive path traversal and refuse overwrite of a nonempty restore target.
+  Run all retained tests and the structure gate before a real archive attempt.
+  First release will be explicitly an in-progress snapshot, not completed data
+  or a verified strategy. It must be downloaded and restored into a new directory
+  before publication. No second source session or strategy parameter change.
+- D1 preparation is structure- and semantics-admitted: 154 retained/new tests
+  passed, including inner-member corruption with an updated outer hash; zero
+  structural findings. A dirty code/config/test tree refused capture with exit 2.
+  Evidence: `research/evidence/DELIVERY-01/D1/`. Real capture and remote asset
+  round-trip remain pending; no remote data asset is claimed yet.
 
 ## Code-evolution record
 

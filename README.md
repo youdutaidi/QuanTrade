@@ -78,6 +78,24 @@ python3 -m venv .venv
 在上传并回读验证前，不能仅凭这段说明认定数据已在远程可用。
 本地数据库不会因上传而删除。
 
+备份与恢复入口如下。输出目录必须是新的；恢复不会覆盖现有数据。
+下载 Release 附件后，从 `delivery.json` 读取对应的 SHA256：
+
+```bash
+.venv/bin/qforge archive create --label in-progress \
+  --output research/output/delivery/my-snapshot
+
+.venv/bin/qforge archive verify --bundle /path/to/quant-data.tar.gz \
+  --sha256 YOUR_SHA256
+.venv/bin/qforge archive restore --bundle /path/to/quant-data.tar.gz \
+  --sha256 YOUR_SHA256 --output /path/to/new-restored-directory
+```
+
+新目录内保留 `research/data` 等相对路径。先核对恢复报告，再在停止本地
+下载进程后使用这些数据库；不要覆盖正在写入的库，也不要单独复制 WAL。
+下载中的快照会保留当时的检查点，不能当作全量数据已验收。代码提交号、
+逐文件校验值和每个数据库的表行数记录在附件清单中。
+
 研究价格序列可用于信号计算，但不是现金和股份的经济总回报账本。
 未来可得信息、交易费用、停牌/涨跌停、公司行动、重复试验偏差、独立
 重放和实际前向模拟盘均需分别验证。历史回测不保证未来表现。
