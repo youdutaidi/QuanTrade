@@ -278,6 +278,7 @@ data_goal:
         evidence: research/evidence/QF-DATA-EXPANSION-01/A6
         source_job: A5 continues under 77ce68f; A6 changes only reference comparison and presentation, not network downloads
         result: structure-admitted and semantics-admitted; 50 tests passed; 5 exact snapshots and 2 explicit pass_boundary snapshots; local build and HTTP 200 passed
+        real_panel_smoke: 40 deterministic available symbols and 51906 rows transformed with finite tradable OHLC and prefix invariance; this is not a strategy backtest or corporate-action P&L validation
         next_action: let the A5 single downloader finish, then rerun complete under the A6 audit; do not start a second BaoStock session
   cutover:
     criteria:
