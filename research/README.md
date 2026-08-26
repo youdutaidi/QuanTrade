@@ -435,6 +435,22 @@ data_goal:
         source_gaps: all nine pilot events have ambiguous source after-tax expressions and blank reserve/listing fields; these remain unresolved, not defaulted to zero or a chosen tax rate
         bulk_capture_admission: proceed with the remaining 34466 lifecycle-year tasks under 480dcac, one source session, 200 requests per batch, two-second batch pause, 90-second request deadline and at most three attempts per task; inspect early progress and stop on repeated identity or schema errors
         bulk_claim_boundary: collection is permitted despite source economic ambiguities because raw bytes and nulls are preserved; capture completion is not economic-ledger or strategy admission
+      - id: QF-DATA-EXPANSION-01-A12
+        decision: add a read-only, single-snapshot audit of annual action coverage and every archived raw response before any economic-ledger consumer can trust the capture
+        baseline: 6c28760
+        owner_session: /root
+        scientific_choice_axis: unchanged source plan and strategy; admission evidence for the existing raw archive only
+        write_surface: qforge/actions/audit.py, qforge/actions/cli.py, tests/test_actions_audit.py, research/README.md, research/evidence/QF-DATA-EXPANSION-01/A12/**
+        running_baseline: A11 continues in its already-loaded 480dcac adapter; do not modify provider, service, store, normalization, session lock, task scope or source data while it runs
+        hypothesis: exact planned task coverage, request ownership, source input identity, raw hashes, row identities and derived-row consistency can be checked from one SQLite read transaction without conflating source ambiguities with certified economic events
+        cheapest_falsifier: deleting a planned task, changing raw bytes, attaching a wrong successful request, changing current derived values or committing a second-connection update during audit must not yield a false complete or mixed-snapshot verdict
+        admission: retain all 171 tests; run structure gate and new adversarial fixtures before a read-only real archive audit; no new source session
+        outcomes: missing tasks stay incomplete; corrupted provenance is protocol-invalid; source blanks and ambiguous tax values remain explicit unresolved counts; only complete valid raw capture may pass its own gate
+        cutover: expose actions audit only after retained semantics and structure pass; rollback target 6c28760; old capture and status entrypoints remain usable
+        claim_boundary: same-source archival consistency only; legacy projections are retained and re-normalized from checked raw bytes, not rewritten; no economic cash/share, rights, investor-tax or strategy certification
+        state: structure-admitted and semantics-admitted; 186 retained/new tests pass, zero structural findings; admitted for a read-only real capture audit
+        retained_mapping: all 171 baseline tests unchanged; 15 additive audit cases cover empty/pending years, missing tasks, raw/count/ownership/attempt/projection/provenance defects, legacy preservation, concurrent WAL snapshot and immutable output
+        structure: maximum function 40 lines, class 249, module 325, workflow script 31; 6291 package lines, 89 script lines, ratio 0.0141; no layer/private-import/duplicate findings
   cutover:
     criteria:
       - SQLite schema, idempotent upserts, checkpoint resume, and source normalization tests pass
