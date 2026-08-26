@@ -13,7 +13,8 @@ from .store import ActionStore
 from .terms import resolve_source_group
 
 
-def preview_action_terms(path: str | Path, plan: dict, daily_input: dict, start: str, end: str) -> dict:
+def preview_action_terms(path: str | Path, plan: dict, daily_input: dict, start: str, end: str,
+                         include_unresolved: bool = False) -> dict:
     if any(date.fromisoformat(value).isoformat() != value for value in (start, end)):
         raise ValueError("noncanonical preview date")
     if not plan["start"] <= start <= end <= plan["end"]:
@@ -24,7 +25,7 @@ def preview_action_terms(path: str | Path, plan: dict, daily_input: dict, start:
         if not audit["archiveIntegrityPass"]:
             raise ValueError("action source archive failed integrity admission")
         groups, unlocated = _source_groups(connection, start, end)
-        resolution = _summarize(groups)
+        resolution = _summarize(groups, include_unresolved)
     return {"state": "gross-terms-preview-only", "start": start, "end": end, "archive": audit,
             **resolution, "unlocatedSourceRows": unlocated, "ledgerReady": False, "investorTaxVerified": False,
             "claim": "same-source gross term interpretation only; no tax, fractional allocation, rights or P&L admission"}
@@ -47,8 +48,9 @@ def _source_groups(connection, start: str, end: str) -> tuple[dict, int]:
     return groups, unlocated
 
 
-def _summarize(groups: dict) -> dict:
+def _summarize(groups: dict, include_unresolved: bool) -> dict:
     counts, reasons, examples = Counter(), Counter(), []
+    unresolved = []
     fingerprint = hashlib.sha256()
     for (code, ex_date), records in sorted(groups.items()):
         result = resolve_source_group([record["raw"] for record in records])
@@ -61,6 +63,8 @@ def _summarize(groups: dict) -> dict:
         if result["state"] == "unresolved":
             reason = result["reason"]
             reasons[reason] += 1
+            if include_unresolved:
+                unresolved.append({**witness, "records": records})
             if reasons[reason] <= 2 and len(examples) < 30:
                 examples.append(witness)
         elif len(records) > 1 and counts["resolvedMultipleRowGroups"] < 5:
@@ -68,4 +72,5 @@ def _summarize(groups: dict) -> dict:
         if len(records) > 1 and result["state"] != "unresolved":
             counts["resolvedMultipleRowGroups"] += 1
     return {"counts": dict(counts), "unresolvedReasons": dict(reasons), "examples": examples,
-            "groupIndexSha256": fingerprint.hexdigest(), "resolutionVersion": 1}
+            "groupIndexSha256": fingerprint.hexdigest(), "resolutionVersion": 2,
+            **({"unresolvedGroups": unresolved} if include_unresolved else {})}

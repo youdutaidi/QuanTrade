@@ -492,6 +492,23 @@ data_goal:
         unresolved: 161 gross-cash disagreements, one reserve-share disagreement, 14 unsupported complete descriptions, 18 conflicting duplicate fields and one missing cash payment date; these are not zero-filled or sent to the account
         verdict: supported for conservative source interpretation and duplicate safeguards; economic admission remains incomplete
         diagnostic_A5: retain two issuer PDF originals, extracted text and source metadata in an immutable evidence-local SQLite archive under A13/primary; no source corrections, tax choice or economic account writes; compare PDF cash/share/reference terms with the flagged raw rows and preserve discrepant source values
+      - id: QF-DATA-EXPANSION-01-A14
+        decision: resolve the observed order-only description parsing defect and expose every unresolved development event with its checked raw provenance for issuer reconciliation
+        baseline: d25005daf14eec51187da6fa99a74c39add9e4ba
+        owner_session: /root
+        scientific_choice_axis: unchanged source economics and candidate grid; representation and diagnostic completeness only
+        write_surface: qforge/actions/terms.py, qforge/actions/terms_preview.py, qforge/actions/cli.py, tests/test_actions_terms.py, tests/test_actions_terms_preview.py, research/README.md, research/evidence/QF-DATA-EXPANSION-01/A14/**
+        running_baseline: A11 provider, store, normalization, service, task scope and source session remain unchanged
+        hypothesis: unique explicitly named cash/bonus/reserve legs retain identical per-ten-share meaning when their textual order changes; each unresolved event can be exported with all raw rows and source hashes from the same audited read snapshot
+        counterexample: A13 rejected the real descriptions 10转1送2派0.4元 and 10转1.5送0.5派0.2元 solely because reserve precedes bonus
+        cheapest_falsifier: leg permutations must match exactly, repeated or incomplete legs must fail, substantive and tiny numeric disagreements must still fail, and optional complete unresolved export must exclude out-of-window actions and match summary counts
+        preserved_policy: no tolerance widening, no conflicting-field merge, no tax branch, no source override or integer-share rounding; all ledgerReady flags remain false
+        admission: preserve all 237 prior tests and pass scoped structure before a new read-only real development preview; source integrity failure stops interpretation
+        command: qforge actions terms --config configs/corporate_actions.json --start 2020-08-25 --end 2025-08-24 --include-unresolved --output research/evidence/QF-DATA-EXPANSION-01/A14/real-triage-A2.json
+        cutover: retain existing summary-only command behavior by default; opt-in raw diagnostics add no account consumer; rollback target d25005d
+        state: structure-admitted and semantics-admitted; 252 tests pass, retaining all 237 prior cases; real development triage is admitted
+        retained_mapping: 15 additive cases cover all six named-leg permutations, duplicate and incomplete legs, observed reverse-order forms, unchanged strict numeric conflict refusal, and complete provenance-linked diagnostics with out-of-window exclusion
+        structure: no findings; maximum function/class/module/workflow-script 40/249/325/31 lines; 6599 package lines, 89 script lines, ratio 0.0135; no new mutable state owner or account consumer
   cutover:
     criteria:
       - SQLite schema, idempotent upserts, checkpoint resume, and source normalization tests pass

@@ -1,4 +1,5 @@
 import argparse
+import hashlib
 import json
 
 import pandas as pd
@@ -117,3 +118,25 @@ def test_terms_cli_report_is_immutable(tmp_path, monkeypatch):
     assert json.loads(before)["state"] == "gross-terms-preview-only"
     assert run_action_command(args, tmp_path) == 2
     assert (tmp_path / "terms.json").read_bytes() == before
+
+
+def test_opt_in_exports_all_unresolved_raw_groups_but_no_out_of_window_rows(tmp_path):
+    conflict = cash_row(dividPlanDate="2025-05-01", dividRegistDate="2025-05-08", dividOperateDate="2025-05-09",
+                        dividPayDate="2025-05-09", dividCashPsBeforeTax="0.7")
+    future = {**conflict, "dividOperateDate": "2025-09-09"}
+    store, plan, daily = make_archive(tmp_path, extra_rows=[conflict, future])
+    ordinary = preview_action_terms(store.path, plan, daily, "2020-08-25", "2025-08-24")
+    assert "unresolvedGroups" not in ordinary
+    detailed = preview_action_terms(store.path, plan, daily, "2020-08-25", "2025-08-24", include_unresolved=True)
+    assert detailed["counts"] == ordinary["counts"]
+    assert detailed["groupIndexSha256"] == ordinary["groupIndexSha256"]
+    assert len(detailed["unresolvedGroups"]) == detailed["counts"]["unresolved"] == 1
+    item = detailed["unresolvedGroups"][0]
+    assert item["exDate"] == "2025-05-09" and item["ledgerReady"] is False
+    assert item["records"][0]["raw"] == conflict
+    with store.connect(readonly=True) as conn:
+        for record in item["records"]:
+            source = record["source"]
+            raw = conn.execute("SELECT raw_json FROM action_requests WHERE request_id=?", (source["requestId"],)).fetchone()[0]
+            assert hashlib.sha256(raw.encode()).hexdigest() == source["rawSha256"]
+            assert json.loads(raw)["rows"][source["rowIndex"]] == record["raw"]

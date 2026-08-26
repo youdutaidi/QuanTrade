@@ -1,4 +1,5 @@
 from decimal import Decimal
+from itertools import permutations
 
 import pytest
 
@@ -99,3 +100,35 @@ def test_decimal_plan_preserves_small_and_fractional_rates():
 @pytest.mark.parametrize("rows", [[], [{"code": "sh.600000"}, {}], [{"code": None}]])
 def test_invalid_group_schema_does_not_emit_terms(rows):
     assert resolve_source_group(rows)["state"] == "unresolved"
+
+
+@pytest.mark.parametrize("legs", list(permutations(("送2股", "转增1股", "派0.4元"))))
+def test_named_leg_order_does_not_change_economics(legs):
+    actual = parse_complete_plan("10" + "".join(legs) + "（含税）")
+    expected = parse_complete_plan("10送2转1派0.4元（含税）")
+    assert actual == expected
+
+
+@pytest.mark.parametrize("description", ["10送1送2派6元", "10转1转增2派6元", "10派3元派3元",
+                                         "10转1送2派0.4", "10转1元送2派0.4元"])
+def test_repeated_or_incomplete_named_legs_are_not_merged(description):
+    assert resolve_source_group([cash_row(dividCashStock=description)])["state"] == "unresolved"
+
+
+@pytest.mark.parametrize("description,bonus,reserve", [("10转1送2派0.4元（含税）", "0.2", "0.1"),
+                                                     ("10转1.5送0.5派0.4元（含税）", "0.05", "0.15")])
+def test_observed_reserve_before_bonus_form_has_explicit_matching_legs(description, bonus, reserve):
+    row = cash_row(dividCashStock=description, dividCashPsBeforeTax="0.04", dividStocksPs=bonus,
+                   dividReserveToStockPs=reserve, dividStockMarketDate="2021-07-02")
+    result = resolve_source_group([row])
+    assert result["state"] == "gross-source-consistent"
+    assert result["terms"]["bonus_per_share"] == bonus and result["terms"]["reserve_per_share"] == reserve
+    assert result["ledgerReady"] is False
+
+
+def test_tiny_rounding_and_large_document_conflicts_still_fail_exact_agreement():
+    cash = cash_row(dividCashPsBeforeTax="0.91", dividCashStock="10派6.6元（含税）")
+    reserve = cash_row(dividCashPsBeforeTax="0.324998", dividCashStock="10转3.999976派3.24998元（含税）",
+                       dividReserveToStockPs="0.399998", dividStockMarketDate="2021-07-02")
+    assert resolve_source_group([cash])["reason"] == "numeric_plan_conflict:dividCashPsBeforeTax"
+    assert resolve_source_group([reserve])["reason"] == "numeric_plan_conflict:dividReserveToStockPs"

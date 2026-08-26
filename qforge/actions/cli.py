@@ -32,6 +32,8 @@ def register_action_commands(commands: argparse._SubParsersAction) -> None:
         if name == "terms":
             action.add_argument("--start", required=True)
             action.add_argument("--end", required=True)
+            action.add_argument("--include-unresolved", action="store_true",
+                                help="include every unresolved in-window group and its checked raw rows")
 
 
 def run_action_command(args: argparse.Namespace, root: Path) -> int:
@@ -46,7 +48,7 @@ def run_action_command(args: argparse.Namespace, root: Path) -> int:
         elif args.action_command == "audit":
             result = _audit(config, root, root / args.output)
         elif args.action_command == "terms":
-            result = _terms(config, root, root / args.output, args.start, args.end)
+            result = _terms(config, root, root / args.output, args.start, args.end, getattr(args, "include_unresolved", False))
         else:
             result = ActionStore(root / config.database_path).status()
     except (ValueError, OSError, RuntimeError, sqlite3.Error) as error:
@@ -68,12 +70,12 @@ def _audit(config: ActionConfig, root: Path, output: Path) -> dict:
     return result
 
 
-def _terms(config: ActionConfig, root: Path, output: Path, start: str, end: str) -> dict:
+def _terms(config: ActionConfig, root: Path, output: Path, start: str, end: str, include_unresolved: bool = False) -> dict:
     if output.exists():
         raise FileExistsError(f"terms output already exists: {output}")
     plan = action_plan(config, root)
     daily_input = admit_action_input(config, root)
-    result = preview_action_terms(root / config.database_path, plan, daily_input, start, end)
+    result = preview_action_terms(root / config.database_path, plan, daily_input, start, end, include_unresolved)
     output.parent.mkdir(parents=True, exist_ok=True)
     with output.open("x", encoding="utf-8") as stream:
         json.dump(result, stream, ensure_ascii=False, indent=2, allow_nan=False)

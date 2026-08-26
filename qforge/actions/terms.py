@@ -9,9 +9,12 @@ from decimal import Decimal, InvalidOperation
 
 NUMBER = r"(?:0|[1-9][0-9]*)(?:\.[0-9]+)?"
 PLAN = re.compile(
-    rf"10(?:送(?P<bonus>{NUMBER})(?:股)?)?(?:转(?:增)?(?P<reserve>{NUMBER})(?:股)?)?"
-    rf"(?:派(?P<cash>{NUMBER})元)?(?P<tax>\(含税(?:,扣税后{NUMBER}(?:或{NUMBER})*元)?\))?"
+    rf"10(?P<legs>(?:送{NUMBER}股?|转(?:增)?{NUMBER}股?|派{NUMBER}元)+)"
+    rf"(?P<tax>\(含税(?:,扣税后{NUMBER}(?:或{NUMBER})*元)?\))?"
 )
+LEG = re.compile(rf"(送|转增|转|派)({NUMBER})(?:股|元)?")
+LEG_NAMES = {"送": "bonus_per_share", "转": "reserve_per_share", "转增": "reserve_per_share",
+             "派": "gross_cash_per_share"}
 NUMERIC_LEGS = {"dividCashPsBeforeTax": "gross_cash_per_share", "dividStocksPs": "bonus_per_share",
                 "dividReserveToStockPs": "reserve_per_share"}
 
@@ -37,11 +40,15 @@ def parse_complete_plan(description: str) -> dict:
     """Zeros mean absent legs in this exact grammar, never a numeric NULL fill."""
     text = description.strip().translate(str.maketrans({"（": "(", "）": ")", "，": ","}))
     match = PLAN.fullmatch(text)
-    if match is None or not any(match[name] is not None for name in ("cash", "bonus", "reserve")):
+    if match is None:
         raise ValueError("unsupported_complete_plan")
-    values = {target: Decimal(match[name] or "0") / Decimal(10)
-              for name, target in (("cash", "gross_cash_per_share"), ("bonus", "bonus_per_share"),
-                                   ("reserve", "reserve_per_share"))}
+    values, seen = dict.fromkeys(NUMERIC_LEGS.values(), Decimal(0)), set()
+    for kind, amount in LEG.findall(match["legs"]):
+        target = LEG_NAMES[kind]
+        if target in seen:
+            raise ValueError("duplicate_distribution_leg")
+        seen.add(target)
+        values[target] = Decimal(amount) / Decimal(10)
     if not any(values.values()):
         raise ValueError("zero_distribution_plan")
     return {**values, "explicit_gross_description": match["tax"] is not None}
