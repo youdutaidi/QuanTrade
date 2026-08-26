@@ -1,0 +1,9 @@
+{
+  "findings": [],
+  "metrics": {
+    "package_lines": 3300,
+    "script_lines": 89,
+    "script_package_ratio": 0.027
+  },
+  "status": "pass"
+}

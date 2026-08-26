@@ -257,8 +257,20 @@ data_goal:
         evidence: research/evidence/QF-DATA-EXPANSION-01/daily_single_verified.log
       - id: QF-DATA-EXPANSION-01-A3
         change: bound the full query call and row stream to 90 seconds; discard and recreate a session after every request error
-        result: active; preserved 811 stock checkpoints, added four benchmark indexes, and recovered both previously slow symbols on a fresh session
+        result: recovered transient sessions and retained 2021911 bars; terminated after a repeated login failure
         evidence: research/evidence/QF-DATA-EXPANSION-01/daily_single_resume_2.log
+      - id: QF-DATA-EXPANSION-01-A4
+        change: increment attempt counters only when a request executes, retry login three times, and let the completion transaction recover failed download passes
+        result: stopped for A5 integrity corrections at 2240 completed tasks and 2975440 daily bars; all market rows preserved
+        evidence: research/evidence/QF-DATA-EXPANSION-01/complete_recovery.log
+      - id: QF-DATA-EXPANSION-01-A5
+        change: reject partial provider streams and wrong response identities; check successful tasks against the trading calendar; distinguish optional suspended delisting-date rows; label adjusted-price chains separately from economic total return
+        state: experiment-admitted after 49 retained and new tests and zero structure findings; no strategy search or data deletion
+        baseline: 40e329f
+        cheapest_falsifier: synthetic partial-stream, missing-date, delisting-boundary, and extreme-loss regression tests
+        admission: retained full test suite and structure gate before restarting the single source session
+        evidence: research/evidence/QF-DATA-EXPANSION-01/A5
+        pre_resume_verdict: all 2240 successful tasks have complete pre-delisting calendar coverage; 69 optional suspended boundary rows retained; no integrity violations; full data admission still pending
   cutover:
     criteria:
       - SQLite schema, idempotent upserts, checkpoint resume, and source normalization tests pass

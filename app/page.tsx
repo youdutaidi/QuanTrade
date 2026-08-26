@@ -437,6 +437,7 @@ export default function Home() {
           <div><small>多年日线任务</small><strong>{marketTasksDone}/{marketTaskTotal}</strong><p>{marketInventory.dailyBarCount.toLocaleString()} 根 · 下载任务可恢复</p></div>
           <div><small>本地 SQLite</small><strong>{number(marketInventory.databaseBytes / 1024 / 1024, 1)} MB</strong><p>WAL · 幂等写入 · 不上传云端</p></div>
         </div>
+        <p>库存快照：{marketInventory.snapshotAt.slice(0, 19).replace("T", " ")} UTC。此处不是实时数据库查询；下载完成后仍需完整性审计和源数据复核，不能直接视为已验证策略。</p>
         <div className="minute-roadmap">
           <div><span className="section-kicker">DATA EXPANSION ROUTE</span><h3>数据先于策略。</h3><p>现有分钟试点将扩展到多年份、点时股票池和本地增量数据库，再进入冻结候选回测。</p></div>
           <ol><li><span>01</span><b>点时股票池</b><p>历史每日证券列表</p></li><li><span>02</span><b>多年行情</b><p>日线发现 · 分钟执行</p></li><li><span>03</span><b>严格回测</b><p>走步 · 成本 · 复算</p></li><li><span>04</span><b>前向影子盘</b><p>通过后才计时</p></li></ol>

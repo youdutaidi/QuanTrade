@@ -88,6 +88,7 @@ def _run_daily_tasks(
                 store.mark_task_running(str(task["task_key"]))
                 try:
                     bars = provider.daily_bars(str(task["code"]), str(task["start_date"]), str(task["end_date"]), config.adjustflag)
+                    store.validate_daily_coverage(bars, task)
                     factors = provider.adjustment_factors(str(task["code"]), str(task["start_date"]), str(task["end_date"]))
                     written = store.upsert_daily_bars(bars) + store.upsert_adjustments(factors)
                     store.finish_task(str(task["task_key"]), written)

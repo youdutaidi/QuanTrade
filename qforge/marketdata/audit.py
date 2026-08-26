@@ -10,6 +10,7 @@ import sqlite3
 from pathlib import Path
 
 from .config import MarketDataConfig
+from .coverage import audit_daily_coverage
 from .store import MarketDataStore
 
 
@@ -17,20 +18,10 @@ def audit_market_database(config: MarketDataConfig, root: Path) -> dict[str, obj
     store = MarketDataStore(root / config.database_path)
     inventory = store.status()
     with store.connect() as connection:
+        connection.execute("BEGIN")
         quick_check = str(connection.execute("PRAGMA quick_check").fetchone()[0])
-        integrity = {
-            "tradableNullOhlc": _count(connection, """SELECT COUNT(*) FROM daily_bars WHERE trade_status=1
-                AND (open IS NULL OR high IS NULL OR low IS NULL OR close IS NULL)"""),
-            "invalidOhlcEnvelope": _count(connection, """SELECT COUNT(*) FROM daily_bars WHERE trade_status=1 AND
-                (high < open OR high < close OR high < low OR low > open OR low > close OR low > high)"""),
-            "negativeVolumeOrAmount": _count(connection, "SELECT COUNT(*) FROM daily_bars WHERE volume < 0 OR amount < 0"),
-            "barsOnNonTradingDays": _count(connection, """SELECT COUNT(*) FROM daily_bars b LEFT JOIN trade_calendar c
-                ON c.calendar_date=b.trade_date WHERE c.calendar_date IS NULL OR c.is_trading_day != 1"""),
-            "barsOutsideLifecycle": _count(connection, """SELECT COUNT(*) FROM daily_bars b JOIN securities s ON s.code=b.code
-                WHERE b.trade_date < s.ipo_date OR (s.out_date IS NOT NULL AND b.trade_date > s.out_date)"""),
-            "unknownSymbols": _count(connection, """SELECT COUNT(*) FROM daily_bars b LEFT JOIN securities s ON s.code=b.code
-                WHERE s.code IS NULL"""),
-        }
+        coverage = audit_daily_coverage(connection, config.adjustflag)
+        integrity = _integrity_counts(connection)
     task_counts = {str(item["status"]): int(item["taskCount"]) for item in inventory["tasks"]}
     audits_pass = bool(inventory["audits"]) and all(item["status"] == "pass" for item in inventory["audits"])
     tasks_complete = task_counts.get("succeeded", 0) > 0 and sum(
@@ -52,12 +43,35 @@ def audit_market_database(config: MarketDataConfig, root: Path) -> dict[str, obj
         "adjustflag": config.adjustflag,
         "quickCheck": quick_check,
         "integrity": integrity,
+        "coverage": coverage,
         "taskCounts": task_counts,
         "universeAuditsPass": audits_pass,
         "tasksComplete": tasks_complete,
         "integrityPass": integrity_pass,
-        "dataReady": audits_pass and tasks_complete and integrity_pass,
+        "dataReady": audits_pass and tasks_complete and integrity_pass and coverage["pass"],
         "inventory": inventory,
+    }
+
+
+def _integrity_counts(connection: sqlite3.Connection) -> dict[str, int]:
+    return {
+            "tradableNullOhlc": _count(connection, """SELECT COUNT(*) FROM daily_bars WHERE trade_status=1
+                AND (open IS NULL OR high IS NULL OR low IS NULL OR close IS NULL)"""),
+            "invalidOhlcEnvelope": _count(connection, """SELECT COUNT(*) FROM daily_bars WHERE trade_status=1 AND
+                (high < open OR high < close OR high < low OR low > open OR low > close OR low > high)"""),
+            "negativeVolumeOrAmount": _count(connection, "SELECT COUNT(*) FROM daily_bars WHERE volume < 0 OR amount < 0"),
+            "barsOnNonTradingDays": _count(connection, """SELECT COUNT(*) FROM daily_bars b LEFT JOIN trade_calendar c
+                ON c.calendar_date=b.trade_date WHERE c.calendar_date IS NULL OR c.is_trading_day != 1"""),
+            "barsOutsideLifecycle": _count(connection, """SELECT COUNT(*) FROM daily_bars b JOIN securities s ON s.code=b.code
+                WHERE b.trade_date < s.ipo_date OR (s.out_date IS NOT NULL AND b.trade_date > s.out_date)"""),
+            "unknownSymbols": _count(connection, """SELECT COUNT(*) FROM daily_bars b LEFT JOIN securities s ON s.code=b.code
+                WHERE s.code IS NULL"""),
+            "tradableBarsOnDelistingDate": _count(connection, """SELECT COUNT(*) FROM daily_bars b
+                JOIN securities s ON s.code=b.code WHERE b.trade_date=s.out_date AND b.trade_status=1"""),
+            "unknownObservedSymbols": _count(connection, """SELECT COUNT(*) FROM universe_observations o
+                LEFT JOIN securities s ON s.code=o.code WHERE s.code IS NULL"""),
+            "invalidTradingStatus": _count(connection, """SELECT COUNT(*) FROM daily_bars
+                WHERE trade_status IS NULL OR trade_status NOT IN (0,1)"""),
     }
 
 

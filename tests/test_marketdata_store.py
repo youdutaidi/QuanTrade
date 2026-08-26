@@ -51,6 +51,26 @@ def test_universe_audit_qualifies_joined_code_column(tmp_path) -> None:
     assert audit["observedStockCount"] == 1
 
 
+def test_schema_migration_preserves_raw_rows_and_excludes_exit_date(tmp_path):
+    store = MarketDataStore(tmp_path / "market.sqlite")
+    store.initialize()
+    store.upsert_calendar(pd.DataFrame([{"calendar_date": "2020-06-01", "is_trading_day": "1"}]))
+    store.upsert_securities(pd.DataFrame([{
+        "code": "sh.600001", "code_name": "样本", "ipoDate": "1998-01-01", "outDate": "2020-06-01", "type": "1", "status": "0",
+    }]))
+    with store.connect() as connection:
+        connection.executescript("""DELETE FROM market_schema_version;
+        INSERT INTO market_schema_version VALUES (1,'test');
+        DROP VIEW listed_universe;
+        CREATE VIEW listed_universe AS SELECT c.calendar_date trade_date,s.code FROM trade_calendar c JOIN securities s;
+        """)
+    store.initialize()
+    with store.connect() as connection:
+        assert connection.execute("SELECT COUNT(*) FROM securities").fetchone()[0] == 1
+        assert connection.execute("SELECT COUNT(*) FROM listed_universe").fetchone()[0] == 0
+    assert "snapshotAt" in store.status()
+
+
 def test_daily_upsert_is_idempotent(tmp_path) -> None:
     store = MarketDataStore(tmp_path / "market.sqlite")
     store.initialize()

@@ -1,6 +1,6 @@
 """SQLite schema for reference data, point-in-time universes, and daily bars."""
 
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2
 
 SCHEMA_SQL = """
 PRAGMA journal_mode=WAL;
@@ -114,7 +114,9 @@ CREATE TABLE IF NOT EXISTS market_download_tasks (
 CREATE INDEX IF NOT EXISTS idx_market_tasks_status
 ON market_download_tasks(task_type, status, attempts, task_key);
 
-CREATE VIEW IF NOT EXISTS listed_universe AS
+"""
+
+LISTED_UNIVERSE_SQL = """CREATE VIEW IF NOT EXISTS listed_universe AS
 SELECT c.calendar_date AS trade_date,
        s.code,
        s.code_name,
@@ -124,5 +126,7 @@ JOIN securities AS s
   ON c.is_trading_day = 1
  AND s.ipo_date IS NOT NULL
  AND s.ipo_date <= c.calendar_date
- AND (s.out_date IS NULL OR s.out_date = '' OR s.out_date >= c.calendar_date);
+ AND (s.out_date IS NULL OR s.out_date = '' OR s.out_date > c.calendar_date);
 """
+
+SCHEMA_SQL += LISTED_UNIVERSE_SQL

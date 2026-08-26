@@ -1,4 +1,4 @@
-"""Export the raw SQLite history as a corporate-action-safe Parquet panel."""
+"""Export adjusted-price features and raw prices, not a total-return ledger."""
 
 from __future__ import annotations
 

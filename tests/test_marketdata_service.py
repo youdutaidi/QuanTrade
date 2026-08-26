@@ -38,6 +38,9 @@ def test_failed_query_recreates_session_and_counts_only_executed_tasks(monkeypat
         def upsert_daily_bars(self, frame):
             return 1
 
+        def validate_daily_coverage(self, frame, task):
+            return None
+
         def upsert_adjustments(self, frame):
             return 0
 

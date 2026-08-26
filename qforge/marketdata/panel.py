@@ -1,4 +1,4 @@
-"""Create a corporate-action-safe research panel from raw BaoStock bars."""
+"""Create adjusted-price features, not an economic total-return ledger."""
 
 from __future__ import annotations
 
@@ -18,34 +18,53 @@ def load_raw_daily(path: str | Path, start: str, end: str, adjustflag: int = 3) 
         return pd.read_sql_query(query, connection, params=[start, end, adjustflag])
 
 
-def total_return_ohlcv(frame: pd.DataFrame) -> pd.DataFrame:
+def adjusted_price_ohlcv(frame: pd.DataFrame) -> pd.DataFrame:
+    """Chain exchange reference-price returns for signals; preserve raw prices.
+
+    Dividends, rights, share changes, taxes and execution still require a separate
+    cash/share ledger. This price chain must not certify corporate-action P&L.
+    """
     if frame.empty:
         return pd.DataFrame(columns=_output_columns())
     required = {"code", "trade_date", "open", "high", "low", "close", "preclose", "volume", "amount", "trade_status", "pct_change", "is_st"}
     missing = required - set(frame.columns)
     if missing:
         raise ValueError(f"raw daily frame missing columns: {sorted(missing)}")
+    if frame.duplicated(["code", "trade_date"]).any():
+        raise ValueError("raw daily frame contains duplicate keys")
     result = frame.copy().sort_values(["code", "trade_date"])
     result["date"] = pd.to_datetime(result["trade_date"])
     result["symbol"] = result["code"].astype(str)
-    fallback_return = result["close"].div(result["preclose"]).sub(1)
-    daily_return = pd.to_numeric(result["pct_change"], errors="coerce").div(100).fillna(fallback_return).fillna(0)
-    growth = daily_return.add(1).clip(lower=0.01)
-    result["close_total_return"] = growth.groupby(result["symbol"]).cumprod()
-    previous_index = result["close_total_return"].div(growth)
-    fallback_base = result["close"].replace(0, np.nan)
+    for field in ["open", "high", "low", "close", "preclose"]:
+        result[f"raw_{field}"] = pd.to_numeric(result[field], errors="coerce")
+    growth = _reference_growth(result)
+    adjusted_close = growth.groupby(result["symbol"]).cumprod()
+    previous_index = adjusted_close.div(growth)
     for field in ["open", "high", "low"]:
         ratio = result[field].div(result["preclose"].replace(0, np.nan))
-        ratio = ratio.fillna(result[field].div(fallback_base))
-        result[f"{field}_total_return"] = previous_index.mul(ratio)
-    result["close"] = result["close_total_return"]
-    result["open"] = result["open_total_return"]
-    result["high"] = result["high_total_return"]
-    result["low"] = result["low_total_return"]
+        result[field] = previous_index.mul(ratio)
+    result["close"] = adjusted_close
     suspended = pd.to_numeric(result["trade_status"], errors="coerce").ne(1)
     result.loc[suspended, ["open", "high", "low"]] = np.nan
     result["volume"] = pd.to_numeric(result["volume"], errors="coerce").fillna(0)
     return result[_output_columns()]
+
+
+def total_return_ohlcv(frame: pd.DataFrame) -> pd.DataFrame:
+    """Legacy alias; the result is an adjusted-price chain, NOT total return."""
+    return adjusted_price_ohlcv(frame)
+
+
+def _reference_growth(frame: pd.DataFrame) -> pd.Series:
+    status = pd.to_numeric(frame["trade_status"], errors="coerce")
+    if not status.isin([0, 1]).all():
+        raise ValueError("invalid trade status in raw daily frame")
+    fallback = frame["raw_close"].div(frame["raw_preclose"].replace(0, np.nan)).sub(1)
+    returns = pd.to_numeric(frame["pct_change"], errors="coerce").div(100).fillna(fallback)
+    returns = returns.mask(status.eq(0), 0.0)
+    if not np.isfinite(returns).all() or returns.le(-1).any():
+        raise ValueError("invalid reference-price return; extreme losses must not be clipped or filled")
+    return returns.add(1)
 
 
 def export_research_panel(
@@ -55,8 +74,10 @@ def export_research_panel(
     end: str,
     adjustflag: int = 3,
 ) -> dict[str, object]:
+    if adjustflag != 3:
+        raise ValueError("research panel requires raw unadjusted bars (adjustflag=3)")
     raw = load_raw_daily(database_path, start, end, adjustflag)
-    panel = total_return_ohlcv(raw)
+    panel = adjusted_price_ohlcv(raw)
     output = Path(output_path)
     output.parent.mkdir(parents=True, exist_ok=True)
     panel.to_parquet(output, index=False)
@@ -67,8 +88,14 @@ def export_research_panel(
         "firstDate": str(panel["date"].min().date()) if len(panel) else None,
         "lastDate": str(panel["date"].max().date()) if len(panel) else None,
         "bytes": output.stat().st_size,
+        "priceBasis": "exchange-reference-price chain; raw OHLC also retained",
+        "corporateActionsVerified": False,
+        "permittedUse": "signal research; not a cash/share P&L ledger",
     }
 
 
 def _output_columns() -> list[str]:
-    return ["date", "symbol", "open", "high", "low", "close", "volume", "amount", "turnover", "trade_status", "is_st"]
+    return [
+        "date", "symbol", "open", "high", "low", "close", "volume", "amount", "turnover", "trade_status", "is_st",
+        "raw_open", "raw_high", "raw_low", "raw_close", "raw_preclose",
+    ]

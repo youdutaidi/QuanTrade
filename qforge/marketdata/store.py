@@ -12,7 +12,8 @@ from pathlib import Path
 import pandas as pd
 
 from .config import MarketDataConfig
-from .schema import SCHEMA_SQL, SCHEMA_VERSION
+from .coverage import validate_daily_coverage
+from .schema import LISTED_UNIVERSE_SQL, SCHEMA_SQL, SCHEMA_VERSION
 
 
 def now_iso() -> str:
@@ -33,6 +34,9 @@ class MarketDataStore:
         self.path.parent.mkdir(parents=True, exist_ok=True)
         with self.connect() as connection:
             connection.executescript(SCHEMA_SQL)
+            version = connection.execute("SELECT COALESCE(MAX(version),0) FROM market_schema_version").fetchone()[0]
+            if version < 2:
+                connection.executescript("DROP VIEW IF EXISTS listed_universe;" + LISTED_UNIVERSE_SQL)
             connection.execute(
                 "INSERT OR IGNORE INTO market_schema_version(version,applied_at) VALUES (?,?)",
                 (SCHEMA_VERSION, now_iso()),
@@ -121,6 +125,12 @@ class MarketDataStore:
         with self.connect() as connection:
             connection.executemany(sql, rows)
         return len(rows)
+
+    def validate_daily_coverage(self, frame: pd.DataFrame, task: dict[str, object]) -> None:
+        with self.connect() as connection:
+            validate_daily_coverage(
+                connection, frame, str(task["code"]), str(task["start_date"]), str(task["end_date"]),
+            )
 
     def upsert_adjustments(self, frame: pd.DataFrame) -> int:
         if frame.empty:
@@ -254,6 +264,8 @@ class MarketDataStore:
     def status(self) -> dict[str, object]:
         self.initialize()
         with self.connect() as connection:
+            connection.execute("BEGIN")
+            snapshot_at = now_iso()
             counts = dict(connection.execute(_COUNTS_QUERY).fetchone())
             tasks = [dict(row) for row in connection.execute(
                 "SELECT status,COUNT(*) taskCount,SUM(rows_written) rowsWritten FROM market_download_tasks GROUP BY status ORDER BY status"
@@ -266,6 +278,7 @@ class MarketDataStore:
             ).fetchone()
         return {
             **counts,
+            "snapshotAt": snapshot_at,
             "database": str(self.path),
             "databaseBytes": self.path.stat().st_size if self.path.exists() else 0,
             "tasks": tasks,
