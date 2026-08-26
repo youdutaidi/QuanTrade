@@ -6,6 +6,7 @@ import argparse
 import json
 from pathlib import Path
 
+from .admission import verify_completed_panel
 from .config import MarketDataConfig
 from .complete import complete_market_data
 from .service import download_daily, download_reference, initialize_market_store, market_status
@@ -18,6 +19,7 @@ def register_market_commands(commands: argparse._SubParsersAction) -> None:
         ("init", "initialize the market SQLite database"),
         ("download-reference", "download calendar, security master, and universe audits"),
         ("complete", "finish downloads, audit, source replay, and panel export"),
+        ("verify-panel", "verify completion evidence and the immutable panel fingerprint"),
         ("status", "show local data inventory and checkpoints"),
     ]:
         action = actions.add_parser(name, help=help_text)
@@ -48,6 +50,8 @@ def run_market_command(args: argparse.Namespace, root: Path) -> int:
         payload = {"state": "daily-reset", **store.reset_daily_data(), **store.status()}
     elif args.market_command == "complete":
         payload = complete_market_data(config, root)
+    elif args.market_command == "verify-panel":
+        payload = verify_completed_panel((root / config.audit_output).parent / "data_completion.json", config)
     else:
         payload = market_status(config, root)
     print(json.dumps(payload, ensure_ascii=False, indent=2, default=str))

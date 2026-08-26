@@ -14,7 +14,8 @@ def fixture_store(tmp_path, out_date=""):
     store = MarketDataStore(tmp_path / config.database_path)
     store.initialize()
     store.upsert_calendar(pd.DataFrame([
-        {"calendar_date": day, "is_trading_day": 1} for day in ["2020-01-02", "2020-01-03", "2020-01-06"]
+        {"calendar_date": day, "is_trading_day": int(day not in {"2020-01-04", "2020-01-05"})}
+        for day in ["2020-01-02", "2020-01-03", "2020-01-04", "2020-01-05", "2020-01-06"]
     ]))
     store.upsert_securities(pd.DataFrame([{
         "code": "sh.600000", "code_name": "样本", "ipoDate": "1999-01-01", "outDate": out_date, "type": "1", "status": "1",
@@ -71,3 +72,15 @@ def test_delisting_date_is_optional_nontradable_source_boundary(tmp_path):
     assert report["dataReady"] is True
     store.upsert_daily_bars(raw_frame(["2020-01-06"], status=1))
     assert audit_market_database(config, tmp_path)["dataReady"] is False
+
+
+def test_missing_calendar_cannot_make_missing_bar_invisible(tmp_path):
+    config, store, task = fixture_store(tmp_path)
+    store.upsert_daily_bars(raw_frame(["2020-01-02", "2020-01-06"]))
+    store.finish_task(task["task_key"], 2)
+    with store.connect() as connection:
+        connection.execute("DELETE FROM trade_calendar WHERE calendar_date='2020-01-03'")
+    report = audit_market_database(config, tmp_path)
+    assert report["coverage"]["pass"] is True
+    assert report["calendar"]["missingDays"] == 1
+    assert report["dataReady"] is False

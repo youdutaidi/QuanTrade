@@ -10,7 +10,7 @@ import sqlite3
 from pathlib import Path
 
 from .config import MarketDataConfig
-from .coverage import audit_daily_coverage
+from .coverage import audit_calendar, audit_daily_coverage
 from .store import MarketDataStore
 
 
@@ -21,6 +21,7 @@ def audit_market_database(config: MarketDataConfig, root: Path) -> dict[str, obj
         connection.execute("BEGIN")
         quick_check = str(connection.execute("PRAGMA quick_check").fetchone()[0])
         coverage = audit_daily_coverage(connection, config.adjustflag)
+        calendar = audit_calendar(connection, config.start, config.end)
         integrity = _integrity_counts(connection)
     task_counts = {str(item["status"]): int(item["taskCount"]) for item in inventory["tasks"]}
     audits_pass = bool(inventory["audits"]) and all(item["status"] in {"pass", "pass_boundary"} for item in inventory["audits"])
@@ -44,11 +45,12 @@ def audit_market_database(config: MarketDataConfig, root: Path) -> dict[str, obj
         "quickCheck": quick_check,
         "integrity": integrity,
         "coverage": coverage,
+        "calendar": calendar,
         "taskCounts": task_counts,
         "universeAuditsPass": audits_pass,
         "tasksComplete": tasks_complete,
         "integrityPass": integrity_pass,
-        "dataReady": audits_pass and tasks_complete and integrity_pass and coverage["pass"],
+        "dataReady": audits_pass and tasks_complete and integrity_pass and coverage["pass"] and calendar["pass"],
         "inventory": inventory,
     }
 

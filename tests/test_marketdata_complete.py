@@ -31,3 +31,28 @@ def test_completion_recovers_after_download_exception(tmp_path, monkeypatch) -> 
     assert len(calls) == 2
     assert result["state"] == "incomplete"
     assert result["passes"][0]["state"] == "failed"
+
+
+def test_export_error_is_recorded_without_ready_claim(tmp_path, monkeypatch):
+    import json
+    from pathlib import Path
+    import qforge.marketdata.complete as module
+    from qforge.marketdata.config import MarketDataConfig
+
+    monkeypatch.setattr(module, "download_daily", lambda *args, **kwargs: {"selectedTasks": 0, "rowsWritten": 0, "failures": 0})
+    monkeypatch.setattr(module, "audit_market_database", lambda *args: {
+        "quickCheck": "ok", "tasksComplete": True, "integrityPass": True, "dataReady": True,
+    })
+    monkeypatch.setattr(module, "verify_source_sample", lambda *args: {"sampleSize": 1, "allPass": True})
+    monkeypatch.setattr(module, "market_status", lambda *args: {})
+
+    def fail(*args):
+        raise ValueError("invalid price")
+
+    monkeypatch.setattr(module, "export_research_panel", fail)
+    config = MarketDataConfig("test", "market.sqlite", "2020-01-01", "2020-12-31")
+    first = module.complete_market_data(config, tmp_path)
+    second = module.complete_market_data(config, tmp_path)
+    assert first["state"] == "incomplete" and first["errors"]
+    assert first["manifest"] != second["manifest"]
+    assert json.loads(Path(first["manifest"]).read_text())["runId"] == first["runId"]

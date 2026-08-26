@@ -283,11 +283,14 @@ data_goal:
       - id: QF-DATA-EXPANSION-01-A7
         decision: make final data admission compare both bars and adjustment factors and export a bounded-memory, atomic, fingerprinted research panel
         baseline: a7301e8
-        write_surface: qforge/marketdata/**, tests/test_marketdata_*.py, research/README.md, research/evidence/QF-DATA-EXPANSION-01/A7/**
+        write_surface: qforge/marketdata/**, tests/test_marketdata_*.py, research/README.md, research/evidence/QF-DATA-EXPANSION-01/A7/**, research/evidence/QF-DATA-EXPANSION-01/completion_runs/**, research/evidence/QF-DATA-EXPANSION-01/data_completion.json
         scientific_choice_axis: unchanged data coverage; no strategy or selection parameter changes
         cheapest_falsifier: corrupted factor values must fail replay; chunked export must equal the reference transform and preserve the previous artifact on failure
-        state: structure-admitted and semantics-admitted; 57 tests pass; pending real-data export cost check and final source replay
+        state: structure-admitted and semantics-admitted; 62 tests pass; real-data export cost check passed; final source replay pending download completion
         source_job: no second source session; A5 downloader continues under its frozen code
+        real_export_cost: 3709150 rows and 2823 symbols; 11.33 seconds; 533086208 peak resident bytes; candidate Parquet SHA256 d945ab19fcae58d2ef3f86ad40ab76269d7c5b3eea534c798e279e1d24c5d6cf
+        evidence_extension: each final completion records immutable audit, source replay, panel fingerprint and result; latest pointer is atomic; export failures or mid-run code changes cannot emit ready
+        admission_extension: complete civil-day calendar coverage is required; verify-panel refuses incomplete manifests, absent source samples and replaced artifacts
   cutover:
     criteria:
       - SQLite schema, idempotent upserts, checkpoint resume, and source normalization tests pass

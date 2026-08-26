@@ -3,8 +3,25 @@
 from __future__ import annotations
 
 import sqlite3
+from datetime import date, timedelta
 
 import pandas as pd
+
+
+def audit_calendar(connection: sqlite3.Connection, start: str, end: str) -> dict[str, object]:
+    first, last = date.fromisoformat(start), date.fromisoformat(end)
+    expected = {(first + timedelta(days=offset)).isoformat() for offset in range((last - first).days + 1)}
+    rows = connection.execute(
+        "SELECT calendar_date,is_trading_day FROM trade_calendar WHERE calendar_date BETWEEN ? AND ?", (start, end),
+    ).fetchall()
+    actual = {str(row[0]) for row in rows}
+    invalid_flags = sum(row[1] not in {0, 1} for row in rows)
+    return {
+        "expectedDays": len(expected), "storedDays": len(actual), "missingDays": len(expected - actual),
+        "unexpectedDays": len(actual - expected), "invalidTradingFlags": invalid_flags,
+        "missingExamples": sorted(expected - actual)[:10],
+        "pass": expected == actual and invalid_flags == 0,
+    }
 
 
 def validate_daily_coverage(

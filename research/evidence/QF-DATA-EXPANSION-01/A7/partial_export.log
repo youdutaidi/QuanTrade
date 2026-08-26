@@ -1,0 +1,32 @@
+{
+  "output": "/Users/cailingling/Desktop/quant-intelligence-lab/research/data/qforge_daily_panel_candidate_A7.parquet",
+  "rows": 3709150,
+  "symbols": 2823,
+  "batches": 29,
+  "firstDate": "2020-08-25",
+  "lastDate": "2026-08-24",
+  "bytes": 248029613,
+  "sha256": "d945ab19fcae58d2ef3f86ad40ab76269d7c5b3eea534c798e279e1d24c5d6cf",
+  "symbolsPerChunk": 100,
+  "priceBasis": "exchange-reference-price chain; raw OHLC also retained",
+  "corporateActionsVerified": false,
+  "permittedUse": "signal research; not a cash/share P&L ledger"
+}
+       11.33 real        10.25 user         0.81 sys
+           533086208  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              133576  page reclaims
+                  45  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                2165  voluntary context switches
+               20954  involuntary context switches
+        192956568180  instructions retired
+         43576945981  cycles elapsed
+           490865672  peak memory footprint
