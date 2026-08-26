@@ -538,6 +538,12 @@ planned_strategy_goal:
       state: structure-admitted and workflow-semantics-admitted; 190 retained/new tests pass, zero structural findings; full real development feature check admitted
       retained_mapping: all 186 baseline tests unchanged; new fixtures cover all 16 settings without ledger writes, missing-bar early stop, invalid eligibility scores, immutable output and reference-calendar holdout exclusion
       structure: 6381 package lines, 89 workflow-script lines, ratio 0.0139; no structural findings
+      real_attempt_A2: stopped before scoring at the listed volume/amount guard; 8.71 seconds, 3153412096 maximum resident bytes and zero swaps; no portfolio or factor ranking produced
+      diagnosis_A2: development raw data has 11125 missing volume/amount rows, all explicitly suspended; 5799726 tradable ordinary-stock rows have no missing or negative volume/amount; preserve the source blanks and every stock/date
+      correction_A3: extend the write surface to qforge/walkforward/replay_inputs.py; allow nullable liquidity fields only on known suspended bars while keeping negatives invalid everywhere and missing tradable fields invalid; do not fill amount blanks or change the frozen rolling formulas
+      missingness_semantics: retained rolling median requires a complete observation window, so an unknown amount keeps the stock ineligible until the window is complete; missing volume makes the existing capacity rule zero; no source database or panel bytes change
+      next_admission: add suspended-null, tradable-null and suspended-negative counterexamples; rerun all 190 retained tests and structure before a fresh full-development attempt
+      admission_A3: 194 tests pass, including all retained 190; zero structural findings, 6383 package lines and script/package ratio 0.0139; admitted to rerun the unchanged full development scope under a new code identity
   decision: Test a frozen A-share family combining residual momentum, short-term reversal, low idiosyncratic volatility, and lottery-stock avoidance on the completed point-in-time database.
   hypothesis: a low-turnover composite that avoids high-MAX and high-idiosyncratic-volatility stocks is more stable than conventional raw momentum in the retail-dominated A-share market.
   candidate_families:

@@ -125,10 +125,12 @@ def _check_coverage(fields: dict, listed: pd.DataFrame) -> None:
     for key in ("trade_status", "is_st"):
         if (listed & ~fields[key].isin([0, 1])).any().any():
             raise ValueError("missing listed bar or unknown trading/ST status")
-    for key in ("volume", "amount"):
-        if (listed & (fields[key].isna() | fields[key].lt(0))).any().any():
-            raise ValueError("missing or negative listed volume/amount")
     tradable = listed & fields["trade_status"].eq(1)
+    for key in ("volume", "amount"):
+        if (listed & fields[key].lt(0)).any().any():
+            raise ValueError("negative listed volume/amount")
+        if (tradable & fields[key].isna()).any().any():
+            raise ValueError("missing tradable volume/amount")
     for key in ("close", "raw_open", "raw_close", "raw_preclose"):
         if (tradable & (fields[key].isna() | fields[key].le(0))).any().any():
             raise ValueError("tradable session has a missing or invalid price")

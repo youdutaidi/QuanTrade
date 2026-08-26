@@ -1,0 +1,34 @@
+Traceback (most recent call last):
+  File "/Users/cailingling/Desktop/quant-intelligence-lab/.venv/bin/qforge", line 6, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/Users/cailingling/Desktop/quant-intelligence-lab/qforge/cli.py", line 45, in main
+    return run_walkforward_command(args, root)
+  File "/Users/cailingling/Desktop/quant-intelligence-lab/qforge/walkforward/cli.py", line 52, in run_walkforward_command
+    payload = run_feature_check(spec, root, root / args.plan, root / args.output)
+  File "/Users/cailingling/Desktop/quant-intelligence-lab/qforge/walkforward/feature_check.py", line 24, in run_feature_check
+    inputs = prepare_replay_inputs(frame, calendar, securities, spec)
+  File "/Users/cailingling/Desktop/quant-intelligence-lab/qforge/walkforward/replay_inputs.py", line 42, in prepare_replay_inputs
+    _check_coverage(fields, listed)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/Users/cailingling/Desktop/quant-intelligence-lab/qforge/walkforward/replay_inputs.py", line 130, in _check_coverage
+    raise ValueError("missing or negative listed volume/amount")
+ValueError: missing or negative listed volume/amount
+        8.71 real         7.53 user         1.94 sys
+          3153412096  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              644824  page reclaims
+                 130  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                 119  voluntary context switches
+               50757  involuntary context switches
+         91765586587  instructions retired
+         37034324539  cycles elapsed
+          5389145344  peak memory footprint

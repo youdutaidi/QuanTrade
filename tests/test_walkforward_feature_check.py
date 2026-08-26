@@ -7,6 +7,7 @@ import pytest
 from qforge.marketdata.config import MarketDataConfig
 from qforge.walkforward.feature_check import run_feature_check
 from qforge.walkforward.inputs import load_development_reference
+from qforge.walkforward.replay_inputs import prepare_replay_inputs
 from qforge.walkforward.specification import StudySpec
 from qforge.walkforward.synthetic_market import synthetic_market
 
@@ -80,3 +81,33 @@ def test_reference_loader_excludes_holdout_calendar_and_records_identity(tmp_pat
     with sqlite3.connect(database) as connection:
         connection.execute("UPDATE trade_calendar SET is_trading_day=0 WHERE calendar_date='2025-08-25'")
     assert load_development_reference(spec, tmp_path)[2] == evidence
+
+
+def test_suspended_liquidity_nulls_survive_and_cannot_create_eligibility(feature_input):
+    spec, _, frame, _ = feature_input
+    _, calendar, securities, _ = synthetic_market(spec)
+    symbol = securities.iloc[0]["code"]
+    mask = frame["symbol"].eq(symbol) & frame["date"].eq(calendar[401])
+    frame.loc[mask, ["trade_status", "volume", "amount"]] = [0, float("nan"), float("nan")]
+    inputs = prepare_replay_inputs(frame, calendar, securities, spec)
+    assert inputs.fields["volume"].loc[calendar[401], symbol] != inputs.fields["volume"].loc[calendar[401], symbol]
+    assert inputs.fields["amount"].loc[calendar[401], symbol] != inputs.fields["amount"].loc[calendar[401], symbol]
+    assert not inputs.eligible.loc[calendar[401]:, symbol].any()
+    assert inputs.capacity.loc[calendar[402], symbol] == 0
+
+
+@pytest.mark.parametrize("field", ["volume", "amount"])
+def test_tradable_liquidity_null_remains_an_error(feature_input, field):
+    spec, _, frame, _ = feature_input
+    _, calendar, securities, _ = synthetic_market(spec)
+    frame.loc[0, field] = float("nan")
+    with pytest.raises(ValueError, match="missing tradable"):
+        prepare_replay_inputs(frame, calendar, securities, spec)
+
+
+def test_suspended_negative_liquidity_remains_an_error(feature_input):
+    spec, _, frame, _ = feature_input
+    _, calendar, securities, _ = synthetic_market(spec)
+    frame.loc[0, ["trade_status", "amount"]] = [0, -1]
+    with pytest.raises(ValueError, match="negative listed"):
+        prepare_replay_inputs(frame, calendar, securities, spec)
