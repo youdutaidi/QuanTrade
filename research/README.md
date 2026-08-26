@@ -83,6 +83,13 @@
   and publish only after full remote download/restore and hash/inventory checks.
   The local databases remain in place and A11 may continue its one source session.
   No code/config/tests or source scope changes are part of this delivery attempt.
+- D3 local capture passed under `ebce265f85f1ce76498104c60ccbee4ecd74a769`:
+  318 files, 1166904403 compressed bytes; SHA256
+  `f7ec5a289494292d8133577b0cf6cefc3508d6fd73e649eb6d56e52434a5e024`.
+  All member hashes pass; four backed-up databases pass integrity and foreign-key
+  checks; known strong credential patterns have no findings. Captured action
+  database has 721 requests and 571 events, explicitly incomplete. A new D3 draft
+  upload is in progress; remote recovery and publication remain pending.
 
 ## Code-evolution record
 

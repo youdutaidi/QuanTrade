@@ -1,0 +1,25 @@
+{"capturedFiles": 4, "totalFiles": 318, "path": "research/data/qforge_actions.sqlite"}
+{"capturedFiles": 7, "totalFiles": 318, "path": "research/data/qforge_market.sqlite"}
+{"capturedFiles": 8, "totalFiles": 318, "path": "research/data/qforge_minute.sqlite"}
+{"capturedFiles": 9, "totalFiles": 318, "path": "research/data/qforge_walkforward.sqlite"}
+{"capturedFiles": 25, "totalFiles": 318, "path": "research/evidence/DELIVERY-01/D1/PREPARATION.md"}
+{"capturedFiles": 50, "totalFiles": 318, "path": "research/evidence/DELIVERY-01/D2/roundtrip-restore.json"}
+{"capturedFiles": 75, "totalFiles": 318, "path": "research/evidence/QF-DATA-EXPANSION-01/A5/pre_resume_audit.json"}
+{"capturedFiles": 100, "totalFiles": 318, "path": "research/evidence/QF-DATA-EXPANSION-01/A9/active-source-refusal.log"}
+{"capturedFiles": 125, "totalFiles": 318, "path": "research/evidence/QF-DATA-EXPANSION-01/daily_worker_3.log"}
+{"capturedFiles": 150, "totalFiles": 318, "path": "research/evidence/QF-VALIDATION-GATE-01/registry_build.log"}
+{"capturedFiles": 175, "totalFiles": 318, "path": "research/evidence/QF-WALKFORWARD-01/P3/synthetic-grid-A2/fixed_equal_composite__long__r10__n20.json"}
+{"capturedFiles": 200, "totalFiles": 318, "path": "research/evidence/QF-WALKFORWARD-01/P3/synthetic-grid-A2/fixed_equal_composite__short__r5__n50.json"}
+{"capturedFiles": 225, "totalFiles": 318, "path": "research/evidence/QF-WALKFORWARD-01/P3/synthetic-grid-A2/low_maximum_return__20d-skip0__r5__n10.json"}
+{"capturedFiles": 250, "totalFiles": 318, "path": "research/evidence/QF-WALKFORWARD-01/P3/synthetic-grid-A2/residual_momentum__120d-skip5__r20__n20.json"}
+{"capturedFiles": 275, "totalFiles": 318, "path": "research/evidence/QF-WALKFORWARD-01/P3/synthetic-grid-A2/residual_momentum__60d-skip21__r10__n50.json"}
+{"capturedFiles": 300, "totalFiles": 318, "path": "research/evidence/QF-WALKFORWARD-01/P3/synthetic-grid-A2/short_reversal__10d-skip0__r5__n50.json"}
+{"state": "compressing", "files": 318}
+{
+  "state": "captured-not-yet-verified",
+  "bundle": "/Users/cailingling/Desktop/quant-intelligence-lab/research/output/delivery/data-20260826-d3/quant-data.tar.gz",
+  "sha256": "f7ec5a289494292d8133577b0cf6cefc3508d6fd73e649eb6d56e52434a5e024",
+  "bytes": 1166904403,
+  "fileCount": 318,
+  "codeCommit": "ebce265f85f1ce76498104c60ccbee4ecd74a769"
+}
