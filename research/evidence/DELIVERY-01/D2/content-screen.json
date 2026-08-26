@@ -1,0 +1,5 @@
+{
+  "archiveMembersScanned": 122,
+  "credentialPatternFindings": [],
+  "scope": "known strong key patterns plus separately enforced path exclusions; not a proof of absence of every possible secret"
+}

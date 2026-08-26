@@ -13,8 +13,10 @@
 - Inspect and preserve remote history; no force push or replacement of unrelated
   remote files. Code uses normal Git; database bundles may use the same repo's
   Releases because regular Git rejects individual files over 100 MiB.
-- Data upload remains pending. Verify remote commit identity and downloaded
-  asset hashes/restore integrity before reporting delivery complete.
+- The first data snapshot is uploaded as a draft, but download/restore
+  verification and the later full-dataset delivery remain pending. Verify
+  remote commit identity and downloaded asset hashes/restore integrity before
+  reporting delivery complete.
 - Read-only remote check on 2026-08-26: repository is private, empty and the
   current account has ADMIN permission; SSH access succeeds. Local `origin`
   points to the requested repository. The first normal Git push of `main`
@@ -53,7 +55,17 @@
 - D2 preparation admitted: 156 tests pass, zero structure findings; the real
   quarantined D1 archive now fails verification before extraction because its
   manifest contains the excluded session cache. The new source-selection report
-  explicitly excludes that cache and SQLite sidecars. D2 remote upload pending.
+  explicitly excludes that cache and SQLite sidecars.
+- D2 real upload succeeded: source commit `5368a6fe77aacec86e23a831338d82bd5b2a3ad5`
+  was pushed and its remote SHA verified. Draft release `data-20260826-d2`
+  contains the 636315381-byte archive and five supporting files. GitHub's archive
+  SHA256 matches `0799eda5a445a1228f63168a304355e64ae821b84799e5099d15ddc55f34c94f`.
+  Its 121-file snapshot includes 6065746 daily bars, 116160 five-minute bars,
+  and the synthetic-ledger database; no provider Cookie cache is included.
+  The two JSON manifests were downloaded and byte-compared successfully.
+  The full archive is still downloading to `research/output/delivery/roundtrip-20260826-d2/`;
+  do not publish before restoring it into a fresh directory and matching all
+  hashes and SQLite inventories. Original A5 ingestion continues independently.
 
 ## Code-evolution record
 
