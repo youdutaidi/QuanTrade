@@ -53,3 +53,25 @@ def test_empty_year_is_valid_only_with_schema_and_identity():
 def test_missing_column_is_not_silently_defaulted_to_zero():
     with pytest.raises(ValueError, match="schema"):
         normalize_response(raw_frame().drop(columns="dividCashPsAfterTax"), "sh.600000", 2021)
+
+
+def test_real_source_description_and_ambiguous_tax_are_not_numeric_claims():
+    description = "10派6元（含税，扣税后5.4或6元）"
+    raw, events = normalize_response(raw_frame(dividCashStock=description,
+                                             dividCashPsAfterTax="0.54或0.6"), "sh.600000", 2021)
+    event = events[0]
+    assert event["source_cash_stock"] == raw["rows"][0]["dividCashStock"] == description
+    assert event["source_after_tax_text"] == "0.54或0.6"
+    assert event["source_after_tax_cash_per_share"] is None
+    assert "ambiguous:dividCashPsAfterTax" in event["issues"]
+    assert "invalid:dividCashStock" not in event["issues"]
+    assert event["normalization_version"] == 2
+    assert event["ledger_ready"] is event["investor_tax_verified"] is False
+
+
+def test_single_after_tax_value_retains_precision_but_is_not_investor_tax_proof():
+    _, events = normalize_response(raw_frame(dividCashPsAfterTax="0.540000"), "sh.600000", 2021)
+    assert events[0]["source_after_tax_cash_per_share"] == "0.540000"
+    assert events[0]["source_after_tax_text"] == "0.540000"
+    assert events[0]["source_cash_stock"] == ""
+    assert events[0]["investor_tax_verified"] is False

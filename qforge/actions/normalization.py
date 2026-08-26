@@ -8,13 +8,15 @@ from decimal import Decimal, InvalidOperation
 import pandas as pd
 
 
+NORMALIZATION_VERSION = 2
 DATE_FIELDS = {"dividRegistDate": "record_date", "dividOperateDate": "ex_date",
                "dividPayDate": "payment_date", "dividStockMarketDate": "shares_listing_date"}
 NUMBER_FIELDS = {"dividCashPsBeforeTax": "gross_cash_per_share",
                  "dividCashPsAfterTax": "source_after_tax_cash_per_share",
-                 "dividStocksPs": "source_stock_per_share", "dividCashStock": "source_cash_stock",
+                 "dividStocksPs": "source_stock_per_share",
                  "dividReserveToStockPs": "reserve_to_stock_per_share"}
-REQUIRED_FIELDS = {"code", *DATE_FIELDS, *NUMBER_FIELDS}
+TEXT_FIELDS = {"dividCashStock": "source_cash_stock", "dividCashPsAfterTax": "source_after_tax_text"}
+REQUIRED_FIELDS = {"code", *DATE_FIELDS, *NUMBER_FIELDS, *TEXT_FIELDS}
 
 
 def normalize_response(frame: pd.DataFrame, code: str, year: int) -> tuple[dict, list[dict]]:
@@ -31,9 +33,11 @@ def normalize_response(frame: pd.DataFrame, code: str, year: int) -> tuple[dict,
         issues = []
         event = {target: parse_date(raw[source], source, issues) for source, target in DATE_FIELDS.items()}
         event.update({target: parse_number(raw[source], source, issues) for source, target in NUMBER_FIELDS.items()})
+        event.update({target: raw[source] for source, target in TEXT_FIELDS.items()})
         if event["ex_date"] and int(event["ex_date"][:4]) != year:
             raise ValueError("dividend ex-date is outside the requested operate year")
-        event.update(code=code, issues=issues, investor_tax_verified=False, ledger_ready=False)
+        event.update(code=code, issues=issues, investor_tax_verified=False, ledger_ready=False,
+                     normalization_version=NORMALIZATION_VERSION)
         events.append(event)
     dates = [event["ex_date"] for event in events if event["ex_date"]]
     for event in events:
@@ -54,6 +58,9 @@ def parse_date(raw: str, field: str, issues: list[str]) -> str | None:
 
 
 def parse_number(raw: str, field: str, issues: list[str]) -> str | None:
+    if field == "dividCashPsAfterTax" and "或" in raw:
+        issues.append(f"ambiguous:{field}")
+        return None
     try:
         value = Decimal(raw)
         if not value.is_finite() or value < 0:

@@ -401,6 +401,17 @@ data_goal:
         pilot_counterexample: dividCashStock is descriptive text, not a numeric quantity; source after-tax value may be the ambiguous expression 0.54 or 0.6; raw strings retained but typed normalization needs correction before expansion
         evidence: research/evidence/QF-DATA-EXPANSION-01/A10 and completion_runs/completion-e8d70198954a427881196268f94c32ce
         claim_boundary: admitted research prices and raw action responses are not certified economic P&L, holdout performance or verified strategies
+      - id: QF-DATA-EXPANSION-01-A11
+        decision: correct dividend text normalization and version derived records while retaining the A10 raw response and original projection unchanged
+        baseline: 363101d
+        scientific_choice_axis: unchanged source scope, cash/share policy and strategy candidates; source representation correction only
+        write_surface: qforge/actions/normalization.py, qforge/actions/store.py, tests/test_actions_*.py, research/README.md, research/evidence/QF-DATA-EXPANSION-01/A11/**; subsequent append-only raw capture in the configured action database
+        cheapest_falsifier: the real description survives as text, ambiguous after-tax text produces no numeric cash claim, and re-normalizing a legacy request does not change its persisted raw or derived bytes
+        admission: retained pytest suite and structure gate; reparse the one real archived response without network or database mutation; then extend the bounded pilot by nine requests
+        launch_gate: inspect all ten pilot responses and hashes, including source gaps and actual request cost, before considering the remaining fixed plan
+        claim_boundary: no inferred zero for blank fields, no selected tax branch, no certified economic cash/share event
+        state: normalization semantics and structure admitted; 171 retained/new tests pass; real hash-verified reparse preserves original raw and historical projection bytes; nine-request pilot admitted
+        continuity: retained 168 tests pass; daily panel SHA unchanged; no cash/share or tax policy changes; original normalized record remains recoverable
   cutover:
     criteria:
       - SQLite schema, idempotent upserts, checkpoint resume, and source normalization tests pass

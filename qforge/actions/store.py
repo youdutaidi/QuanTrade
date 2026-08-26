@@ -12,7 +12,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from .normalization import normalize_response
+from .normalization import NORMALIZATION_VERSION, normalize_response
 from .schema import SCHEMA_SQL
 
 
@@ -121,6 +121,16 @@ class ActionStore:
         if row is None or hashlib.sha256(row[0].encode()).hexdigest() != row[1]:
             raise ValueError("raw action response is absent or its hash changed")
         return json.loads(row[0])
+
+    def normalized_response(self, request_id: str) -> dict:
+        """Reparse hash-verified raw bytes without replacing any historical projection."""
+        raw = self.raw_response(request_id)
+        frame = pd.DataFrame(raw["rows"], columns=raw["fields"])
+        frame.attrs["request"] = raw["request"]
+        request = raw["request"]
+        _, events = normalize_response(frame, request["code"], request["year"])
+        return {"requestId": request_id, "normalizationVersion": NORMALIZATION_VERSION,
+                "request": request, "events": events}
 
     def status(self) -> dict:
         if not self.path.exists():

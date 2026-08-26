@@ -1,0 +1,43 @@
+{
+  "rawAndHistoricalProjectionUnchanged": true,
+  "sourceRawSha256": [
+    "d56381a7d65337d5397cb07d258790f86f5f56d059541c4c91bc90d3c8708640"
+  ],
+  "historicalProjectionSha256": [
+    "cf8c20177c4af8f0ac52c309f620b50ba04877ad4d9462f1ee5d0aa746775e06"
+  ],
+  "currentProjections": [
+    {
+      "requestId": "request-6397c4530a8d43ce813795340e092590",
+      "normalizationVersion": 2,
+      "request": {
+        "code": "sh.600000",
+        "year": 2020,
+        "yearType": "operate"
+      },
+      "events": [
+        {
+          "record_date": "2020-07-22",
+          "ex_date": "2020-07-23",
+          "payment_date": "2020-07-23",
+          "shares_listing_date": null,
+          "gross_cash_per_share": "0.6",
+          "source_after_tax_cash_per_share": null,
+          "source_stock_per_share": "0.000000",
+          "reserve_to_stock_per_share": null,
+          "source_cash_stock": "10派6元（含税，扣税后5.4或6元）",
+          "source_after_tax_text": "0.54或0.6",
+          "code": "sh.600000",
+          "issues": [
+            "missing:dividStockMarketDate",
+            "ambiguous:dividCashPsAfterTax",
+            "missing:dividReserveToStockPs"
+          ],
+          "investor_tax_verified": false,
+          "ledger_ready": false,
+          "normalization_version": 2
+        }
+      ]
+    }
+  ]
+}

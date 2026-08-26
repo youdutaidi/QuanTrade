@@ -67,6 +67,8 @@ def test_raw_response_hash_detects_local_tampering(tmp_path):
         conn.execute("UPDATE action_requests SET raw_json='{}' WHERE request_id=?", (request,))
     with pytest.raises(ValueError, match="hash changed"):
         store.raw_response(request)
+    with pytest.raises(ValueError, match="hash changed"):
+        store.normalized_response(request)
 
 
 def test_changed_scope_cannot_reuse_checkpoints(tmp_path):
@@ -89,3 +91,24 @@ def test_nonempty_event_is_atomic_and_cannot_replace_a_completed_response(tmp_pa
         store.fail_request(request, "cannot overwrite")
     with store.connect(readonly=True) as conn:
         assert conn.execute("SELECT ledger_ready FROM action_events").fetchone()[0] == 0
+
+
+def test_legacy_projection_is_reparsed_from_raw_without_rewriting_history(tmp_path):
+    store, task, run = archive(tmp_path)
+    request = store.start_request(task, run)
+    frame = empty_frame()
+    frame.loc[0] = {key: "" for key in frame.columns}
+    frame.loc[0, ["code", "dividOperateDate", "dividCashStock", "dividCashPsAfterTax"]] = [
+        "sh.600000", "2021-07-01", "10派6元（含税）", "0.54或0.6"]
+    store.save_response(request, frame)
+    with store.connect() as conn:
+        conn.execute("UPDATE action_events SET normalized_json=? WHERE request_id=?",
+                     ('{"source_cash_stock":null,"ledger_ready":false}', request))
+        before = tuple(conn.execute("SELECT r.raw_json,r.raw_sha256,e.normalized_json FROM action_requests r JOIN action_events e USING(request_id)").fetchone())
+    parsed = store.normalized_response(request)
+    assert parsed["normalizationVersion"] == 2
+    assert parsed["events"][0]["source_cash_stock"] == "10派6元（含税）"
+    assert parsed["events"][0]["source_after_tax_cash_per_share"] is None
+    with store.connect(readonly=True) as conn:
+        after = tuple(conn.execute("SELECT r.raw_json,r.raw_sha256,e.normalized_json FROM action_requests r JOIN action_events e USING(request_id)").fetchone())
+    assert before == after
