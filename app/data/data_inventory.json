@@ -5,24 +5,24 @@
   "stockCount": 5549,
   "delistedStockCount": 337,
   "universeObservationRows": 39088,
-  "dailyBarCount": 3076788,
-  "dailyBarSymbols": 2330,
+  "dailyBarCount": 4483667,
+  "dailyBarSymbols": 3419,
   "firstDailyBar": "2020-08-25",
   "lastDailyBar": "2026-08-24",
-  "adjustmentFactorCount": 11456,
-  "snapshotAt": "2026-08-26T04:12:04.955233+00:00",
+  "adjustmentFactorCount": 15715,
+  "snapshotAt": "2026-08-26T04:31:32.193039+00:00",
   "database": "/Users/cailingling/Desktop/quant-intelligence-lab/research/data/qforge_market.sqlite",
-  "databaseBytes": 696446976,
+  "databaseBytes": 1013112832,
   "tasks": [
     {
       "status": "running",
-      "taskCount": 3100,
+      "taskCount": 2011,
       "rowsWritten": 0
     },
     {
       "status": "succeeded",
-      "taskCount": 2330,
-      "rowsWritten": 3088244
+      "taskCount": 3419,
+      "rowsWritten": 4499382
     }
   ],
   "audits": [

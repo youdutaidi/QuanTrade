@@ -16,9 +16,10 @@ from .store import MarketDataStore
 
 def audit_market_database(config: MarketDataConfig, root: Path) -> dict[str, object]:
     store = MarketDataStore(root / config.database_path)
-    inventory = store.status()
+    store.initialize()
     with store.connect() as connection:
         connection.execute("BEGIN")
+        inventory = store.status(connection)
         quick_check = str(connection.execute("PRAGMA quick_check").fetchone()[0])
         coverage = audit_daily_coverage(connection, config.adjustflag)
         calendar = audit_calendar(connection, config.start, config.end)

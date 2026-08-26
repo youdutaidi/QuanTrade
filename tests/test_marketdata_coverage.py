@@ -84,3 +84,23 @@ def test_missing_calendar_cannot_make_missing_bar_invisible(tmp_path):
     assert report["coverage"]["pass"] is True
     assert report["calendar"]["missingDays"] == 1
     assert report["dataReady"] is False
+
+
+def test_audit_uses_one_snapshot_while_ingestion_advances(tmp_path, monkeypatch):
+    config, store, task = fixture_store(tmp_path)
+    store.upsert_daily_bars(raw_frame(["2020-01-02", "2020-01-06"]))
+    store.finish_task(task["task_key"], 2)
+    original = MarketDataStore.status
+
+    def status_then_write(self, connection=None):
+        inventory = original(self, connection)
+        store.upsert_daily_bars(raw_frame(["2020-01-03"]))
+        return inventory
+
+    monkeypatch.setattr(MarketDataStore, "status", status_then_write)
+    report = audit_market_database(config, tmp_path)
+    assert report["inventory"]["dailyBarCount"] == 2
+    assert report["coverage"]["missingRows"] == 1
+    assert report["dataReady"] is False
+    with store.connect() as connection:
+        assert connection.execute("SELECT COUNT(*) FROM daily_bars").fetchone()[0] == 3

@@ -291,6 +291,13 @@ data_goal:
         real_export_cost: 3709150 rows and 2823 symbols; 11.33 seconds; 533086208 peak resident bytes; candidate Parquet SHA256 d945ab19fcae58d2ef3f86ad40ab76269d7c5b3eea534c798e279e1d24c5d6cf
         evidence_extension: each final completion records immutable audit, source replay, panel fingerprint and result; latest pointer is atomic; export failures or mid-run code changes cannot emit ready
         admission_extension: complete civil-day calendar coverage is required; verify-panel refuses incomplete manifests, absent source samples and replaced artifacts
+      - id: QF-DATA-EXPANSION-01-A8
+        decision: make live inventory counts and integrity/coverage checks observe one SQLite read snapshot
+        baseline: b6d7f5d
+        counterexample: A7 live audit observed 3218 successful tasks in inventory and 3219 in coverage because ingestion advanced between separate read transactions
+        cheapest_falsifier: commit a missing bar from a second WAL connection during the audit; all reported counts must remain on the initial snapshot
+        write_surface: qforge/marketdata/store.py, qforge/marketdata/audit.py, tests/test_marketdata_coverage.py, research/README.md, research/evidence/QF-DATA-EXPANSION-01/A8/**
+        state: structure-admitted and semantics-admitted; 63 tests passed; live audit now uses one read transaction; no change to source data or strategy parameters
   cutover:
     criteria:
       - SQLite schema, idempotent upserts, checkpoint resume, and source normalization tests pass

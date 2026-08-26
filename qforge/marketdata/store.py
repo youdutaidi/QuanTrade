@@ -262,30 +262,32 @@ class MarketDataStore:
                 ("failed" if error else "succeeded", rows, error, now_iso(), task_key),
             )
 
-    def status(self) -> dict[str, object]:
+    def status(self, connection: sqlite3.Connection | None = None) -> dict[str, object]:
+        if connection is not None:
+            return _read_inventory(connection, self.path)
         self.initialize()
         with self.connect() as connection:
             connection.execute("BEGIN")
-            snapshot_at = now_iso()
-            counts = dict(connection.execute(_COUNTS_QUERY).fetchone())
-            tasks = [dict(row) for row in connection.execute(
-                "SELECT status,COUNT(*) taskCount,SUM(rows_written) rowsWritten FROM market_download_tasks GROUP BY status ORDER BY status"
-            ).fetchall()]
-            audits = [dict(row) for row in connection.execute(
-                "SELECT observation_date observationDate,observed_stock_count observedStockCount,derived_stock_count derivedStockCount,observed_only_count observedOnlyCount,derived_only_count derivedOnlyCount,status FROM universe_audits ORDER BY observation_date"
-            ).fetchall()]
-            latest = connection.execute(
-                "SELECT run_id runId,operation,status,rows_written rowsWritten,error,completed_at completedAt FROM market_download_runs ORDER BY started_at DESC LIMIT 1"
-            ).fetchone()
-        return {
-            **counts,
-            "snapshotAt": snapshot_at,
-            "database": str(self.path),
-            "databaseBytes": self.path.stat().st_size if self.path.exists() else 0,
-            "tasks": tasks,
-            "audits": audits,
-            "latestRun": dict(latest) if latest else None,
-        }
+            return _read_inventory(connection, self.path)
+
+
+def _read_inventory(connection: sqlite3.Connection, path: Path) -> dict[str, object]:
+    snapshot_at = now_iso()
+    counts = dict(connection.execute(_COUNTS_QUERY).fetchone())
+    tasks = [dict(row) for row in connection.execute(
+        "SELECT status,COUNT(*) taskCount,SUM(rows_written) rowsWritten FROM market_download_tasks GROUP BY status ORDER BY status"
+    ).fetchall()]
+    audits = [dict(row) for row in connection.execute(
+        "SELECT observation_date observationDate,observed_stock_count observedStockCount,derived_stock_count derivedStockCount,observed_only_count observedOnlyCount,derived_only_count derivedOnlyCount,status FROM universe_audits ORDER BY observation_date"
+    ).fetchall()]
+    latest = connection.execute(
+        "SELECT run_id runId,operation,status,rows_written rowsWritten,error,completed_at completedAt FROM market_download_runs ORDER BY started_at DESC LIMIT 1"
+    ).fetchone()
+    return {
+        **counts, "snapshotAt": snapshot_at, "database": str(path),
+        "databaseBytes": path.stat().st_size if path.exists() else 0,
+        "tasks": tasks, "audits": audits, "latestRun": dict(latest) if latest else None,
+    }
 
 
 def _optional(value: object) -> str | None:
