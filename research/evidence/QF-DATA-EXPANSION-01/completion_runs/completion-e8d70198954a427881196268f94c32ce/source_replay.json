@@ -1,0 +1,328 @@
+{
+  "sampleSize": 20,
+  "allPass": true,
+  "results": [
+    {
+      "code": "sh.600068",
+      "status": "pass",
+      "daily": {
+        "status": "pass",
+        "freshRows": 258,
+        "storedRows": 258,
+        "numericMismatches": 0
+      },
+      "adjustments": {
+        "status": "pass",
+        "freshRows": 1,
+        "storedRows": 1,
+        "numericMismatches": 0
+      }
+    },
+    {
+      "code": "sh.000001",
+      "status": "pass",
+      "daily": {
+        "status": "pass",
+        "freshRows": 1454,
+        "storedRows": 1454,
+        "numericMismatches": 0
+      },
+      "adjustments": {
+        "status": "pass",
+        "freshRows": 0,
+        "storedRows": 0,
+        "numericMismatches": 0
+      }
+    },
+    {
+      "code": "sh.600000",
+      "status": "pass",
+      "daily": {
+        "status": "pass",
+        "freshRows": 1454,
+        "storedRows": 1454,
+        "numericMismatches": 0
+      },
+      "adjustments": {
+        "status": "pass",
+        "freshRows": 6,
+        "storedRows": 6,
+        "numericMismatches": 0
+      }
+    },
+    {
+      "code": "sh.688001",
+      "status": "pass",
+      "daily": {
+        "status": "pass",
+        "freshRows": 1454,
+        "storedRows": 1454,
+        "numericMismatches": 0
+      },
+      "adjustments": {
+        "status": "pass",
+        "freshRows": 5,
+        "storedRows": 5,
+        "numericMismatches": 0
+      }
+    },
+    {
+      "code": "sz.000001",
+      "status": "pass",
+      "daily": {
+        "status": "pass",
+        "freshRows": 1454,
+        "storedRows": 1454,
+        "numericMismatches": 0
+      },
+      "adjustments": {
+        "status": "pass",
+        "freshRows": 9,
+        "storedRows": 9,
+        "numericMismatches": 0
+      }
+    },
+    {
+      "code": "sz.300001",
+      "status": "pass",
+      "daily": {
+        "status": "pass",
+        "freshRows": 1454,
+        "storedRows": 1454,
+        "numericMismatches": 0
+      },
+      "adjustments": {
+        "status": "pass",
+        "freshRows": 6,
+        "storedRows": 6,
+        "numericMismatches": 0
+      }
+    },
+    {
+      "code": "sh.600335",
+      "status": "pass",
+      "daily": {
+        "status": "pass",
+        "freshRows": 1454,
+        "storedRows": 1454,
+        "numericMismatches": 0
+      },
+      "adjustments": {
+        "status": "pass",
+        "freshRows": 9,
+        "storedRows": 9,
+        "numericMismatches": 0
+      }
+    },
+    {
+      "code": "sh.600691",
+      "status": "pass",
+      "daily": {
+        "status": "pass",
+        "freshRows": 1454,
+        "storedRows": 1454,
+        "numericMismatches": 0
+      },
+      "adjustments": {
+        "status": "pass",
+        "freshRows": 0,
+        "storedRows": 0,
+        "numericMismatches": 0
+      }
+    },
+    {
+      "code": "sh.601088",
+      "status": "pass",
+      "daily": {
+        "status": "pass",
+        "freshRows": 1454,
+        "storedRows": 1454,
+        "numericMismatches": 0
+      },
+      "adjustments": {
+        "status": "pass",
+        "freshRows": 7,
+        "storedRows": 7,
+        "numericMismatches": 0
+      }
+    },
+    {
+      "code": "sh.603100",
+      "status": "pass",
+      "daily": {
+        "status": "pass",
+        "freshRows": 1454,
+        "storedRows": 1454,
+        "numericMismatches": 0
+      },
+      "adjustments": {
+        "status": "pass",
+        "freshRows": 8,
+        "storedRows": 8,
+        "numericMismatches": 0
+      }
+    },
+    {
+      "code": "sh.603557",
+      "status": "pass",
+      "daily": {
+        "status": "pass",
+        "freshRows": 1454,
+        "storedRows": 1454,
+        "numericMismatches": 0
+      },
+      "adjustments": {
+        "status": "pass",
+        "freshRows": 0,
+        "storedRows": 0,
+        "numericMismatches": 0
+      }
+    },
+    {
+      "code": "sh.605128",
+      "status": "pass",
+      "daily": {
+        "status": "pass",
+        "freshRows": 1439,
+        "storedRows": 1439,
+        "numericMismatches": 0
+      },
+      "adjustments": {
+        "status": "pass",
+        "freshRows": 7,
+        "storedRows": 7,
+        "numericMismatches": 0
+      }
+    },
+    {
+      "code": "sh.688238",
+      "status": "pass",
+      "daily": {
+        "status": "pass",
+        "freshRows": 1074,
+        "storedRows": 1074,
+        "numericMismatches": 0
+      },
+      "adjustments": {
+        "status": "pass",
+        "freshRows": 2,
+        "storedRows": 2,
+        "numericMismatches": 0
+      }
+    },
+    {
+      "code": "sh.688627",
+      "status": "pass",
+      "daily": {
+        "status": "pass",
+        "freshRows": 753,
+        "storedRows": 753,
+        "numericMismatches": 0
+      },
+      "adjustments": {
+        "status": "pass",
+        "freshRows": 4,
+        "storedRows": 4,
+        "numericMismatches": 0
+      }
+    },
+    {
+      "code": "sz.000587",
+      "status": "pass",
+      "daily": {
+        "status": "pass",
+        "freshRows": 632,
+        "storedRows": 632,
+        "numericMismatches": 0
+      },
+      "adjustments": {
+        "status": "pass",
+        "freshRows": 0,
+        "storedRows": 0,
+        "numericMismatches": 0
+      }
+    },
+    {
+      "code": "sz.000996",
+      "status": "pass",
+      "daily": {
+        "status": "pass",
+        "freshRows": 931,
+        "storedRows": 931,
+        "numericMismatches": 0
+      },
+      "adjustments": {
+        "status": "pass",
+        "freshRows": 0,
+        "storedRows": 0,
+        "numericMismatches": 0
+      }
+    },
+    {
+      "code": "sz.002165",
+      "status": "pass",
+      "daily": {
+        "status": "pass",
+        "freshRows": 1454,
+        "storedRows": 1454,
+        "numericMismatches": 0
+      },
+      "adjustments": {
+        "status": "pass",
+        "freshRows": 7,
+        "storedRows": 7,
+        "numericMismatches": 0
+      }
+    },
+    {
+      "code": "sz.002452",
+      "status": "pass",
+      "daily": {
+        "status": "pass",
+        "freshRows": 1454,
+        "storedRows": 1454,
+        "numericMismatches": 0
+      },
+      "adjustments": {
+        "status": "pass",
+        "freshRows": 7,
+        "storedRows": 7,
+        "numericMismatches": 0
+      }
+    },
+    {
+      "code": "sz.002747",
+      "status": "pass",
+      "daily": {
+        "status": "pass",
+        "freshRows": 1454,
+        "storedRows": 1454,
+        "numericMismatches": 0
+      },
+      "adjustments": {
+        "status": "pass",
+        "freshRows": 4,
+        "storedRows": 4,
+        "numericMismatches": 0
+      }
+    },
+    {
+      "code": "sz.300012",
+      "status": "pass",
+      "daily": {
+        "status": "pass",
+        "freshRows": 1454,
+        "storedRows": 1454,
+        "numericMismatches": 0
+      },
+      "adjustments": {
+        "status": "pass",
+        "freshRows": 7,
+        "storedRows": 7,
+        "numericMismatches": 0
+      }
+    }
+  ],
+  "scope": "same-source replay of daily bars and adjustment factors; not independent market or P&L verification",
+  "samplePolicy": "deterministic evenly-spaced securities with explicit lifecycle and board coverage"
+}

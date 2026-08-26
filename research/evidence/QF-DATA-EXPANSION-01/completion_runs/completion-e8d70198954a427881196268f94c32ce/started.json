@@ -1,0 +1,41 @@
+{
+  "runId": "completion-e8d70198954a427881196268f94c32ce",
+  "startedAt": "2026-08-26T06:36:35.450559+00:00",
+  "config": {
+    "experiment_id": "QF-DATA-EXPANSION-01",
+    "database_path": "research/data/qforge_market.sqlite",
+    "start": "2020-08-25",
+    "end": "2026-08-24",
+    "adjustflag": 3,
+    "markets": [
+      "sh",
+      "sz"
+    ],
+    "security_types": [
+      "1"
+    ],
+    "benchmark_codes": [
+      "sh.000001",
+      "sh.000300",
+      "sh.000905",
+      "sh.000852"
+    ],
+    "audit_dates": [
+      "2021-08-25",
+      "2022-08-25",
+      "2023-08-25",
+      "2024-08-26",
+      "2025-08-25"
+    ],
+    "retries": 3,
+    "request_timeout_seconds": 90,
+    "batch_size": 200,
+    "batch_pause_seconds": 2.0,
+    "source_sample_size": 20,
+    "audit_output": "research/evidence/QF-DATA-EXPANSION-01/data_audit.json",
+    "verification_output": "research/evidence/QF-DATA-EXPANSION-01/source_sample_replay.json",
+    "research_panel_output": "research/data/qforge_daily_panel.parquet",
+    "app_output": "app/data/data_inventory.json"
+  },
+  "codeSha256": "800cd7feff13c23e71af2a1cdf0df701a430063fbc79f88c5bc8165e047f3a94"
+}

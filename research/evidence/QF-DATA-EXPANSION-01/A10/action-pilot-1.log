@@ -1,0 +1,22 @@
+login success!
+{"progress": 1, "selectedTasks": 1, "code": "sh.600000", "year": 2020, "rowsWritten": 1, "failures": 0}
+logout success!
+{
+  "state": "incomplete",
+  "database": "/Users/cailingling/Desktop/quant-intelligence-lab/research/data/qforge_actions.sqlite",
+  "scopeSha256": "5983b1dc73827d5cbe7da6787f5c05858e1e38e1fdbe00291ba29c6079cc5ad8",
+  "tasks": {
+    "pending": 34475,
+    "succeeded": 1
+  },
+  "events": 1,
+  "requests": 1,
+  "queriedEmptyYears": 0,
+  "ledgerReady": false,
+  "investorTaxVerified": false,
+  "attemptedTasks": 1,
+  "rowsWritten": 1,
+  "failures": 0,
+  "runId": "actions-abb0c0118ff64160a1f0379a3205684a",
+  "recoveredTasks": 0
+}

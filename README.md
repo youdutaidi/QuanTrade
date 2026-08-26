@@ -54,11 +54,16 @@ python3 -m venv .venv
 .venv/bin/qforge walkforward ledger-demo --config configs/walk_forward.json \
   --output research/output/ledger-demo-local
 
+# 冻结的 144 个候选在合成行情上逐日执行，并独立重放 SQLite 账本。
+.venv/bin/qforge walkforward execution-demo --config configs/walk_forward.json \
+  --output research/output/execution-demo-local --all-candidates
+
 # 已有五分钟试验的数据状态。
 .venv/bin/qforge minute status --config configs/minute_5m.json
 ```
 
-`ledger-demo` 是手工可核算的合成测试，不是真实市场收益。
+`ledger-demo` 和 `execution-demo` 都是合成测试，不是真实市场收益；
+20 个合成交易日不会被外推为年化收益率。
 新的全量候选回测仍需完成数据验收、公司行动接入和市场执行验证。
 已有日线和分钟研究入口保留在研究文档中，不会因新代码准备而被替换。
 
@@ -73,9 +78,13 @@ python3 -m venv .venv
 - `research/evidence/`：配置指纹、测试、审计、源数据重取检查与运行证据。
 - `configs/validation_policy.json`：可信策略的统一门槛；通过单项不等于整体通过。
 
-大数据文件不直接放进普通 Git 历史。最终交付目标是本仓库的 Releases，
+大数据文件不直接放进普通 Git 历史，而放在本仓库的 Releases，
 包含一致性数据库备份、原始/派生数据清单、SHA256 和恢复说明。
-在上传并回读验证前，不能仅凭这段说明认定数据已在远程可用。
+第一份[采集中快照 data-20260826-d2](https://github.com/youdutaidi/QuanTrade/releases/tag/data-20260826-d2)
+已发布，归档大小 636,315,381 字节；121 个文件和三份 SQLite 数据库
+均已从 GitHub 下载、校验并恢复到新的本地目录。附件包含恢复验证报告。
+这份快照捕获时有 6,065,746 条日线和 116,160 条五分钟记录，
+不包含捕获后新增的数据；不要把它当作最终全量数据或已验证策略。
 本地数据库不会因上传而删除。
 
 备份与恢复入口如下。输出目录必须是新的；恢复不会覆盖现有数据。

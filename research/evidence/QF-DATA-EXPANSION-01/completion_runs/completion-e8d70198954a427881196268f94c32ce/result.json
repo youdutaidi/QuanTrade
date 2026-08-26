@@ -1,0 +1,167 @@
+{
+  "runId": "completion-e8d70198954a427881196268f94c32ce",
+  "startedAt": "2026-08-26T06:36:35.450559+00:00",
+  "config": {
+    "experiment_id": "QF-DATA-EXPANSION-01",
+    "database_path": "research/data/qforge_market.sqlite",
+    "start": "2020-08-25",
+    "end": "2026-08-24",
+    "adjustflag": 3,
+    "markets": [
+      "sh",
+      "sz"
+    ],
+    "security_types": [
+      "1"
+    ],
+    "benchmark_codes": [
+      "sh.000001",
+      "sh.000300",
+      "sh.000905",
+      "sh.000852"
+    ],
+    "audit_dates": [
+      "2021-08-25",
+      "2022-08-25",
+      "2023-08-25",
+      "2024-08-26",
+      "2025-08-25"
+    ],
+    "retries": 3,
+    "request_timeout_seconds": 90,
+    "batch_size": 200,
+    "batch_pause_seconds": 2.0,
+    "source_sample_size": 20,
+    "audit_output": "research/evidence/QF-DATA-EXPANSION-01/data_audit.json",
+    "verification_output": "research/evidence/QF-DATA-EXPANSION-01/source_sample_replay.json",
+    "research_panel_output": "research/data/qforge_daily_panel.parquet",
+    "app_output": "app/data/data_inventory.json"
+  },
+  "codeSha256": "800cd7feff13c23e71af2a1cdf0df701a430063fbc79f88c5bc8165e047f3a94",
+  "state": "ready",
+  "passes": [
+    {
+      "pass": 1,
+      "selectedTasks": 0,
+      "rowsWritten": 0,
+      "failures": 0
+    }
+  ],
+  "errors": [],
+  "audit": {
+    "quickCheck": "ok",
+    "tasksComplete": true,
+    "integrityPass": true,
+    "dataReady": true
+  },
+  "verification": {
+    "sampleSize": 20,
+    "allPass": true
+  },
+  "panel": {
+    "output": "/Users/cailingling/Desktop/quant-intelligence-lab/research/data/qforge_daily_panel.parquet",
+    "rows": 7076844,
+    "symbols": 5428,
+    "batches": 55,
+    "firstDate": "2020-08-25",
+    "lastDate": "2026-08-24",
+    "bytes": 474278731,
+    "sha256": "5c872434d4fddf066f6fb8f8e5e151cb25b5334aefd71b6d47f67524895717dc",
+    "symbolsPerChunk": 100,
+    "priceBasis": "exchange-reference-price chain; raw OHLC also retained",
+    "corporateActionsVerified": false,
+    "permittedUse": "signal research; not a cash/share P&L ledger"
+  },
+  "inventory": {
+    "calendarDays": 2191,
+    "tradingDays": 1454,
+    "securityCount": 8920,
+    "stockCount": 5549,
+    "delistedStockCount": 337,
+    "universeObservationRows": 39088,
+    "dailyBarCount": 7077020,
+    "dailyBarSymbols": 5430,
+    "firstDailyBar": "2020-08-25",
+    "lastDailyBar": "2026-08-24",
+    "adjustmentFactorCount": 24831,
+    "snapshotAt": "2026-08-26T06:37:55.040380+00:00",
+    "database": "/Users/cailingling/Desktop/quant-intelligence-lab/research/data/qforge_market.sqlite",
+    "databaseBytes": 1594908672,
+    "tasks": [
+      {
+        "status": "succeeded",
+        "taskCount": 5430,
+        "rowsWritten": 7101851
+      }
+    ],
+    "audits": [
+      {
+        "observationDate": "2020-08-25",
+        "observedStockCount": 3972,
+        "derivedStockCount": 3970,
+        "observedOnlyCount": 2,
+        "derivedOnlyCount": 0,
+        "status": "pass_boundary"
+      },
+      {
+        "observationDate": "2021-08-25",
+        "observedStockCount": 4453,
+        "derivedStockCount": 4453,
+        "observedOnlyCount": 0,
+        "derivedOnlyCount": 0,
+        "status": "pass"
+      },
+      {
+        "observationDate": "2022-08-25",
+        "observedStockCount": 4779,
+        "derivedStockCount": 4779,
+        "observedOnlyCount": 0,
+        "derivedOnlyCount": 0,
+        "status": "pass"
+      },
+      {
+        "observationDate": "2023-08-25",
+        "observedStockCount": 5049,
+        "derivedStockCount": 5049,
+        "observedOnlyCount": 0,
+        "derivedOnlyCount": 0,
+        "status": "pass"
+      },
+      {
+        "observationDate": "2024-08-26",
+        "observedStockCount": 5102,
+        "derivedStockCount": 5101,
+        "observedOnlyCount": 1,
+        "derivedOnlyCount": 0,
+        "status": "pass_boundary"
+      },
+      {
+        "observationDate": "2025-08-25",
+        "observedStockCount": 5153,
+        "derivedStockCount": 5153,
+        "observedOnlyCount": 0,
+        "derivedOnlyCount": 0,
+        "status": "pass"
+      },
+      {
+        "observationDate": "2026-08-24",
+        "observedStockCount": 5211,
+        "derivedStockCount": 5211,
+        "observedOnlyCount": 0,
+        "derivedOnlyCount": 0,
+        "status": "pass"
+      }
+    ],
+    "latestRun": {
+      "runId": "market-cadcc080653a478cb7855dc4ac6536e5",
+      "operation": "download-daily",
+      "status": "succeeded",
+      "rowsWritten": 0,
+      "error": null,
+      "completedAt": "2026-08-26T06:36:35.476814+00:00"
+    }
+  },
+  "scope": "raw and adjusted-price research input; not verified strategy or corporate-action P&L",
+  "completedAt": "2026-08-26T06:37:55.284164+00:00",
+  "manifest": "/Users/cailingling/Desktop/quant-intelligence-lab/research/evidence/QF-DATA-EXPANSION-01/completion_runs/completion-e8d70198954a427881196268f94c32ce/result.json"
+}

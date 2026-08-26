@@ -1,0 +1,11 @@
+{
+  "state": "verified-input",
+  "manifest": "/Users/cailingling/Desktop/quant-intelligence-lab/research/evidence/QF-DATA-EXPANSION-01/data_completion.json",
+  "panel": "/Users/cailingling/Desktop/quant-intelligence-lab/research/data/qforge_daily_panel.parquet",
+  "rows": 7076844,
+  "sha256": "5c872434d4fddf066f6fb8f8e5e151cb25b5334aefd71b6d47f67524895717dc",
+  "scope": "research input only; corporate-action P&L and strategy validation remain separate",
+  "studySha256": "f946362d7d5e71e2e023e5412cd3024bada5edcec5eddd1b18737eaf2afdeae4",
+  "frozenPlanSha256": "ff4f73b39e141806a2aa3dc29f0cb1fb703af1edace7c62ea7dc660da61bf0a9",
+  "marketOutcomesRead": false
+}

@@ -386,6 +386,21 @@ data_goal:
         continuity: all prior 115 tests retained; minute database still has 116160 real bars; local HTTP 200; frozen strategy config unchanged
         evidence: research/evidence/QF-DATA-EXPANSION-01/A9
         claim_boundary: raw dividend capture is not full corporate-action coverage, rights-issue accounting, investor-specific taxation, or economic P&L validation
+      - id: QF-DATA-EXPANSION-01-A10
+        decision: admit the completed daily download under the already-tested boundary-aware audit, source replay and fingerprinted export; then exercise the admitted raw-dividend adapter on a bounded pilot
+        baseline: cc77d70
+        scientific_choice_axis: unchanged data scope and frozen strategy specification; no market-outcome search
+        write_surface: research/README.md, research/evidence/QF-DATA-EXPANSION-01/A10/**, existing completion evidence and inventory outputs; append-only source capture in the configured local databases
+        precondition: A5 finished all 5430 tasks and its one retry; no daily source process remains; old A5 audit was incomplete because it predates explicit pass_boundary acceptance
+        frozen_commands: qforge market complete --config configs/market_data.json; qforge market verify-panel --config configs/market_data.json; qforge actions download --config configs/corporate_actions.json --max-tasks 1
+        cheapest_falsifier: any missing-calendar bar, failed source replay, changed panel fingerprint, wrong dividend response identity or invalid required schema stops admission
+        pilot_extension: inspect the first real raw response and normalization before at most nine additional requests; inspect all pilot rows and errors before launching the remaining fixed lifecycle-year capture
+        state: daily research input admitted; first raw dividend response captured; expanded action pilot stopped on a real normalization counterexample
+        daily_result: all 5430 tasks succeeded; 7077020 raw bars and 24831 adjustment rows; zero mandatory missing rows; 20 same-source daily-plus-factor replays pass; 7076844-row panel fingerprint verified
+        panel_sha256: 5c872434d4fddf066f6fb8f8e5e151cb25b5334aefd71b6d47f67524895717dc
+        pilot_counterexample: dividCashStock is descriptive text, not a numeric quantity; source after-tax value may be the ambiguous expression 0.54 or 0.6; raw strings retained but typed normalization needs correction before expansion
+        evidence: research/evidence/QF-DATA-EXPANSION-01/A10 and completion_runs/completion-e8d70198954a427881196268f94c32ce
+        claim_boundary: admitted research prices and raw action responses are not certified economic P&L, holdout performance or verified strategies
   cutover:
     criteria:
       - SQLite schema, idempotent upserts, checkpoint resume, and source normalization tests pass

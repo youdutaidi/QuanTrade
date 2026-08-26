@@ -10,7 +10,7 @@
   "firstDailyBar": "2020-08-25",
   "lastDailyBar": "2026-08-24",
   "adjustmentFactorCount": 24831,
-  "snapshotAt": "2026-08-26T06:22:26.964630+00:00",
+  "snapshotAt": "2026-08-26T06:37:55.040380+00:00",
   "database": "/Users/cailingling/Desktop/quant-intelligence-lab/research/data/qforge_market.sqlite",
   "databaseBytes": 1594908672,
   "tasks": [
@@ -79,11 +79,11 @@
     }
   ],
   "latestRun": {
-    "runId": "market-3b34328f65b74846a47f6299b84b550a",
+    "runId": "market-cadcc080653a478cb7855dc4ac6536e5",
     "operation": "download-daily",
     "status": "succeeded",
-    "rowsWritten": 1460,
+    "rowsWritten": 0,
     "error": null,
-    "completedAt": "2026-08-26T06:21:52.753636+00:00"
+    "completedAt": "2026-08-26T06:36:35.476814+00:00"
   }
 }

@@ -1,0 +1,17 @@
+{
+  "panel": {
+    "output": "/Users/cailingling/Desktop/quant-intelligence-lab/research/data/qforge_daily_panel.parquet",
+    "rows": 7076844,
+    "symbols": 5428,
+    "batches": 55,
+    "firstDate": "2020-08-25",
+    "lastDate": "2026-08-24",
+    "bytes": 474278731,
+    "sha256": "5c872434d4fddf066f6fb8f8e5e151cb25b5334aefd71b6d47f67524895717dc",
+    "symbolsPerChunk": 100,
+    "priceBasis": "exchange-reference-price chain; raw OHLC also retained",
+    "corporateActionsVerified": false,
+    "permittedUse": "signal research; not a cash/share P&L ledger"
+  },
+  "errors": []
+}

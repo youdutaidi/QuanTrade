@@ -1,0 +1,144 @@
+{
+  "experimentId": "QF-DATA-EXPANSION-01",
+  "source": "BaoStock anonymous historical API",
+  "provenance": {
+    "baostockVersion": "0.9.3",
+    "pythonVersion": "3.14.3",
+    "sqliteVersion": "3.51.2",
+    "configSha256": "4c797fa32337a614a9ef46d933d559507fd603b8d88f22f383c694d42ef77843"
+  },
+  "window": {
+    "start": "2020-08-25",
+    "end": "2026-08-24"
+  },
+  "adjustflag": 3,
+  "quickCheck": "ok",
+  "integrity": {
+    "tradableNullOhlc": 0,
+    "invalidOhlcEnvelope": 0,
+    "negativeVolumeOrAmount": 0,
+    "barsOnNonTradingDays": 0,
+    "barsOutsideLifecycle": 0,
+    "unknownSymbols": 0,
+    "tradableBarsOnDelistingDate": 0,
+    "unknownObservedSymbols": 0,
+    "invalidTradingStatus": 0,
+    "invalidAdjustmentFactors": 0,
+    "unknownAdjustmentSymbols": 0
+  },
+  "coverage": {
+    "successfulTasksChecked": 5428,
+    "expectedRows": 7076844,
+    "missingRows": 0,
+    "tasksWithMissingDates": 0,
+    "examples": [],
+    "optionalSuspendedDelistingRows": 176,
+    "boundaryRule": "IPO inclusive; delisting date exclusive; raw suspended boundary rows retained",
+    "pass": true
+  },
+  "calendar": {
+    "expectedDays": 2191,
+    "storedDays": 2191,
+    "missingDays": 0,
+    "unexpectedDays": 0,
+    "invalidTradingFlags": 0,
+    "missingExamples": [],
+    "pass": true
+  },
+  "taskCounts": {
+    "succeeded": 5430
+  },
+  "universeAuditsPass": true,
+  "tasksComplete": true,
+  "integrityPass": true,
+  "dataReady": true,
+  "inventory": {
+    "calendarDays": 2191,
+    "tradingDays": 1454,
+    "securityCount": 8920,
+    "stockCount": 5549,
+    "delistedStockCount": 337,
+    "universeObservationRows": 39088,
+    "dailyBarCount": 7077020,
+    "dailyBarSymbols": 5430,
+    "firstDailyBar": "2020-08-25",
+    "lastDailyBar": "2026-08-24",
+    "adjustmentFactorCount": 24831,
+    "snapshotAt": "2026-08-26T06:36:43.274220+00:00",
+    "database": "/Users/cailingling/Desktop/quant-intelligence-lab/research/data/qforge_market.sqlite",
+    "databaseBytes": 1594908672,
+    "tasks": [
+      {
+        "status": "succeeded",
+        "taskCount": 5430,
+        "rowsWritten": 7101851
+      }
+    ],
+    "audits": [
+      {
+        "observationDate": "2020-08-25",
+        "observedStockCount": 3972,
+        "derivedStockCount": 3970,
+        "observedOnlyCount": 2,
+        "derivedOnlyCount": 0,
+        "status": "pass_boundary"
+      },
+      {
+        "observationDate": "2021-08-25",
+        "observedStockCount": 4453,
+        "derivedStockCount": 4453,
+        "observedOnlyCount": 0,
+        "derivedOnlyCount": 0,
+        "status": "pass"
+      },
+      {
+        "observationDate": "2022-08-25",
+        "observedStockCount": 4779,
+        "derivedStockCount": 4779,
+        "observedOnlyCount": 0,
+        "derivedOnlyCount": 0,
+        "status": "pass"
+      },
+      {
+        "observationDate": "2023-08-25",
+        "observedStockCount": 5049,
+        "derivedStockCount": 5049,
+        "observedOnlyCount": 0,
+        "derivedOnlyCount": 0,
+        "status": "pass"
+      },
+      {
+        "observationDate": "2024-08-26",
+        "observedStockCount": 5102,
+        "derivedStockCount": 5101,
+        "observedOnlyCount": 1,
+        "derivedOnlyCount": 0,
+        "status": "pass_boundary"
+      },
+      {
+        "observationDate": "2025-08-25",
+        "observedStockCount": 5153,
+        "derivedStockCount": 5153,
+        "observedOnlyCount": 0,
+        "derivedOnlyCount": 0,
+        "status": "pass"
+      },
+      {
+        "observationDate": "2026-08-24",
+        "observedStockCount": 5211,
+        "derivedStockCount": 5211,
+        "observedOnlyCount": 0,
+        "derivedOnlyCount": 0,
+        "status": "pass"
+      }
+    ],
+    "latestRun": {
+      "runId": "market-cadcc080653a478cb7855dc4ac6536e5",
+      "operation": "download-daily",
+      "status": "succeeded",
+      "rowsWritten": 0,
+      "error": null,
+      "completedAt": "2026-08-26T06:36:35.476814+00:00"
+    }
+  }
+}
