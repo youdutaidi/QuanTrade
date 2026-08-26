@@ -71,6 +71,18 @@
   directory. Two proof assets were added and all eight remote asset hashes checked.
   Published 2026-08-26T06:28:50Z as a prerelease, not Latest; remote tag resolves
   to the exact frozen source commit. Evidence: `research/evidence/DELIVERY-01/D2/`.
+- D3 delivery continuation (baseline `52a55aa`, unchanged archive implementation):
+  capture the now-admitted complete daily input, existing five-minute data,
+  synthetic execution evidence, and the in-progress raw-dividend archive into
+  `research/output/delivery/data-20260826-d3`. Preserve D2 as its original snapshot.
+  Capture and restore all selected project data with the existing secret/cache
+  exclusion policy. Each database is internally consistent; databases and logs
+  are captured at separate recorded instants. No global transaction is claimed.
+  The daily panel is complete within its frozen source scope; dividend capture
+  and strategy validation are not complete. Upload only after local verification,
+  and publish only after full remote download/restore and hash/inventory checks.
+  The local databases remain in place and A11 may continue its one source session.
+  No code/config/tests or source scope changes are part of this delivery attempt.
 
 ## Code-evolution record
 
