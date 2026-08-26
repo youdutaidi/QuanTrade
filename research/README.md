@@ -509,6 +509,10 @@ data_goal:
         state: structure-admitted and semantics-admitted; 252 tests pass, retaining all 237 prior cases; real development triage is admitted
         retained_mapping: 15 additive cases cover all six named-leg permutations, duplicate and incomplete legs, observed reverse-order forms, unchanged strict numeric conflict refusal, and complete provenance-linked diagnostics with out-of-window exclusion
         structure: no findings; maximum function/class/module/workflow-script 40/249/325/31 lines; 6599 package lines, 89 script lines, ratio 0.0135; no new mutable state owner or account consumer
+        real_triage: A2 under 8b5ee048a55dcc0ae4b84aa26891ef3685dfe516 completed in 18.45 seconds, 211746816 peak resident bytes and zero swaps; 30386 succeeded requests in one still-incomplete capture snapshot, no integrity or provenance failures
+        real_terms: 15972 development rows form 15790 groups, 15369 gross-source-consistent and 421 unresolved; all unresolved rows have raw provenance; zero unlocated dates
+        precision_diagnostic: 393 of 397 cash conflicts differ by at most 0.000001 per share, but only 369 match six-decimal ROUND_HALF_UP; 24 downward half-unit ties and four substantive differences prevent a blanket rounding explanation; no tolerance or acceptance change
+        verdict: complete diagnostic export and order-independent parsing supported; economic admission remains incomplete and no portfolio return was computed
   cutover:
     criteria:
       - SQLite schema, idempotent upserts, checkpoint resume, and source normalization tests pass
@@ -604,6 +608,14 @@ planned_strategy_goal:
       real_attempt_A6: 7ccec1f completed all 16 settings on the same 5820982 development rows and 5341 stocks; 19.97 seconds, peak RSS 3662610432 bytes, zero swaps; correct workflow state and identical input/reference/config fingerprints and score-coverage summaries versus A4
       verdict: real full-development signal preparation supported and usable; no stock-universe reduction, amount zero-fill, source mutation, economic return, candidate selection or holdout evaluation
       next_discriminator: complete and audit raw company-action coverage, resolve effective distributions without double counting, then admit their integration into the existing cash/share replay before any market-performance ranking
+    holdout_claim_audit:
+      id: QF-WALKFORWARD-01-P5
+      state: read-only claim audit; no market replay, parameter change or replacement date window
+      evidence: research/evidence/QF-WALKFORWARD-01/P5/HOLDOUT_CLAIM_AUDIT.md
+      finding: legacy 1116-candidate search, factor and minute results already exposed the entire proposed final year before P1; robust_pick explicitly selects on legacy holdoutReturn
+      claim_correction: the new loader does not load final-window rows, but that does not make previously researched history untouched; independentHoldoutCertified is false
+      preservation: original P1 configuration, plan, dates and result bytes remain unchanged; this audit supersedes their untouched or unopened wording
+      admission_requirement: machine-enforced research-history provenance and a separately admitted independent validation protocol are required before promotion; this gate is not yet implemented and current preflight is input admission only
   decision: Test a frozen A-share family combining residual momentum, short-term reversal, low idiosyncratic volatility, and lottery-stock avoidance on the completed point-in-time database.
   hypothesis: a low-turnover composite that avoids high-MAX and high-idiosyncratic-volatility stocks is more stable than conventional raw momentum in the retail-dominated A-share market.
   candidate_families:
@@ -645,7 +657,7 @@ planned_strategy_goal:
     fold_1: train through 2022-08-24, test 2022-08-25 to 2023-08-24
     fold_2: train through 2023-08-24, test 2023-08-25 to 2024-08-24
     fold_3: train through 2024-08-24, test 2024-08-25 to 2025-08-24
-    untouched_holdout: 2025-08-25 to 2026-08-24
+    reserved_final_window: 2025-08-25 to 2026-08-24; known prior outcome exposure, not an untouched independent holdout
   frozen_execution:
     signal_cutoff: completed close at t
     fill: next tradable open at t+1
@@ -672,8 +684,8 @@ planned_strategy_goal:
   search_control:
     - the 144-candidate grid above is immutable before the first outcome is computed
     - candidate selection uses only discovery and the three walk-forward folds
-    - the three folds are development/selection evidence, not unbiased out-of-sample evidence for the winner; only the untouched final holdout may support that claim
-    - untouched holdout is opened once for the selected candidate
+    - the three folds are development/selection evidence, not unbiased out-of-sample evidence for the winner; P5 also disqualifies the exposed final year from an untouched independent OOS claim
+    - the reserved final window is evaluated at most once by this new pipeline, but prior legacy exposure is retained and cannot be erased by that invocation limit
     - family-wise performance receives a stationary-bootstrap multiple-testing correction
     - selection maximizes median fold CAGR subject to every fold being positive and no fold drawdown breaching -35 percent
   admission:

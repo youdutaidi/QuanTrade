@@ -1,0 +1,22 @@
+{
+  "state": "diagnostic-only",
+  "input": "research/evidence/QF-DATA-EXPANSION-01/A14/real-triage-A2.json",
+  "inputSha256": "1f0556861989e3eb4a30166258365ea69782d81c3ad01e499498033046189414",
+  "codeCommit": "8b5ee048a55dcc0ae4b84aa26891ef3685dfe516",
+  "method": "merge checked raw rows, parse complete per-ten plan, subtract exact Decimal description cash from source numeric cash; separately compare ROUND_HALF_UP at 0.000001",
+  "cashConflicts": 397,
+  "absoluteDifferenceAtMostOneMillionth": 393,
+  "sixDecimalRoundHalfUpCompatible": 369,
+  "otherSmallDifferences": 24,
+  "otherSmallDifferenceValue": "-0.0000005",
+  "numericDecimalPlaces": {"0": 1, "1": 12, "2": 20, "3": 15, "4": 2, "5": 28, "6": 319},
+  "largeDifferences": [
+    {"code": "sh.600803", "exDate": "2024-08-01", "descriptionGross": "0.66", "numericGross": "0.91", "difference": "0.25"},
+    {"code": "sh.600803", "exDate": "2025-07-22", "descriptionGross": "0.81", "numericGross": "1.03", "difference": "0.22"},
+    {"code": "sz.001323", "exDate": "2025-08-21", "descriptionGross": "0", "numericGross": "1", "difference": "1"},
+    {"code": "sz.002352", "exDate": "2024-11-07", "descriptionGross": "0.4", "numericGross": "1.4", "difference": "1.0"}
+  ],
+  "acceptancePolicyChanged": false,
+  "ledgerReady": false,
+  "claim": "precision compatibility diagnosis, not proof of the provider rounding policy or authoritative economic terms"
+}

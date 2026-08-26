@@ -1,0 +1,37 @@
+{
+  "auditDate": "2026-08-26",
+  "state": "read-only-prior-outcome-exposure-confirmed",
+  "codeCommit": "8b5ee048a55dcc0ae4b84aa26891ef3685dfe516",
+  "holdout": ["2025-08-25", "2026-08-24"],
+  "priorOutcomeExposure": true,
+  "independentHoldoutCertified": false,
+  "newMarketBacktestExecuted": false,
+  "frozenConfigChanged": false,
+  "configSha256": "f946362d7d5e71e2e023e5412cd3024bada5edcec5eddd1b18737eaf2afdeae4",
+  "frozenPlanSha256": "ff4f73b39e141806a2aa3dc29f0cb1fb703af1edace7c62ea7dc660da61bf0a9",
+  "originalP1ResultSha256": "33e163636d24b7696231c3baec698b3419d41107aef64a45a33e9c21ba18028d",
+  "sources": [
+    {"path": "app/data/backtest.json", "sha256": "38a38fdad0f8d2886146ae0e07d43ce682701a9500e1fb8bfc571e1b0b082d80", "window": ["2025-08-25", "2026-08-24"], "testedStrategies": 1116},
+    {"path": "app/data/factor_backtest.json", "sha256": "ac0b4ebc33ed063539a9e3e107e4951c9b6b39662036956a4c35eb02105ed284", "window": ["2025-08-25", "2026-08-24"]},
+    {"path": "app/data/minute_system.json", "sha256": "ee26737f903b5e2450fdd750d6037ac610bf19bf6c97e672fc7d1c41fd21d067", "window": ["2025-08-25", "2026-08-24"]},
+    {"path": "research/run_backtests.py", "sha256": "37a72464b226ec9fc77a476114015c43942d48cc36c8e67c64a8b7157b7bea17", "selectionLine": 210, "finding": "robust_pick is selected using holdoutReturn"}
+  ],
+  "legacyResults": {
+    "fullWindowWinner": {"annualizedReturn": 2.775888478261729, "maxDrawdown": -0.5325930178501539, "validated": false},
+    "holdoutSelectedDailyCandidate": {"annualizedReturn": 1.4422573586749206, "maxDrawdown": -0.3540203837587267, "validated": false},
+    "factorLeader": {"annualizedReturn": 0.4642444638671299, "maxDrawdown": -0.23770894917354002, "validated": false}
+  },
+  "minuteStoredEquityRecalculation": {
+    "database": "research/data/qforge_minute.sqlite",
+    "runId": "strategy-43c1d870a9dc4e279944c8f1f870c8ac",
+    "snapshots": 242,
+    "initialCash": 1000000.0,
+    "finalEquity": 630438.928140677,
+    "totalReturn": -0.36956107185932296,
+    "maxDrawdown": -0.4645693082071848,
+    "meaning": "stored-equity arithmetic only, not independent execution validation"
+  },
+  "newStudyDatabase": {"path": "research/data/qforge_walkforward.sqlite", "runs": 145, "syntheticRuns": 145, "events": 7356, "verifiedStrategyRuns": 0},
+  "registry": {"path": "app/data/validation_registry.json", "sha256": "72f00f15da0cc43397028318c5ab666b3dc615759944ae99bfdca0d56d593dbc", "assessed": 3, "verified": 0, "rejected": 3},
+  "machinePriorExposureGateImplemented": false
+}
