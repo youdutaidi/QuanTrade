@@ -1,0 +1,18 @@
+{"capturedFiles": 5, "totalFiles": 116, "path": "research/data/qforge_market.sqlite"}
+{"capturedFiles": 6, "totalFiles": 116, "path": "research/data/qforge_minute.sqlite"}
+{"capturedFiles": 7, "totalFiles": 116, "path": "research/data/qforge_walkforward.sqlite"}
+{"capturedFiles": 8, "totalFiles": 116, "path": "research/data/yf_cache/cookies.db"}
+{"capturedFiles": 9, "totalFiles": 116, "path": "research/data/yf_cache/tkr-tz.db"}
+{"capturedFiles": 25, "totalFiles": 116, "path": "research/evidence/DELIVERY-01/D1/PREPARATION.md"}
+{"capturedFiles": 50, "totalFiles": 116, "path": "research/evidence/QF-DATA-EXPANSION-01/A7/tests.log"}
+{"capturedFiles": 75, "totalFiles": 116, "path": "research/evidence/QF-DATA-EXPANSION-01/daily_single_resume_2.log"}
+{"capturedFiles": 100, "totalFiles": 116, "path": "research/evidence/QF-VALIDATION-GATE-01/http_smoke.log"}
+{"state": "compressing", "files": 116}
+{
+  "state": "captured-not-yet-verified",
+  "bundle": "/Users/cailingling/Desktop/quant-intelligence-lab/research/output/delivery/data-20260826-d1/quant-data.tar.gz",
+  "sha256": "67d21ac62ddfd6417a08869e8c0bb329f1f420b867d254bbbd015dad95a7fb91",
+  "bytes": 624914575,
+  "fileCount": 116,
+  "codeCommit": "27d9fe7158df4b618d7d15a10c5ee7a8ae058f8b"
+}

@@ -1,0 +1,59 @@
+{
+  "selectedFiles": 119,
+  "selectedDiskBytes": 1661667194,
+  "excluded": [
+    {
+      "path": "research/data/qforge_actions.sqlite.job.lock",
+      "reason": "transient sidecar; committed SQLite content is captured through online backup"
+    },
+    {
+      "path": "research/data/qforge_market.sqlite-shm",
+      "reason": "transient sidecar; committed SQLite content is captured through online backup"
+    },
+    {
+      "path": "research/data/qforge_market.sqlite-wal",
+      "reason": "transient sidecar; committed SQLite content is captured through online backup"
+    },
+    {
+      "path": "research/data/qforge_minute.sqlite-shm",
+      "reason": "transient sidecar; committed SQLite content is captured through online backup"
+    },
+    {
+      "path": "research/data/qforge_minute.sqlite-wal",
+      "reason": "transient sidecar; committed SQLite content is captured through online backup"
+    },
+    {
+      "path": "research/data/qforge_walkforward.sqlite-shm",
+      "reason": "transient sidecar; committed SQLite content is captured through online backup"
+    },
+    {
+      "path": "research/data/qforge_walkforward.sqlite-wal",
+      "reason": "transient sidecar; committed SQLite content is captured through online backup"
+    },
+    {
+      "path": "research/data/yf_cache/cookies.db",
+      "reason": "Yahoo provider session/timezone cache, not the downloaded price archive"
+    },
+    {
+      "path": "research/data/yf_cache/cookies.db-shm",
+      "reason": "Yahoo provider session/timezone cache, not the downloaded price archive"
+    },
+    {
+      "path": "research/data/yf_cache/cookies.db-wal",
+      "reason": "Yahoo provider session/timezone cache, not the downloaded price archive"
+    },
+    {
+      "path": "research/data/yf_cache/tkr-tz.db",
+      "reason": "Yahoo provider session/timezone cache, not the downloaded price archive"
+    },
+    {
+      "path": "research/data/yf_cache/tkr-tz.db-shm",
+      "reason": "Yahoo provider session/timezone cache, not the downloaded price archive"
+    },
+    {
+      "path": "research/data/yf_cache/tkr-tz.db-wal",
+      "reason": "Yahoo provider session/timezone cache, not the downloaded price archive"
+    }
+  ],
+  "sourceSelectionOnly": true
+}

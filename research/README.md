@@ -41,6 +41,19 @@
   structural findings. A dirty code/config/test tree refused capture with exit 2.
   Evidence: `research/evidence/DELIVERY-01/D1/`. Real capture and remote asset
   round-trip remain pending; no remote data asset is claimed yet.
+- D1 real-capture verdict: protocol-invalid for remote delivery. Its local-only
+  manifest included `research/data/yf_cache/cookies.db`, a provider session
+  cache. No Release or data upload was created. The generated archive is
+  quarantined, while original data is preserved.
+- D2 correction (same delivery task; baseline `27d9fe7`, same write surface):
+  explicitly exclude the Yahoo provider cache and credential/cookie filenames
+  during capture and reject them during archive verification/restoration.
+  Add regression fixtures, rerun retained tests/structure, then capture a new
+  `research/output/delivery/data-20260826-d2` artifact. Do not reuse D1 bytes.
+- D2 preparation admitted: 156 tests pass, zero structure findings; the real
+  quarantined D1 archive now fails verification before extraction because its
+  manifest contains the excluded session cache. The new source-selection report
+  explicitly excludes that cache and SQLite sidecars. D2 remote upload pending.
 
 ## Code-evolution record
 

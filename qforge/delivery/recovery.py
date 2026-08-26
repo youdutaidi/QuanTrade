@@ -10,7 +10,7 @@ from pathlib import Path, PurePosixPath
 from tempfile import TemporaryDirectory
 
 from ..marketdata.export import file_sha256
-from .capture import MANIFEST_NAME, SOURCE_ROOTS, database_inventory
+from .capture import MANIFEST_NAME, SOURCE_ROOTS, database_inventory, excluded_reason
 
 
 def verify_snapshot(bundle: Path, expected_sha256: str) -> dict:
@@ -90,6 +90,8 @@ def validate_manifest(manifest: dict) -> dict:
             raise ValueError("unsafe archive path")
         if not any(name.startswith(root + "/") for root in SOURCE_ROOTS) or name.startswith("research/output/delivery/"):
             raise ValueError("archive path is outside the data allowlist")
+        if excluded_reason(Path(name)):
+            raise ValueError("archive contains an excluded credential, session cache or sidecar")
         if name in expected or type(entry["bytes"]) is not int or entry["bytes"] < 0:
             raise ValueError("duplicate archive path or invalid length")
         if not re.fullmatch(r"[0-9a-f]{64}", entry["sha256"]):

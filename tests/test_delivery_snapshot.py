@@ -50,6 +50,10 @@ def test_live_wal_backup_is_complete_and_restore_is_non_overwriting(tmp_path):
 def test_allowlist_excludes_credentials_and_previous_delivery_bundles(tmp_path):
     root = fixture_project(tmp_path)
     (root / "research/data/.env").write_text("never-upload")
+    cache = root / "research/data/yf_cache"
+    cache.mkdir()
+    (cache / "cookies.db").write_text("session-fixture-do-not-export")
+    (cache / "tkr-tz.db").write_text("timezone-cache-fixture")
     old = root / "research/output/delivery/old"
     old.mkdir(parents=True)
     (old / "old.tar.gz").write_bytes(b"old snapshot")
@@ -58,6 +62,7 @@ def test_allowlist_excludes_credentials_and_previous_delivery_bundles(tmp_path):
     manifest = json.loads((root / "research/output/delivery/new/manifest.json").read_text())
     assert [entry["path"] for entry in manifest["files"]] == ["research/data/prices.csv"]
     assert manifest["excluded"][0]["path"] == "research/data/.env"
+    assert len(manifest["excluded"]) == 3
 
 
 def test_corruption_refuses_before_creating_restore_directory(tmp_path):
@@ -93,6 +98,8 @@ def malicious_bundle(tmp_path, name, link=False, duplicate_manifest=False, conte
     ("../../escaped", False, False), ("/tmp/escaped", False, False),
     ("research/data/link", True, False), ("research/data/safe", False, True),
     (".ssh/id_rsa", False, False),
+    ("research/data/yf_cache/cookies.db", False, False),
+    ("research/data/cookies.json", False, False),
 ])
 def test_unsafe_archive_never_publishes_a_restore_tree(tmp_path, name, link, duplicate):
     bundle, fingerprint = malicious_bundle(tmp_path, name, link, duplicate)

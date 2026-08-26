@@ -82,11 +82,16 @@ def selected_files(root: Path) -> tuple[list[Path], list[dict]]:
 
 
 def excluded_reason(path: Path) -> str | None:
+    if "yf_cache" in path.parts:
+        return "Yahoo provider session/timezone cache, not the downloaded price archive"
+    if path.name.lower() in {"cookies.db", "cookies.sqlite", "cookies.sqlite3", "cookies.json", "cookies.txt",
+                             "credentials.json", "token.json", "auth.json", ".netrc"}:
+        return "credential or session-cookie cache is never included"
     if path.name.endswith(("-wal", "-shm", "-journal", ".lock")):
         return "transient sidecar; committed SQLite content is captured through online backup"
     if path.name == ".DS_Store" or "__pycache__" in path.parts:
         return "operating-system or interpreter cache"
-    if path.name.startswith(".env") or path.suffix in {".pem", ".key"} or path.name in {"credentials.json", "token.json"}:
+    if path.name.startswith(".env") or path.suffix.lower() in {".pem", ".key"}:
         return "credential-like filename is never included"
     return None
 
