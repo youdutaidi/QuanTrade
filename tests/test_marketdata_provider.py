@@ -79,3 +79,29 @@ def test_adjustment_provider_rejects_wrong_security_code():
     provider = BaoStockMarketProvider(module=SimpleNamespace(query_adjust_factor=lambda **kwargs: response))
     with pytest.raises(ValueError, match="unexpected security"):
         provider.adjustment_factors("sh.600000", "2020-01-01", "2020-12-31")
+
+
+@pytest.mark.parametrize("code,year,year_type", [
+    ("sh.600001", "2021", "operate"), ("sh.600000", "2022", "operate"),
+    ("sh.600000", "2021", "report"),
+])
+def test_dividend_empty_response_identity_is_checked(code, year, year_type):
+    response = Response()
+    response.rows = iter([])
+    response.code, response.year, response.yearType = code, year, year_type
+    provider = BaoStockMarketProvider(module=SimpleNamespace(query_dividend_data=lambda *args, **kwargs: response))
+    with pytest.raises(ValueError, match="identity mismatch"):
+        provider.dividends("sh.600000", 2021)
+
+
+def test_dividend_preserves_raw_strings_and_request_metadata():
+    response = Response()
+    response.fields = ["code", "dividCashPsBeforeTax"]
+    response.rows = iter([["sh.600000", "0.16000000"]])
+    response.code, response.year, response.yearType = "sh.600000", "2021", "operate"
+    requested = []
+    module = SimpleNamespace(query_dividend_data=lambda *args, **kwargs: (requested.append((args, kwargs)) or response))
+    frame = BaoStockMarketProvider(module=module).dividends("sh.600000", 2021)
+    assert frame.iloc[0]["dividCashPsBeforeTax"] == "0.16000000"
+    assert frame.attrs["request"] == {"code": "sh.600000", "year": 2021, "yearType": "operate"}
+    assert requested == [(("sh.600000",), {"year": 2021, "yearType": "operate"})]

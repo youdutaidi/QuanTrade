@@ -8,6 +8,7 @@ from types import ModuleType
 import pandas as pd
 
 from .config import MinuteConfig
+from ..marketdata.session import baostock_session_lock
 
 
 MINUTE_FIELDS = "date,time,code,open,high,low,close,volume,amount,adjustflag"
@@ -32,8 +33,17 @@ class BaoStockProvider:
     def __init__(self, module: ModuleType | None = None, retries: int = 3):
         self.module = module
         self.retries = retries
+        self.session_lock = baostock_session_lock()
 
     def __enter__(self) -> "BaoStockProvider":
+        self.session_lock.__enter__()
+        try:
+            return self._login()
+        except BaseException:
+            self.session_lock.__exit__()
+            raise
+
+    def _login(self) -> "BaoStockProvider":
         if self.module is None:
             import baostock as bs
 
@@ -44,8 +54,11 @@ class BaoStockProvider:
         return self
 
     def __exit__(self, *_: object) -> None:
-        if self.module is not None:
-            self.module.logout()
+        try:
+            if self.module is not None:
+                self.module.logout()
+        finally:
+            self.session_lock.__exit__()
 
     def fetch(self, symbol: str, config: MinuteConfig) -> pd.DataFrame:
         code = normalize_symbol(symbol)

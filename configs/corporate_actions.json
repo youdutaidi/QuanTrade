@@ -1,0 +1,9 @@
+{
+  "experiment_id": "QF-DATA-EXPANSION-01",
+  "market_config": "configs/market_data.json",
+  "database_path": "research/data/qforge_actions.sqlite",
+  "retries": 3,
+  "request_timeout_seconds": 90,
+  "batch_size": 200,
+  "batch_pause_seconds": 2.0
+}

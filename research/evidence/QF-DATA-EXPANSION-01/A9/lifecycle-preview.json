@@ -1,0 +1,20 @@
+{
+  "config": {
+    "experiment_id": "QF-DATA-EXPANSION-01",
+    "market_config": "configs/market_data.json",
+    "database_path": "research/data/qforge_actions.sqlite",
+    "retries": 3,
+    "request_timeout_seconds": 90,
+    "batch_size": 200,
+    "batch_pause_seconds": 2.0
+  },
+  "start": "2020-08-25",
+  "end": "2026-08-24",
+  "yearType": "operate",
+  "scopeSha256": "5983b1dc73827d5cbe7da6787f5c05858e1e38e1fdbe00291ba29c6079cc5ad8",
+  "state": "preview-only",
+  "sourceRequests": 0,
+  "symbols": 5424,
+  "taskCount": 34476,
+  "claim": "lifecycle plan only; no action coverage or economic P&L admission"
+}

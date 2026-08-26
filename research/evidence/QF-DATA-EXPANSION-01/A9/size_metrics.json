@@ -1,0 +1,21 @@
+{
+  "maxFunction": [
+    40,
+    "qforge/marketdata/audit.py",
+    "audit_market_database"
+  ],
+  "maxClass": [
+    249,
+    "qforge/marketdata/store.py",
+    "MarketDataStore"
+  ],
+  "maxModule": [
+    325,
+    "qforge/marketdata/store.py"
+  ],
+  "maxScript": [
+    31,
+    "research/data_workflows/verify_source_sample.py"
+  ],
+  "measuredScope": "qforge and research/data_workflows"
+}

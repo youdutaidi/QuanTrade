@@ -9,6 +9,7 @@ from types import ModuleType
 
 import pandas as pd
 
+from .session import baostock_session_lock
 
 DAILY_FIELDS = "date,code,open,high,low,close,preclose,volume,amount,adjustflag,turn,tradestatus,pctChg,isST"
 DAILY_NUMERIC = ["open", "high", "low", "close", "preclose", "volume", "amount", "turn", "tradestatus", "pctChg", "isST"]
@@ -18,8 +19,17 @@ class BaoStockMarketProvider:
     def __init__(self, module: ModuleType | None = None, timeout_seconds: int = 90):
         self.module = module
         self.timeout_seconds = timeout_seconds
+        self.session_lock = baostock_session_lock()
 
     def __enter__(self) -> "BaoStockMarketProvider":
+        self.session_lock.__enter__()
+        try:
+            return self._login()
+        except BaseException:
+            self.session_lock.__exit__()
+            raise
+
+    def _login(self) -> "BaoStockMarketProvider":
         if self.module is None:
             import baostock as bs
 
@@ -39,9 +49,23 @@ class BaoStockMarketProvider:
         raise RuntimeError("BaoStock login failed after three attempts") from last_error
 
     def __exit__(self, *_: object) -> None:
-        if self.module is not None:
-            with _deadline(self.timeout_seconds):
-                self.module.logout()
+        try:
+            if self.module is not None:
+                with _deadline(self.timeout_seconds):
+                    self.module.logout()
+        finally:
+            self.session_lock.__exit__()
+
+    def dividends(self, code: str, year: int) -> pd.DataFrame:
+        with _deadline(self.timeout_seconds):
+            response = self.module.query_dividend_data(code, year=year, yearType="operate")
+        frame = self._query(response)
+        identity = (getattr(response, "code", None), str(getattr(response, "year", "")),
+                    getattr(response, "yearType", None))
+        if identity != (code, str(year), "operate"):
+            raise ValueError("BaoStock dividend response identity mismatch, including empty responses")
+        frame.attrs["request"] = {"code": code, "year": year, "yearType": "operate"}
+        return frame
 
     def trade_calendar(self, start: str, end: str) -> pd.DataFrame:
         with _deadline(self.timeout_seconds):

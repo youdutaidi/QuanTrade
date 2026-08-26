@@ -1,0 +1,21 @@
+{
+  "barCount": 116160,
+  "symbolCount": 10,
+  "firstBar": "2025-08-25 09:35:00",
+  "lastBar": "2026-08-24 15:00:00",
+  "tradeDays": 242,
+  "databaseBytes": 29839360,
+  "lastDownload": {
+    "run_id": "download-942fe34fde2d44c79dc95989237777be",
+    "status": "succeeded",
+    "rows_written": 116160,
+    "completed_at": "2026-08-25T07:47:39.259553+00:00",
+    "error": null
+  },
+  "lastStrategy": {
+    "run_id": "strategy-43c1d870a9dc4e279944c8f1f870c8ac",
+    "status": "succeeded",
+    "completed_at": "2026-08-25T07:51:02.315401+00:00",
+    "error": null
+  }
+}

@@ -38,6 +38,11 @@ python3 -m venv .venv
 .venv/bin/qforge market complete --config configs/market_data.json
 .venv/bin/qforge market verify-panel --config configs/market_data.json
 
+# 先查看公司行动的逐年采集范围；下载必须等日线验收通过。
+.venv/bin/qforge actions plan --preview --config configs/corporate_actions.json
+.venv/bin/qforge actions download --config configs/corporate_actions.json --max-tasks 10
+.venv/bin/qforge actions status --config configs/corporate_actions.json
+
 # 查看已冻结的候选，不读取市场收益。
 .venv/bin/qforge walkforward plan --config configs/walk_forward.json
 
@@ -63,6 +68,8 @@ python3 -m venv .venv
   历史股票池观察与复权因子。
 - `research/data/qforge_minute.sqlite`：已下载的真实五分钟样本，以及旧试验账本。
 - `research/data/qforge_walkforward.sqlite`：新账本的不可覆盖运行记录和事件。
+- `research/data/qforge_actions.sqlite`：公司行动采集准入后创建，保存分红接口的
+  原始返回、逐年空返回、失败记录和可恢复检查点；不代表税务或总回报已验证。
 - `research/evidence/`：配置指纹、测试、审计、源数据重取检查与运行证据。
 - `configs/validation_policy.json`：可信策略的统一门槛；通过单项不等于整体通过。
 

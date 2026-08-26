@@ -317,6 +317,22 @@ data_goal:
         cheapest_falsifier: commit a missing bar from a second WAL connection during the audit; all reported counts must remain on the initial snapshot
         write_surface: qforge/marketdata/store.py, qforge/marketdata/audit.py, tests/test_marketdata_coverage.py, research/README.md, research/evidence/QF-DATA-EXPANSION-01/A8/**
         state: structure-admitted and semantics-admitted; 63 tests passed; live audit now uses one read transaction; no change to source data or strategy parameters
+      - id: QF-DATA-EXPANSION-01-A9
+        decision: retain raw annual dividend responses, including queried-empty years, in a resumable local archive without interpreting source after-tax values as investor-specific cash
+        baseline: 7a1fe0b
+        scientific_choice_axis: unchanged market coverage and strategy specification; close the raw corporate-action provenance gap
+        write_surface: qforge/actions/**, qforge/marketdata/provider.py, qforge/marketdata/session.py, qforge/minute/provider.py (session exclusion only), qforge/cli.py, configs/corporate_actions.json, tests/test_actions_*.py, tests/test_marketdata_provider.py, tests/test_marketdata_session.py, tests/test_minute_provider.py, research/README.md, research/evidence/QF-DATA-EXPANSION-01/A9/**
+        source_contract: BaoStock query_dividend_data with yearType operate; request every overlapping lifecycle year for Shanghai and Shenzhen A shares, including delisted stocks; preserve schema, strings, nulls, response identity, errors, timestamps and hashes
+        cheapest_falsifier: wrong or partial responses cannot complete a checkpoint; queried-empty responses must persist; interrupted requests resume without duplicate events; a second source session must fail before login
+        input_gate: preview reads only security lifecycle; network ingestion requires the completed daily-panel manifest and no running daily-download record; A5 must finish before any new source session starts
+        semantic_commands: retained pytest suite, structure gate, read-only real lifecycle plan, refusal check while A5 is active; no live corporate-action pilot before these pass
+        outcomes: passing fixtures admits capture mechanics only; source gaps or ambiguous cash/share/tax fields remain unresolved; failed gates retain the old baseline and prevent a source launch
+        state: structure-admitted and capture-semantics-admitted; 144 retained and new tests pass; zero structural findings; real action-source pilot pending daily completion
+        real_preview: 5424 A-share symbols and 34476 overlapping lifecycle-year tasks; scope SHA256 5983b1dc73827d5cbe7da6787f5c05858e1e38e1fdbe00291ba29c6079cc5ad8
+        source_refusal: real max-tasks 1 command exited 2 before database initialization or source login because A5 is active
+        continuity: all prior 115 tests retained; minute database still has 116160 real bars; local HTTP 200; frozen strategy config unchanged
+        evidence: research/evidence/QF-DATA-EXPANSION-01/A9
+        claim_boundary: raw dividend capture is not full corporate-action coverage, rights-issue accounting, investor-specific taxation, or economic P&L validation
   cutover:
     criteria:
       - SQLite schema, idempotent upserts, checkpoint resume, and source normalization tests pass
