@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import json
+import hashlib
+import sqlite3
 from pathlib import Path
 
 import pandas as pd
@@ -42,3 +44,23 @@ def load_development_frame(spec: StudySpec, root: Path, frozen_plan: Path) -> tu
     if file_sha256(path) != evidence["sha256"]:
         raise ValueError("research panel changed while loading development inputs")
     return frame, {**evidence, "loadedRows": len(frame), "loadedThrough": str(end.date()), "holdoutLoaded": False}
+
+
+def load_development_reference(spec: StudySpec, root: Path) -> tuple[list[str], pd.DataFrame, dict]:
+    """Read dated calendar and lifecycle references together, without holdout bars."""
+    config = MarketDataConfig.from_json(root / spec.values["data_config"])
+    start = spec.values["periods"]["discovery"][0]
+    end = spec.values["periods"]["folds"][-1]["test"][1]
+    path = (root / config.database_path).resolve()
+    with sqlite3.connect(path.as_uri() + "?mode=ro", uri=True) as connection:
+        connection.row_factory = sqlite3.Row
+        connection.execute("BEGIN")
+        calendar = [row[0] for row in connection.execute("""SELECT calendar_date FROM trade_calendar
+            WHERE is_trading_day=1 AND calendar_date BETWEEN ? AND ? ORDER BY calendar_date""", (start, end))]
+        securities = [dict(row) for row in connection.execute(
+            "SELECT code,ipo_date,out_date,security_type FROM securities ORDER BY code")]
+    if not calendar or not securities:
+        raise ValueError("development reference input is empty")
+    encoded = json.dumps({"calendar": calendar, "securities": securities}, sort_keys=True, separators=(",", ":"))
+    return calendar, pd.DataFrame(securities), {"referenceSha256": hashlib.sha256(encoded.encode()).hexdigest(),
+                                              "referenceThrough": end, "referenceSnapshot": "single SQLite read transaction"}

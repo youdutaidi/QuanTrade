@@ -11,6 +11,7 @@ from pathlib import Path
 from .specification import StudySpec
 from .demo import run_ledger_demo
 from .execution_demo import run_execution_demo
+from .feature_check import run_feature_check
 from .inputs import verify_study_inputs
 
 
@@ -30,6 +31,10 @@ def register_walkforward_commands(commands: argparse._SubParsersAction) -> None:
     execution.add_argument("--config", required=True)
     execution.add_argument("--output", required=True)
     execution.add_argument("--all-candidates", action="store_true", help="exercise all 144 frozen candidates on synthetic bars only")
+    features = actions.add_parser("feature-check", help="real development input and frozen-factor compute preflight, no portfolio returns")
+    features.add_argument("--config", required=True)
+    features.add_argument("--plan", required=True)
+    features.add_argument("--output", required=True, help="new evidence directory; refuses overwrite")
 
 
 def run_walkforward_command(args: argparse.Namespace, root: Path) -> int:
@@ -41,6 +46,10 @@ def run_walkforward_command(args: argparse.Namespace, root: Path) -> int:
         return 0
     if args.walkforward_command == "execution-demo":
         payload = run_execution_demo(spec, root, root / args.output, args.all_candidates)
+        print(json.dumps(payload, ensure_ascii=False, indent=2))
+        return 0
+    if args.walkforward_command == "feature-check":
+        payload = run_feature_check(spec, root, root / args.plan, root / args.output)
         print(json.dumps(payload, ensure_ascii=False, indent=2))
         return 0
     candidates = spec.candidates()

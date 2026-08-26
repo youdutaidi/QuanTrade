@@ -522,6 +522,22 @@ planned_strategy_goal:
       formal_synthetic_attempt: synthetic-grid-A2 ran all 144 frozen candidates across 16 score settings; 7344 events persisted and independently reloaded/replayed; all short-window CAGR values deliberately omitted
       evidence: research/evidence/QF-WALKFORWARD-01/P3
       outcomes: semantic mismatch stops cutover; source or settlement gaps retain incomplete evidence without a return ranking; passing synthetic tests admits execution mechanics only
+    real_input_preparation:
+      id: QF-WALKFORWARD-01-P4
+      baseline: 64f3bbf
+      owner_session: /root
+      decision: check the entire admitted development panel against the frozen signal engine and measure full input/feature preparation cost before economic replay
+      scientific_choice_axis: unchanged 144 candidates and 16 score definitions; no portfolio return, winner selection or holdout computation
+      write_surface: qforge/walkforward/inputs.py, qforge/walkforward/feature_check.py, qforge/walkforward/cli.py, tests/test_walkforward_feature_check.py, research/README.md, research/evidence/QF-WALKFORWARD-01/P4/**
+      inputs: admitted daily panel SHA 5c872434d4fddf066f6fb8f8e5e151cb25b5334aefd71b6d47f67524895717dc; predicate-filter through 2025-08-24 before dataframe creation; one read transaction for calendar and lifecycle references
+      scope: compute/input preflight only while QF-DATA-EXPANSION-01 remains active; cash/share source completion is required for later economic replay but is not inferred from factor preparation
+      cheapest_falsifier: a missing listed bar or missing reference trading date must stop before factor computation; any infinite or ineligible finite score fails; every frozen signal setting must have finite development observations
+      admission: preserve all 186 tests, new no-network workflow fixtures and structure gate before real full-development input/feature check; no data mutation, strategy parameter change or source session
+      cost_boundary: time input loading, alignment and all shared score settings; record process peak RSS; do not persist a return ranking or claim short-run factors are investment performance
+      outcomes: alignment failure blocks feature use; nonfinite or empty settings fail; high cost triggers a separate equivalent implementation review without narrowing the universe; passing admits only real signal preparation
+      state: structure-admitted and workflow-semantics-admitted; 190 retained/new tests pass, zero structural findings; full real development feature check admitted
+      retained_mapping: all 186 baseline tests unchanged; new fixtures cover all 16 settings without ledger writes, missing-bar early stop, invalid eligibility scores, immutable output and reference-calendar holdout exclusion
+      structure: 6381 package lines, 89 workflow-script lines, ratio 0.0139; no structural findings
   decision: Test a frozen A-share family combining residual momentum, short-term reversal, low idiosyncratic volatility, and lottery-stock avoidance on the completed point-in-time database.
   hypothesis: a low-turnover composite that avoids high-MAX and high-idiosyncratic-volatility stocks is more stable than conventional raw momentum in the retail-dominated A-share market.
   candidate_families:
