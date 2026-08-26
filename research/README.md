@@ -487,7 +487,11 @@ data_goal:
         retained_mapping: all 194 baseline tests unchanged; 43 additive cases cover duplicate amounts, complementary blanks, conflicting fields, strict complete-plan parsing, exact Decimal legs, tax nonselection, chronology, corruption refusal, one-WAL-snapshot reads, out-of-window exclusion, unlocated dates, pending tasks and immutable reports
         structure: zero findings; maximum function/class/module/script 40/249/325/31 lines; 6585 package lines and 89 workflow-script lines, ratio 0.0135; existing archive owns persisted state, interpretation is pure, and the read-only witness owns no economic account
         launch_command: qforge actions terms --config configs/corporate_actions.json --start 2020-08-25 --end 2025-08-24 --output research/evidence/QF-DATA-EXPANSION-01/A13/real-preview-A4.json
-        real_preview: not executed yet; source economic ambiguities are expected to remain unresolved
+        real_preview: A4 under 0ffecc839c24d6c1932cdbc665b4f2bd804a5bc7 completed in 14.91 seconds, 196001792 peak resident bytes and zero swaps; archive snapshot has 23777 succeeded tasks, one running, 10698 pending and no integrity or provenance defects
+        real_terms: 12687 development source rows form 12543 ex-date groups; 12348 groups are gross-source-consistent, including 124 safely merged multirow groups; 195 remain unresolved; zero unlocated ex-dates
+        unresolved: 161 gross-cash disagreements, one reserve-share disagreement, 14 unsupported complete descriptions, 18 conflicting duplicate fields and one missing cash payment date; these are not zero-filled or sent to the account
+        verdict: supported for conservative source interpretation and duplicate safeguards; economic admission remains incomplete
+        diagnostic_A5: retain two issuer PDF originals, extracted text and source metadata in an immutable evidence-local SQLite archive under A13/primary; no source corrections, tax choice or economic account writes; compare PDF cash/share/reference terms with the flagged raw rows and preserve discrepant source values
   cutover:
     criteria:
       - SQLite schema, idempotent upserts, checkpoint resume, and source normalization tests pass

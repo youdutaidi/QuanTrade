@@ -1,0 +1,330 @@
+[
+  {
+    "code": "sh.600116",
+    "exDate": "2025-01-08",
+    "reason": "conflicting_field:dividCashStock",
+    "sources": [
+      {
+        "requestId": "request-b58d01b8f898449f9c9f968eaac8c803",
+        "rawSha256": "6d3e5c52b89eced22a303b1e460ad1545e28a06940136869070eaa3b6185df76",
+        "rowIndex": 0
+      },
+      {
+        "requestId": "request-b58d01b8f898449f9c9f968eaac8c803",
+        "rawSha256": "6d3e5c52b89eced22a303b1e460ad1545e28a06940136869070eaa3b6185df76",
+        "rowIndex": 1
+      }
+    ],
+    "rawFields": [
+      {
+        "dividCashStock": "10派0.5元",
+        "dividCashPsBeforeTax": "0.05",
+        "dividCashPsAfterTax": "",
+        "dividStocksPs": "0.000000",
+        "dividReserveToStockPs": "",
+        "dividPlanDate": "",
+        "dividRegistDate": "2025-01-07",
+        "dividOperateDate": "2025-01-08",
+        "dividPayDate": "2025-01-08",
+        "dividStockMarketDate": ""
+      },
+      {
+        "dividCashStock": "10派0.5元（含税，扣税后0.45或0.5元）",
+        "dividCashPsBeforeTax": "0.05",
+        "dividCashPsAfterTax": "0.045或0.05",
+        "dividStocksPs": "0.000000",
+        "dividReserveToStockPs": "",
+        "dividPlanDate": "2025-01-02",
+        "dividRegistDate": "2025-01-07",
+        "dividOperateDate": "2025-01-08",
+        "dividPayDate": "2025-01-08",
+        "dividStockMarketDate": ""
+      }
+    ]
+  },
+  {
+    "code": "sh.600605",
+    "exDate": "2021-05-17",
+    "reason": "conflicting_field:dividCashPsAfterTax",
+    "sources": [
+      {
+        "requestId": "request-38b8efdebc9149238aaab587796ff458",
+        "rawSha256": "0262a60f461fb6e86d0c66b4803f994f8cf058ee78787672e4831e03e8097a2f",
+        "rowIndex": 0
+      },
+      {
+        "requestId": "request-38b8efdebc9149238aaab587796ff458",
+        "rawSha256": "0262a60f461fb6e86d0c66b4803f994f8cf058ee78787672e4831e03e8097a2f",
+        "rowIndex": 1
+      }
+    ],
+    "rawFields": [
+      {
+        "dividCashStock": "10转4派1.02元（含税，扣税后0.518或1.02元）",
+        "dividCashPsBeforeTax": "0.102",
+        "dividCashPsAfterTax": "0.0518或0.102",
+        "dividStocksPs": "0.000000",
+        "dividReserveToStockPs": "0.400000",
+        "dividPlanDate": "2021-05-11",
+        "dividRegistDate": "2021-05-14",
+        "dividOperateDate": "2021-05-17",
+        "dividPayDate": "2021-05-17",
+        "dividStockMarketDate": "2021-05-18"
+      },
+      {
+        "dividCashStock": "10转4派1.02元（含税，扣税后0.918或1.02元）",
+        "dividCashPsBeforeTax": "0.102",
+        "dividCashPsAfterTax": "0.0918或0.102",
+        "dividStocksPs": "0.000000",
+        "dividReserveToStockPs": "0.400000",
+        "dividPlanDate": "2021-05-11",
+        "dividRegistDate": "2021-05-14",
+        "dividOperateDate": "2021-05-17",
+        "dividPayDate": "2021-05-17",
+        "dividStockMarketDate": "2021-05-18"
+      }
+    ]
+  },
+  {
+    "code": "sh.600731",
+    "exDate": "2021-05-25",
+    "reason": "unsupported_complete_plan",
+    "sources": [
+      {
+        "requestId": "request-798b343c5aad46249315c35356fc134b",
+        "rawSha256": "b1c683100e5cec0d85fa1cd2591871ef30704ed7499f631e805029faa3c63467",
+        "rowIndex": 0
+      }
+    ],
+    "rawFields": [
+      {
+        "dividCashStock": "10转1送2派0.4元（含税，扣税后0.16或0.4元）",
+        "dividCashPsBeforeTax": "0.04",
+        "dividCashPsAfterTax": "0.016或0.04",
+        "dividStocksPs": "0.200000",
+        "dividReserveToStockPs": "0.100000",
+        "dividPlanDate": "2021-05-18",
+        "dividRegistDate": "2021-05-24",
+        "dividOperateDate": "2021-05-25",
+        "dividPayDate": "2021-05-25",
+        "dividStockMarketDate": "2021-05-26"
+      }
+    ]
+  },
+  {
+    "code": "sh.600803",
+    "exDate": "2024-08-01",
+    "reason": "numeric_plan_conflict:dividCashPsBeforeTax",
+    "sources": [
+      {
+        "requestId": "request-988810c5d5574f6dba0c966a40b9dbdc",
+        "rawSha256": "4d408a49588ef8c628e2b3ab3aa9f11ae5c0b83a56ae8e60e89ffe3a47d7159d",
+        "rowIndex": 0
+      }
+    ],
+    "rawFields": [
+      {
+        "dividCashStock": "10派6.6元（含税，扣税后5.94或6.6元）",
+        "dividCashPsBeforeTax": "0.91",
+        "dividCashPsAfterTax": "0.594或0.66",
+        "dividStocksPs": "0.000000",
+        "dividReserveToStockPs": "",
+        "dividPlanDate": "2024-07-26",
+        "dividRegistDate": "2024-07-31",
+        "dividOperateDate": "2024-08-01",
+        "dividPayDate": "2024-08-01",
+        "dividStockMarketDate": ""
+      }
+    ]
+  },
+  {
+    "code": "sh.600803",
+    "exDate": "2025-07-22",
+    "reason": "numeric_plan_conflict:dividCashPsBeforeTax",
+    "sources": [
+      {
+        "requestId": "request-f62dae85d3a943c8aefd76735491ca0f",
+        "rawSha256": "753a9832f40b9645ec21794106de45353b3cab1f97fca72d6d36d401e99352e3",
+        "rowIndex": 0
+      }
+    ],
+    "rawFields": [
+      {
+        "dividCashStock": "10派8.1元（含税，扣税后7.29或8.1元）",
+        "dividCashPsBeforeTax": "1.03",
+        "dividCashPsAfterTax": "0.729或0.81",
+        "dividStocksPs": "0.000000",
+        "dividReserveToStockPs": "",
+        "dividPlanDate": "2025-07-16",
+        "dividRegistDate": "2025-07-21",
+        "dividOperateDate": "2025-07-22",
+        "dividPayDate": "2025-07-22",
+        "dividStockMarketDate": ""
+      }
+    ]
+  },
+  {
+    "code": "sh.600853",
+    "exDate": "2020-12-03",
+    "reason": "unsupported_complete_plan",
+    "sources": [
+      {
+        "requestId": "request-0e0c9c3b212246c5a2b593f6c3efd780",
+        "rawSha256": "3b04868091e0ebe6879260d26db50eeed5005c4df305d7af918149e87970dc5e",
+        "rowIndex": 2
+      }
+    ],
+    "rawFields": [
+      {
+        "dividCashStock": "10转1.5送0.5派0.2元（含税，扣税后0.13或0.2元）",
+        "dividCashPsBeforeTax": "0.02",
+        "dividCashPsAfterTax": "0.013或0.02",
+        "dividStocksPs": "0.050000",
+        "dividReserveToStockPs": "0.150000",
+        "dividPlanDate": "2020-11-27",
+        "dividRegistDate": "2020-12-02",
+        "dividOperateDate": "2020-12-03",
+        "dividPayDate": "2020-12-03",
+        "dividStockMarketDate": "2020-12-04"
+      }
+    ]
+  },
+  {
+    "code": "sh.600989",
+    "exDate": "2021-05-20",
+    "reason": "conflicting_field:dividCashPsAfterTax",
+    "sources": [
+      {
+        "requestId": "request-23e552934e254bbdabc4b053d07d0a8d",
+        "rawSha256": "94fdb7a86e9a35f97e57f552bfbd742f27245dbcff8934db0249d973fa465ea6",
+        "rowIndex": 0
+      },
+      {
+        "requestId": "request-23e552934e254bbdabc4b053d07d0a8d",
+        "rawSha256": "94fdb7a86e9a35f97e57f552bfbd742f27245dbcff8934db0249d973fa465ea6",
+        "rowIndex": 1
+      }
+    ],
+    "rawFields": [
+      {
+        "dividCashStock": "10派3.2091元（含税，扣税后2.8882或3.2091元）",
+        "dividCashPsBeforeTax": "0.32091",
+        "dividCashPsAfterTax": "0.28882或0.32091",
+        "dividStocksPs": "0.000000",
+        "dividReserveToStockPs": "",
+        "dividPlanDate": "2021-05-12",
+        "dividRegistDate": "2021-05-19",
+        "dividOperateDate": "2021-05-20",
+        "dividPayDate": "2021-05-20",
+        "dividStockMarketDate": ""
+      },
+      {
+        "dividCashStock": "10派2.6472元（含税，扣税后2.3825或2.6472元）",
+        "dividCashPsBeforeTax": "0.26472",
+        "dividCashPsAfterTax": "0.23825或0.26472",
+        "dividStocksPs": "0.000000",
+        "dividReserveToStockPs": "",
+        "dividPlanDate": "2021-05-12",
+        "dividRegistDate": "2021-05-19",
+        "dividOperateDate": "2021-05-20",
+        "dividPayDate": "2021-05-20",
+        "dividStockMarketDate": ""
+      }
+    ]
+  },
+  {
+    "code": "sh.601186",
+    "exDate": "2025-07-22",
+    "reason": "conflicting_field:dividCashStock",
+    "sources": [
+      {
+        "requestId": "request-f4b22e5851da47d4a646387dc97df300",
+        "rawSha256": "a86c597cf639118640d3823fb44d3dddf711a4640c1df8904438889fee97ffd7",
+        "rowIndex": 0
+      },
+      {
+        "requestId": "request-f4b22e5851da47d4a646387dc97df300",
+        "rawSha256": "a86c597cf639118640d3823fb44d3dddf711a4640c1df8904438889fee97ffd7",
+        "rowIndex": 1
+      }
+    ],
+    "rawFields": [
+      {
+        "dividCashStock": "10派3元（含税，扣税后2.7或3元）",
+        "dividCashPsBeforeTax": "0.3",
+        "dividCashPsAfterTax": "0.27或0.3",
+        "dividStocksPs": "0.000000",
+        "dividReserveToStockPs": "",
+        "dividPlanDate": "2025-07-14",
+        "dividRegistDate": "2025-07-21",
+        "dividOperateDate": "2025-07-22",
+        "dividPayDate": "2025-07-22",
+        "dividStockMarketDate": ""
+      },
+      {
+        "dividCashStock": "10派3元",
+        "dividCashPsBeforeTax": "0.3",
+        "dividCashPsAfterTax": "",
+        "dividStocksPs": "0.000000",
+        "dividReserveToStockPs": "",
+        "dividPlanDate": "",
+        "dividRegistDate": "2025-07-21",
+        "dividOperateDate": "2025-07-22",
+        "dividPayDate": "2025-07-22",
+        "dividStockMarketDate": ""
+      }
+    ]
+  },
+  {
+    "code": "sz.000819",
+    "exDate": "2021-06-25",
+    "reason": "missing_or_invalid_date:dividPayDate",
+    "sources": [
+      {
+        "requestId": "request-d06e51f1995743529a42151b42affaaa",
+        "rawSha256": "270522ca0632e72e97ce97019355a583bb20d3a2c080230b74caedf598a9f86c",
+        "rowIndex": 0
+      }
+    ],
+    "rawFields": [
+      {
+        "dividCashStock": "10派0.1元（含税，扣税后0.09或0.1元）",
+        "dividCashPsBeforeTax": "0.01",
+        "dividCashPsAfterTax": "0.009或0.01",
+        "dividStocksPs": "0.000000",
+        "dividReserveToStockPs": "",
+        "dividPlanDate": "2021-06-18",
+        "dividRegistDate": "2021-06-24",
+        "dividOperateDate": "2021-06-25",
+        "dividPayDate": "",
+        "dividStockMarketDate": ""
+      }
+    ]
+  },
+  {
+    "code": "sz.002049",
+    "exDate": "2022-08-24",
+    "reason": "numeric_plan_conflict:dividReserveToStockPs",
+    "sources": [
+      {
+        "requestId": "request-e48219faa68f4ff3b65f1c225a1d774d",
+        "rawSha256": "7a853c0d7ccd009a4e1febc7d584ed5cc9217442fbb212ef2d50b31008a385ed",
+        "rowIndex": 0
+      }
+    ],
+    "rawFields": [
+      {
+        "dividCashStock": "10转3.999976派3.24998元（含税，扣税后2.924982或3.24998元）",
+        "dividCashPsBeforeTax": "0.324998",
+        "dividCashPsAfterTax": "0.2924982或0.324998",
+        "dividStocksPs": "0.000000",
+        "dividReserveToStockPs": "0.399998",
+        "dividPlanDate": "2022-08-18",
+        "dividRegistDate": "2022-08-23",
+        "dividOperateDate": "2022-08-24",
+        "dividPayDate": "2022-08-24",
+        "dividStockMarketDate": "2022-08-24"
+      }
+    ]
+  }
+]

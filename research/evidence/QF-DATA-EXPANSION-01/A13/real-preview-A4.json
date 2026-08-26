@@ -1,0 +1,452 @@
+{
+  "state": "gross-terms-preview-only",
+  "start": "2020-08-25",
+  "end": "2025-08-24",
+  "archive": {
+    "state": "capture-incomplete",
+    "snapshotAt": "2026-08-26T07:39:28.744460+00:00",
+    "database": "/Users/cailingling/Desktop/quant-intelligence-lab/research/data/qforge_actions.sqlite",
+    "scopeSha256": "5983b1dc73827d5cbe7da6787f5c05858e1e38e1fdbe00291ba29c6079cc5ad8",
+    "dailyInputSha256": "5c872434d4fddf066f6fb8f8e5e151cb25b5334aefd71b6d47f67524895717dc",
+    "expectedTasks": 34476,
+    "tasks": {
+      "succeeded": 23777,
+      "running": 1,
+      "pending": 10698
+    },
+    "tasksComplete": false,
+    "archiveIntegrityPass": true,
+    "captureReady": false,
+    "problems": {
+      "counts": {},
+      "examples": []
+    },
+    "sourceIdentities": [
+      {
+        "identity": {
+          "adapterSha256": "2ce015522ba7dba48958ebb32f34ab55d89adf264a560fe07352f2df8eb4d49d",
+          "provider": "BaoStock",
+          "providerVersion": "0.9.3"
+        },
+        "runs": 2
+      },
+      {
+        "identity": {
+          "adapterSha256": "dca184f8445ad6ca19685906216cf1bd4acd138e4d310bab697fc4c6c1659b4d",
+          "provider": "BaoStock",
+          "providerVersion": "0.9.3"
+        },
+        "runs": 1
+      }
+    ],
+    "normalizationVersion": 2,
+    "counts": {
+      "requests": 23778,
+      "legacyProjectionsUnchecked": 1,
+      "rawResponsesChecked": 23777,
+      "queriedEmptyYears": 7871,
+      "sourceEvents": 17766,
+      "eventsOutsideStudyDates": 1955,
+      "currentProjectionsChecked": 17765
+    },
+    "yearRequestStates": {
+      "2020:succeeded": 2981,
+      "2021:succeeded": 3250,
+      "2022:succeeded": 3426,
+      "2023:succeeded": 3517,
+      "2024:succeeded": 3522,
+      "2025:succeeded": 3535,
+      "2026:succeeded": 3546,
+      "2023:running": 1
+    },
+    "requestIndexSha256": "2b74f8d4e1fa46db7d2682d3b59270778264b407c85603d8b4ea294f4d896455",
+    "unresolvedFieldCounts": {
+      "missing:dividStockMarketDate": 16294,
+      "ambiguous:dividCashPsAfterTax": 17554,
+      "missing:dividReserveToStockPs": 16396,
+      "missing:dividCashPsBeforeTax": 193,
+      "missing:dividCashPsAfterTax": 211,
+      "multiple_rows_on_same_ex_date": 343,
+      "missing:dividPayDate": 136,
+      "invalid:dividCashPsAfterTax": 1
+    },
+    "legacyProjectionPolicy": "retained historical bytes are not certified or consumed; reparse checked raw source",
+    "ledgerReady": false,
+    "investorTaxVerified": false,
+    "scope": "single-snapshot same-source archive checks; not independent source coverage or economic P&L"
+  },
+  "counts": {
+    "sourceRowsInWindow": 12687,
+    "eventGroups": 12543,
+    "gross-source-consistent": 12348,
+    "multipleRowGroups": 143,
+    "resolvedMultipleRowGroups": 124,
+    "unresolved": 195
+  },
+  "unresolvedReasons": {
+    "conflicting_field:dividCashStock": 13,
+    "conflicting_field:dividCashPsAfterTax": 5,
+    "unsupported_complete_plan": 14,
+    "numeric_plan_conflict:dividCashPsBeforeTax": 161,
+    "missing_or_invalid_date:dividPayDate": 1,
+    "numeric_plan_conflict:dividReserveToStockPs": 1
+  },
+  "examples": [
+    {
+      "code": "sh.600025",
+      "exDate": "2021-06-18",
+      "sourceRows": 2,
+      "ledgerReady": false,
+      "investorTaxVerified": false,
+      "state": "gross-source-consistent",
+      "terms": {
+        "code": "sh.600025",
+        "implementation_notice_date": "2021-06-11",
+        "record_date": "2021-06-17",
+        "ex_date": "2021-06-18",
+        "payment_date": "2021-06-18",
+        "shares_listing_date": null,
+        "gross_cash_per_share": "0.16",
+        "bonus_per_share": "0",
+        "reserve_per_share": "0"
+      },
+      "quantityBasis": "complete per-ten-share description; every nonblank numeric leg agrees",
+      "taxBasis": "gross cash only; no source after-tax branch selected",
+      "identityBasis": "same security/ex-date and no conflicting nonblank source fields",
+      "sources": [
+        {
+          "requestId": "request-b0589353a6904c1fa987e9df310a3242",
+          "rawSha256": "2987684977c12df9813b3dcfaf548622e9b57dfead306d71173019c98b6aecda",
+          "rowIndex": 0
+        },
+        {
+          "requestId": "request-b0589353a6904c1fa987e9df310a3242",
+          "rawSha256": "2987684977c12df9813b3dcfaf548622e9b57dfead306d71173019c98b6aecda",
+          "rowIndex": 1
+        }
+      ]
+    },
+    {
+      "code": "sh.600066",
+      "exDate": "2021-05-21",
+      "sourceRows": 2,
+      "ledgerReady": false,
+      "investorTaxVerified": false,
+      "state": "gross-source-consistent",
+      "terms": {
+        "code": "sh.600066",
+        "implementation_notice_date": "2021-05-17",
+        "record_date": "2021-05-20",
+        "ex_date": "2021-05-21",
+        "payment_date": "2021-05-21",
+        "shares_listing_date": null,
+        "gross_cash_per_share": "0.5",
+        "bonus_per_share": "0",
+        "reserve_per_share": "0"
+      },
+      "quantityBasis": "complete per-ten-share description; every nonblank numeric leg agrees",
+      "taxBasis": "gross cash only; no source after-tax branch selected",
+      "identityBasis": "same security/ex-date and no conflicting nonblank source fields",
+      "sources": [
+        {
+          "requestId": "request-8d9d94f8a372411f932de2f761f7b5c8",
+          "rawSha256": "b335ec6de7be0d0b8340676246dd0a16e19b9feab9e8e45ad527883af24f586a",
+          "rowIndex": 0
+        },
+        {
+          "requestId": "request-8d9d94f8a372411f932de2f761f7b5c8",
+          "rawSha256": "b335ec6de7be0d0b8340676246dd0a16e19b9feab9e8e45ad527883af24f586a",
+          "rowIndex": 1
+        }
+      ]
+    },
+    {
+      "code": "sh.600116",
+      "exDate": "2025-01-08",
+      "sourceRows": 2,
+      "ledgerReady": false,
+      "investorTaxVerified": false,
+      "state": "unresolved",
+      "reason": "conflicting_field:dividCashStock",
+      "sources": [
+        {
+          "requestId": "request-b58d01b8f898449f9c9f968eaac8c803",
+          "rawSha256": "6d3e5c52b89eced22a303b1e460ad1545e28a06940136869070eaa3b6185df76",
+          "rowIndex": 0
+        },
+        {
+          "requestId": "request-b58d01b8f898449f9c9f968eaac8c803",
+          "rawSha256": "6d3e5c52b89eced22a303b1e460ad1545e28a06940136869070eaa3b6185df76",
+          "rowIndex": 1
+        }
+      ]
+    },
+    {
+      "code": "sh.600178",
+      "exDate": "2021-06-24",
+      "sourceRows": 2,
+      "ledgerReady": false,
+      "investorTaxVerified": false,
+      "state": "gross-source-consistent",
+      "terms": {
+        "code": "sh.600178",
+        "implementation_notice_date": "2021-06-17",
+        "record_date": "2021-06-23",
+        "ex_date": "2021-06-24",
+        "payment_date": "2021-06-24",
+        "shares_listing_date": null,
+        "gross_cash_per_share": "0.03",
+        "bonus_per_share": "0",
+        "reserve_per_share": "0"
+      },
+      "quantityBasis": "complete per-ten-share description; every nonblank numeric leg agrees",
+      "taxBasis": "gross cash only; no source after-tax branch selected",
+      "identityBasis": "same security/ex-date and no conflicting nonblank source fields",
+      "sources": [
+        {
+          "requestId": "request-89a55218ca9740f4972e4ff72934052f",
+          "rawSha256": "5833a20e77be1474f0c2ad04a61149f01a7366bbeb96c33f808f36793691082a",
+          "rowIndex": 0
+        },
+        {
+          "requestId": "request-89a55218ca9740f4972e4ff72934052f",
+          "rawSha256": "5833a20e77be1474f0c2ad04a61149f01a7366bbeb96c33f808f36793691082a",
+          "rowIndex": 1
+        }
+      ]
+    },
+    {
+      "code": "sh.600180",
+      "exDate": "2021-07-02",
+      "sourceRows": 2,
+      "ledgerReady": false,
+      "investorTaxVerified": false,
+      "state": "gross-source-consistent",
+      "terms": {
+        "code": "sh.600180",
+        "implementation_notice_date": "2021-06-25",
+        "record_date": "2021-07-01",
+        "ex_date": "2021-07-02",
+        "payment_date": "2021-07-02",
+        "shares_listing_date": null,
+        "gross_cash_per_share": "0.0466",
+        "bonus_per_share": "0",
+        "reserve_per_share": "0"
+      },
+      "quantityBasis": "complete per-ten-share description; every nonblank numeric leg agrees",
+      "taxBasis": "gross cash only; no source after-tax branch selected",
+      "identityBasis": "same security/ex-date and no conflicting nonblank source fields",
+      "sources": [
+        {
+          "requestId": "request-bb7b37c6303c454e91dc4ed7d3f9993c",
+          "rawSha256": "3f340e99c1fc1d3d003e05b2aee974f0dbbd7b8bd9fafaf8c4f9947fd9cd2c6d",
+          "rowIndex": 0
+        },
+        {
+          "requestId": "request-bb7b37c6303c454e91dc4ed7d3f9993c",
+          "rawSha256": "3f340e99c1fc1d3d003e05b2aee974f0dbbd7b8bd9fafaf8c4f9947fd9cd2c6d",
+          "rowIndex": 1
+        }
+      ]
+    },
+    {
+      "code": "sh.600218",
+      "exDate": "2021-06-23",
+      "sourceRows": 2,
+      "ledgerReady": false,
+      "investorTaxVerified": false,
+      "state": "gross-source-consistent",
+      "terms": {
+        "code": "sh.600218",
+        "implementation_notice_date": "2021-06-17",
+        "record_date": "2021-06-22",
+        "ex_date": "2021-06-23",
+        "payment_date": "2021-06-23",
+        "shares_listing_date": null,
+        "gross_cash_per_share": "0.1",
+        "bonus_per_share": "0",
+        "reserve_per_share": "0"
+      },
+      "quantityBasis": "complete per-ten-share description; every nonblank numeric leg agrees",
+      "taxBasis": "gross cash only; no source after-tax branch selected",
+      "identityBasis": "same security/ex-date and no conflicting nonblank source fields",
+      "sources": [
+        {
+          "requestId": "request-1760fd433d3b430f8494049e93e332ef",
+          "rawSha256": "c1d8489ae9883a683fbd2946a509d441bc709ab1d088d4cdf6adfec94f253531",
+          "rowIndex": 0
+        },
+        {
+          "requestId": "request-1760fd433d3b430f8494049e93e332ef",
+          "rawSha256": "c1d8489ae9883a683fbd2946a509d441bc709ab1d088d4cdf6adfec94f253531",
+          "rowIndex": 1
+        }
+      ]
+    },
+    {
+      "code": "sh.600605",
+      "exDate": "2021-05-17",
+      "sourceRows": 2,
+      "ledgerReady": false,
+      "investorTaxVerified": false,
+      "state": "unresolved",
+      "reason": "conflicting_field:dividCashPsAfterTax",
+      "sources": [
+        {
+          "requestId": "request-38b8efdebc9149238aaab587796ff458",
+          "rawSha256": "0262a60f461fb6e86d0c66b4803f994f8cf058ee78787672e4831e03e8097a2f",
+          "rowIndex": 0
+        },
+        {
+          "requestId": "request-38b8efdebc9149238aaab587796ff458",
+          "rawSha256": "0262a60f461fb6e86d0c66b4803f994f8cf058ee78787672e4831e03e8097a2f",
+          "rowIndex": 1
+        }
+      ]
+    },
+    {
+      "code": "sh.600731",
+      "exDate": "2021-05-25",
+      "sourceRows": 1,
+      "ledgerReady": false,
+      "investorTaxVerified": false,
+      "state": "unresolved",
+      "reason": "unsupported_complete_plan",
+      "sources": [
+        {
+          "requestId": "request-798b343c5aad46249315c35356fc134b",
+          "rawSha256": "b1c683100e5cec0d85fa1cd2591871ef30704ed7499f631e805029faa3c63467",
+          "rowIndex": 0
+        }
+      ]
+    },
+    {
+      "code": "sh.600803",
+      "exDate": "2024-08-01",
+      "sourceRows": 1,
+      "ledgerReady": false,
+      "investorTaxVerified": false,
+      "state": "unresolved",
+      "reason": "numeric_plan_conflict:dividCashPsBeforeTax",
+      "sources": [
+        {
+          "requestId": "request-988810c5d5574f6dba0c966a40b9dbdc",
+          "rawSha256": "4d408a49588ef8c628e2b3ab3aa9f11ae5c0b83a56ae8e60e89ffe3a47d7159d",
+          "rowIndex": 0
+        }
+      ]
+    },
+    {
+      "code": "sh.600803",
+      "exDate": "2025-07-22",
+      "sourceRows": 1,
+      "ledgerReady": false,
+      "investorTaxVerified": false,
+      "state": "unresolved",
+      "reason": "numeric_plan_conflict:dividCashPsBeforeTax",
+      "sources": [
+        {
+          "requestId": "request-f62dae85d3a943c8aefd76735491ca0f",
+          "rawSha256": "753a9832f40b9645ec21794106de45353b3cab1f97fca72d6d36d401e99352e3",
+          "rowIndex": 0
+        }
+      ]
+    },
+    {
+      "code": "sh.600853",
+      "exDate": "2020-12-03",
+      "sourceRows": 1,
+      "ledgerReady": false,
+      "investorTaxVerified": false,
+      "state": "unresolved",
+      "reason": "unsupported_complete_plan",
+      "sources": [
+        {
+          "requestId": "request-0e0c9c3b212246c5a2b593f6c3efd780",
+          "rawSha256": "3b04868091e0ebe6879260d26db50eeed5005c4df305d7af918149e87970dc5e",
+          "rowIndex": 2
+        }
+      ]
+    },
+    {
+      "code": "sh.600989",
+      "exDate": "2021-05-20",
+      "sourceRows": 2,
+      "ledgerReady": false,
+      "investorTaxVerified": false,
+      "state": "unresolved",
+      "reason": "conflicting_field:dividCashPsAfterTax",
+      "sources": [
+        {
+          "requestId": "request-23e552934e254bbdabc4b053d07d0a8d",
+          "rawSha256": "94fdb7a86e9a35f97e57f552bfbd742f27245dbcff8934db0249d973fa465ea6",
+          "rowIndex": 0
+        },
+        {
+          "requestId": "request-23e552934e254bbdabc4b053d07d0a8d",
+          "rawSha256": "94fdb7a86e9a35f97e57f552bfbd742f27245dbcff8934db0249d973fa465ea6",
+          "rowIndex": 1
+        }
+      ]
+    },
+    {
+      "code": "sh.601186",
+      "exDate": "2025-07-22",
+      "sourceRows": 2,
+      "ledgerReady": false,
+      "investorTaxVerified": false,
+      "state": "unresolved",
+      "reason": "conflicting_field:dividCashStock",
+      "sources": [
+        {
+          "requestId": "request-f4b22e5851da47d4a646387dc97df300",
+          "rawSha256": "a86c597cf639118640d3823fb44d3dddf711a4640c1df8904438889fee97ffd7",
+          "rowIndex": 0
+        },
+        {
+          "requestId": "request-f4b22e5851da47d4a646387dc97df300",
+          "rawSha256": "a86c597cf639118640d3823fb44d3dddf711a4640c1df8904438889fee97ffd7",
+          "rowIndex": 1
+        }
+      ]
+    },
+    {
+      "code": "sz.000819",
+      "exDate": "2021-06-25",
+      "sourceRows": 1,
+      "ledgerReady": false,
+      "investorTaxVerified": false,
+      "state": "unresolved",
+      "reason": "missing_or_invalid_date:dividPayDate",
+      "sources": [
+        {
+          "requestId": "request-d06e51f1995743529a42151b42affaaa",
+          "rawSha256": "270522ca0632e72e97ce97019355a583bb20d3a2c080230b74caedf598a9f86c",
+          "rowIndex": 0
+        }
+      ]
+    },
+    {
+      "code": "sz.002049",
+      "exDate": "2022-08-24",
+      "sourceRows": 1,
+      "ledgerReady": false,
+      "investorTaxVerified": false,
+      "state": "unresolved",
+      "reason": "numeric_plan_conflict:dividReserveToStockPs",
+      "sources": [
+        {
+          "requestId": "request-e48219faa68f4ff3b65f1c225a1d774d",
+          "rawSha256": "7a853c0d7ccd009a4e1febc7d584ed5cc9217442fbb212ef2d50b31008a385ed",
+          "rowIndex": 0
+        }
+      ]
+    }
+  ],
+  "groupIndexSha256": "e575cba6407dc872a8944d4356b2f7757be64335efefba47b66eb36562ac1462",
+  "resolutionVersion": 1,
+  "unlocatedSourceRows": 0,
+  "ledgerReady": false,
+  "investorTaxVerified": false,
+  "claim": "same-source gross term interpretation only; no tax, fractional allocation, rights or P&L admission"
+}

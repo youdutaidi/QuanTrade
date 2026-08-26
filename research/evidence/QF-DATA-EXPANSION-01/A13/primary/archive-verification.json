@@ -1,0 +1,25 @@
+{
+  "integrity": "ok",
+  "documents": [
+    {
+      "code": "sh.600803",
+      "announcementDate": "2024-07-26",
+      "sha256": "c610a0242cc13bbde06917cfaad3549365afc16e10a5bf278b4751f5be497917",
+      "bytes": 370274,
+      "retrievedAt": "2026-08-26T07:46:30.770Z",
+      "byteMatch": true,
+      "ledgerReady": false
+    },
+    {
+      "code": "sz.002049",
+      "announcementDate": "2022-08-18",
+      "sha256": "01338f2bb244f8fb4da8d844db9a4beb461353fcaf3313f38bb6a273a8e8b553",
+      "bytes": 125121,
+      "retrievedAt": "2026-08-26T07:46:30.770Z",
+      "byteMatch": true,
+      "ledgerReady": false
+    }
+  ],
+  "inMemoryImmutabilityRefusals": 3,
+  "allPass": true
+}

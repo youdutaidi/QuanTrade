@@ -1,0 +1,11 @@
+{
+  "snapshotAt": "2026-08-26T07:47:39.164757+00:00",
+  "tasks": {
+    "pending": 7249,
+    "running": 1,
+    "succeeded": 27226
+  },
+  "events": 20215,
+  "openRuns": 1,
+  "ledgerReadyEvents": 0
+}

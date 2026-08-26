@@ -1,0 +1,27 @@
+{
+  "claim": "two issuer-formula/market-reference checks only; no account cash, tax or allocation admission",
+  "checks": [
+    {
+      "code": "sh.600803",
+      "exDate": "2024-08-01",
+      "priorClose": "19.63",
+      "documentReferenceCash": "0.9054",
+      "documentReferenceNewShares": "0",
+      "computedReference": "18.7246",
+      "roundedReference": "18.72",
+      "storedRawPreclose": "18.72",
+      "matchesAtCent": true
+    },
+    {
+      "code": "sz.002049",
+      "exDate": "2022-08-24",
+      "priorClose": "242",
+      "documentReferenceCash": "0.324998",
+      "documentReferenceNewShares": "0.3999976",
+      "computedReference": "172.6252973576526131187653465",
+      "roundedReference": "172.63",
+      "storedRawPreclose": "172.63",
+      "matchesAtCent": true
+    }
+  ]
+}
