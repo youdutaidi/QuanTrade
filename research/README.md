@@ -544,6 +544,9 @@ planned_strategy_goal:
       missingness_semantics: retained rolling median requires a complete observation window, so an unknown amount keeps the stock ineligible until the window is complete; missing volume makes the existing capacity rule zero; no source database or panel bytes change
       next_admission: add suspended-null, tradable-null and suspended-negative counterexamples; rerun all 190 retained tests and structure before a fresh full-development attempt
       admission_A3: 194 tests pass, including all retained 190; zero structural findings, 6383 package lines and script/package ratio 0.0139; admitted to rerun the unchanged full development scope under a new code identity
+      real_attempt_A4: all 16 settings computed on 5820982 development rows, 5341 stocks and 1212 sessions in 20.73 seconds; peak RSS 3177234432 bytes, zero swaps; no holdout or portfolio outcome
+      report_correction_A5: input evidence overwrote the feature report state label; retain A4 unchanged, strengthen the fixture with the real input-state field, place the workflow state after evidence merge, then rerun retained gates and a fresh real attempt
+      admission_A5: strengthened counterexample fails before the merge correction; all 194 tests pass after correction, zero structural findings, maxima 40/249/325/31; real A6 replay admitted with unchanged inputs and equations
   decision: Test a frozen A-share family combining residual momentum, short-term reversal, low idiosyncratic volatility, and lottery-stock avoidance on the completed point-in-time database.
   hypothesis: a low-turnover composite that avoids high-MAX and high-idiosyncratic-volatility stocks is more stable than conventional raw momentum in the retail-dominated A-share market.
   candidate_families:

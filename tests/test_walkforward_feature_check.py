@@ -16,7 +16,7 @@ from qforge.walkforward.synthetic_market import synthetic_market
 def feature_input(tmp_path, monkeypatch):
     spec = StudySpec.from_json(Path(__file__).resolve().parents[1] / "configs/walk_forward.json")
     frame, calendar, securities, _ = synthetic_market(spec)
-    evidence = {"loadedRows": len(frame), "holdoutLoaded": False, "studySha256": spec.sha256}
+    evidence = {"state": "verified-input", "loadedRows": len(frame), "holdoutLoaded": False, "studySha256": spec.sha256}
     monkeypatch.setattr("qforge.walkforward.feature_check.load_development_frame", lambda *_: (frame.copy(), evidence))
     monkeypatch.setattr("qforge.walkforward.feature_check.load_development_reference",
                         lambda *_: (calendar, securities, {"referenceSha256": "fixture"}))
@@ -27,6 +27,7 @@ def test_feature_workflow_checks_all_frozen_settings_without_a_portfolio(feature
     spec, root, _, _ = feature_input
     output = root / "feature-evidence"
     result = run_feature_check(spec, root, root / "plan.json", output)
+    assert result["state"] == "development-features-checked"
     assert result["signalSettings"] == 16 and result["candidateCount"] == 144
     assert result["stockSymbols"] == 3 and result["sessions"] == 420
     assert all(item["finiteScores"] > 0 for item in result["scores"])

@@ -1,0 +1,20 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_____ test_feature_workflow_checks_all_frozen_settings_without_a_portfolio _____
+
+feature_input = (StudySpec(source_json='{\n  "experiment_id": "QF-WALKFORWARD-01",\n  "version": 1,\n  "data_config": "configs/market_...ows': 1680, 'holdoutLoaded': False, 'studySha256': 'f946362d7d5e71e2e023e5412cd3024bada5edcec5eddd1b18737eaf2afdeae4'})
+
+    def test_feature_workflow_checks_all_frozen_settings_without_a_portfolio(feature_input):
+        spec, root, _, _ = feature_input
+        output = root / "feature-evidence"
+        result = run_feature_check(spec, root, root / "plan.json", output)
+>       assert result["state"] == "development-features-checked"
+E       AssertionError: assert 'verified-input' == 'development-features-checked'
+E         
+E         - development-features-checked
+E         + verified-input
+
+tests/test_walkforward_feature_check.py:30: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_walkforward_feature_check.py::test_feature_workflow_checks_all_frozen_settings_without_a_portfolio
+1 failed in 0.44s

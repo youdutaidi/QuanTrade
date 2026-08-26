@@ -28,7 +28,7 @@ def run_feature_check(spec: StudySpec, root: Path, frozen_plan: Path, output: Pa
     computed = time.perf_counter()
     summaries = _score_summaries(scores, inputs, spec)
     peak = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
-    payload = {"state": "development-features-checked", **evidence, **reference,
+    payload = {**evidence, **reference, "state": "development-features-checked",
                "stockSymbols": inputs.listed.shape[1], "sessions": len(inputs.sessions),
                "firstSession": inputs.sessions[0], "lastSession": inputs.sessions[-1],
                "candidateCount": len(spec.candidates()), "signalSettings": len(scores), "scores": summaries,

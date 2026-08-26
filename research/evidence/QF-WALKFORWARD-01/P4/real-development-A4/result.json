@@ -1,0 +1,210 @@
+{
+  "state": "verified-input",
+  "manifest": "/Users/cailingling/Desktop/quant-intelligence-lab/research/evidence/QF-DATA-EXPANSION-01/data_completion.json",
+  "panel": "/Users/cailingling/Desktop/quant-intelligence-lab/research/data/qforge_daily_panel.parquet",
+  "rows": 7076844,
+  "sha256": "5c872434d4fddf066f6fb8f8e5e151cb25b5334aefd71b6d47f67524895717dc",
+  "scope": "research input only; corporate-action P&L and strategy validation remain separate",
+  "studySha256": "f946362d7d5e71e2e023e5412cd3024bada5edcec5eddd1b18737eaf2afdeae4",
+  "frozenPlanSha256": "ff4f73b39e141806a2aa3dc29f0cb1fb703af1edace7c62ea7dc660da61bf0a9",
+  "loadedRows": 5820982,
+  "loadedThrough": "2025-08-24",
+  "holdoutLoaded": false,
+  "referenceSha256": "834d66b1cd7d90e30ac46e0117f7a0363454a18e0f6f9f880af5601189ad18d8",
+  "referenceThrough": "2025-08-24",
+  "referenceSnapshot": "single SQLite read transaction",
+  "stockSymbols": 5341,
+  "sessions": 1212,
+  "firstSession": "2020-08-25",
+  "lastSession": "2025-08-22",
+  "candidateCount": 144,
+  "signalSettings": 16,
+  "scores": [
+    {
+      "setting": [
+        "fixed_equal_composite",
+        0,
+        0,
+        "long"
+      ],
+      "finiteScores": 3592974,
+      "sessionsWithScores": 879,
+      "symbolsWithScores": 5125
+    },
+    {
+      "setting": [
+        "fixed_equal_composite",
+        0,
+        0,
+        "medium"
+      ],
+      "finiteScores": 4150683,
+      "sessionsWithScores": 1011,
+      "symbolsWithScores": 5166
+    },
+    {
+      "setting": [
+        "fixed_equal_composite",
+        0,
+        0,
+        "short"
+      ],
+      "finiteScores": 4468299,
+      "sessionsWithScores": 1087,
+      "symbolsWithScores": 5217
+    },
+    {
+      "setting": [
+        "low_idiosyncratic_volatility",
+        20,
+        0,
+        ""
+      ],
+      "finiteScores": 4492937,
+      "sessionsWithScores": 1093,
+      "symbolsWithScores": 5218
+    },
+    {
+      "setting": [
+        "low_idiosyncratic_volatility",
+        60,
+        0,
+        ""
+      ],
+      "finiteScores": 4488837,
+      "sessionsWithScores": 1092,
+      "symbolsWithScores": 5217
+    },
+    {
+      "setting": [
+        "low_maximum_return",
+        20,
+        0,
+        ""
+      ],
+      "finiteScores": 4492937,
+      "sessionsWithScores": 1093,
+      "symbolsWithScores": 5218
+    },
+    {
+      "setting": [
+        "low_maximum_return",
+        60,
+        0,
+        ""
+      ],
+      "finiteScores": 4492937,
+      "sessionsWithScores": 1093,
+      "symbolsWithScores": 5218
+    },
+    {
+      "setting": [
+        "residual_momentum",
+        120,
+        21,
+        ""
+      ],
+      "finiteScores": 4150683,
+      "sessionsWithScores": 1011,
+      "symbolsWithScores": 5166
+    },
+    {
+      "setting": [
+        "residual_momentum",
+        120,
+        5,
+        ""
+      ],
+      "finiteScores": 4217849,
+      "sessionsWithScores": 1027,
+      "symbolsWithScores": 5170
+    },
+    {
+      "setting": [
+        "residual_momentum",
+        252,
+        21,
+        ""
+      ],
+      "finiteScores": 3592974,
+      "sessionsWithScores": 879,
+      "symbolsWithScores": 5125
+    },
+    {
+      "setting": [
+        "residual_momentum",
+        252,
+        5,
+        ""
+      ],
+      "finiteScores": 3663253,
+      "sessionsWithScores": 895,
+      "symbolsWithScores": 5126
+    },
+    {
+      "setting": [
+        "residual_momentum",
+        60,
+        21,
+        ""
+      ],
+      "finiteScores": 4401197,
+      "sessionsWithScores": 1071,
+      "symbolsWithScores": 5214
+    },
+    {
+      "setting": [
+        "residual_momentum",
+        60,
+        5,
+        ""
+      ],
+      "finiteScores": 4468299,
+      "sessionsWithScores": 1087,
+      "symbolsWithScores": 5217
+    },
+    {
+      "setting": [
+        "short_reversal",
+        10,
+        0,
+        ""
+      ],
+      "finiteScores": 4492937,
+      "sessionsWithScores": 1093,
+      "symbolsWithScores": 5218
+    },
+    {
+      "setting": [
+        "short_reversal",
+        20,
+        0,
+        ""
+      ],
+      "finiteScores": 4492937,
+      "sessionsWithScores": 1093,
+      "symbolsWithScores": 5218
+    },
+    {
+      "setting": [
+        "short_reversal",
+        5,
+        0,
+        ""
+      ],
+      "finiteScores": 4492937,
+      "sessionsWithScores": 1093,
+      "symbolsWithScores": 5218
+    }
+  ],
+  "timingSeconds": {
+    "load": 1.1664225420099683,
+    "align": 10.568100916978437,
+    "allScoreSettings": 8.417208875005599,
+    "total": 20.21427150000818
+  },
+  "peakResidentBytes": 3177234432,
+  "strategyOutcomesComputed": false,
+  "verifiedStrategy": false,
+  "claim": "real development signal input/compute check only; no economic return, selection or holdout"
+}
