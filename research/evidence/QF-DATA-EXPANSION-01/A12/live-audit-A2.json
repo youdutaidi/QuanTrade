@@ -1,0 +1,72 @@
+{
+  "state": "capture-incomplete",
+  "snapshotAt": "2026-08-26T06:57:59.375996+00:00",
+  "database": "/Users/cailingling/Desktop/quant-intelligence-lab/research/data/qforge_actions.sqlite",
+  "scopeSha256": "5983b1dc73827d5cbe7da6787f5c05858e1e38e1fdbe00291ba29c6079cc5ad8",
+  "dailyInputSha256": "5c872434d4fddf066f6fb8f8e5e151cb25b5334aefd71b6d47f67524895717dc",
+  "expectedTasks": 34476,
+  "tasks": {
+    "succeeded": 5364,
+    "running": 1,
+    "pending": 29111
+  },
+  "tasksComplete": false,
+  "archiveIntegrityPass": true,
+  "captureReady": false,
+  "problems": {
+    "counts": {},
+    "examples": []
+  },
+  "sourceIdentities": [
+    {
+      "identity": {
+        "adapterSha256": "2ce015522ba7dba48958ebb32f34ab55d89adf264a560fe07352f2df8eb4d49d",
+        "provider": "BaoStock",
+        "providerVersion": "0.9.3"
+      },
+      "runs": 2
+    },
+    {
+      "identity": {
+        "adapterSha256": "dca184f8445ad6ca19685906216cf1bd4acd138e4d310bab697fc4c6c1659b4d",
+        "provider": "BaoStock",
+        "providerVersion": "0.9.3"
+      },
+      "runs": 1
+    }
+  ],
+  "normalizationVersion": 2,
+  "counts": {
+    "requests": 5365,
+    "legacyProjectionsUnchecked": 1,
+    "rawResponsesChecked": 5364,
+    "queriedEmptyYears": 1985,
+    "sourceEvents": 3758,
+    "eventsOutsideStudyDates": 505,
+    "currentProjectionsChecked": 3757
+  },
+  "yearRequestStates": {
+    "2020:succeeded": 787,
+    "2021:succeeded": 793,
+    "2022:succeeded": 783,
+    "2023:succeeded": 768,
+    "2024:succeeded": 757,
+    "2025:succeeded": 744,
+    "2026:succeeded": 732,
+    "2025:running": 1
+  },
+  "requestIndexSha256": "85e3876630cbb1726d54a70542be2922b86acab1461fa880bee5f9f0a230c7b3",
+  "unresolvedFieldCounts": {
+    "missing:dividStockMarketDate": 3632,
+    "ambiguous:dividCashPsAfterTax": 3731,
+    "missing:dividReserveToStockPs": 3670,
+    "missing:dividCashPsBeforeTax": 29,
+    "missing:dividCashPsAfterTax": 27,
+    "multiple_rows_on_same_ex_date": 83,
+    "missing:dividPayDate": 13
+  },
+  "legacyProjectionPolicy": "retained historical bytes are not certified or consumed; reparse checked raw source",
+  "ledgerReady": false,
+  "investorTaxVerified": false,
+  "scope": "single-snapshot same-source archive checks; not independent source coverage or economic P&L"
+}

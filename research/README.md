@@ -451,6 +451,10 @@ data_goal:
         state: structure-admitted and semantics-admitted; 186 retained/new tests pass, zero structural findings; admitted for a read-only real capture audit
         retained_mapping: all 171 baseline tests unchanged; 15 additive audit cases cover empty/pending years, missing tasks, raw/count/ownership/attempt/projection/provenance defects, legacy preservation, concurrent WAL snapshot and immutable output
         structure: maximum function 40 lines, class 249, module 325, workflow script 31; 6291 package lines, 89 script lines, ratio 0.0141; no layer/private-import/duplicate findings
+        real_audit: A2 under 4bdf63c checked one snapshot with 5364 successful requests, 3758 raw events and 1985 queried-empty years; zero archive/provenance defects; 3.35 seconds and 167149568 peak resident bytes
+        verdict: supported within raw-archive consistency scope; capture-incomplete and CLI exit 2 are correct because 29111 tasks were pending and one running; no economic or strategy promotion
+        source_counterexamples: 83 source rows share an ex-date within a response; development-only examples include both byte-identical duplicates and complementary or differing rows; never blindly sum them as separate payments
+        next_discriminator: finish the unchanged source capture, rerun this audit on all planned tasks, and resolve company-action event identity and economic terms before portfolio consumption
   cutover:
     criteria:
       - SQLite schema, idempotent upserts, checkpoint resume, and source normalization tests pass
