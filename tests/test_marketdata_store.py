@@ -71,6 +71,24 @@ def test_schema_migration_preserves_raw_rows_and_excludes_exit_date(tmp_path):
     assert "snapshotAt" in store.status()
 
 
+def test_universe_boundary_exception_requires_nontradable_exit_date(tmp_path):
+    store = MarketDataStore(tmp_path / "market.sqlite")
+    store.initialize()
+    day = "2020-06-01"
+    store.upsert_calendar(pd.DataFrame([{"calendar_date": day, "is_trading_day": "1"}]))
+    store.upsert_securities(pd.DataFrame([{
+        "code": "sh.600001", "code_name": "样本", "ipoDate": "1998-01-01", "outDate": day, "type": "1", "status": "0",
+    }]))
+    observation = pd.DataFrame([{"code": "sh.600001", "code_name": "样本", "tradeStatus": "0"}])
+    store.upsert_observation(day, observation)
+    audit = store.audit_universe(day, ["1"], ["sh"])
+    assert audit["status"] == "pass_boundary"
+    assert audit["observedOnlyCount"] == 1  # raw discrepancy is not erased
+    observation.loc[0, "tradeStatus"] = "1"
+    store.upsert_observation(day, observation)
+    assert store.audit_universe(day, ["1"], ["sh"])["status"] == "mismatch"
+
+
 def test_daily_upsert_is_idempotent(tmp_path) -> None:
     store = MarketDataStore(tmp_path / "market.sqlite")
     store.initialize()

@@ -271,6 +271,14 @@ data_goal:
         admission: retained full test suite and structure gate before restarting the single source session
         evidence: research/evidence/QF-DATA-EXPANSION-01/A5
         pre_resume_verdict: all 2240 successful tasks have complete pre-delisting calendar coverage; 69 optional suspended boundary rows retained; no integrity violations; full data admission still pending
+      - id: QF-DATA-EXPANSION-01-A6
+        change: replay reference snapshots after the exclusive delisting-view migration; explicitly distinguish raw equality from audited nontradable boundary exclusions
+        baseline: 77ce68f
+        cheapest_falsifier: a tradable delisting-date observation must remain a mismatch; raw count differences and hashes must remain visible
+        evidence: research/evidence/QF-DATA-EXPANSION-01/A6
+        source_job: A5 continues under 77ce68f; A6 changes only reference comparison and presentation, not network downloads
+        result: structure-admitted and semantics-admitted; 50 tests passed; 5 exact snapshots and 2 explicit pass_boundary snapshots; local build and HTTP 200 passed
+        next_action: let the A5 single downloader finish, then rerun complete under the A6 audit; do not start a second BaoStock session
   cutover:
     criteria:
       - SQLite schema, idempotent upserts, checkpoint resume, and source normalization tests pass

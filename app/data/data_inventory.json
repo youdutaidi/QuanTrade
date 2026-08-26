@@ -5,34 +5,34 @@
   "stockCount": 5549,
   "delistedStockCount": 337,
   "universeObservationRows": 39088,
-  "dailyBarCount": 2975440,
-  "dailyBarSymbols": 2240,
+  "dailyBarCount": 3076788,
+  "dailyBarSymbols": 2330,
   "firstDailyBar": "2020-08-25",
   "lastDailyBar": "2026-08-24",
-  "adjustmentFactorCount": 10983,
-  "snapshotAt": "2026-08-26T04:08:42.176569+00:00",
+  "adjustmentFactorCount": 11456,
+  "snapshotAt": "2026-08-26T04:12:04.955233+00:00",
   "database": "/Users/cailingling/Desktop/quant-intelligence-lab/research/data/qforge_market.sqlite",
-  "databaseBytes": 673886208,
+  "databaseBytes": 696446976,
   "tasks": [
     {
       "status": "running",
-      "taskCount": 3190,
+      "taskCount": 3100,
       "rowsWritten": 0
     },
     {
       "status": "succeeded",
-      "taskCount": 2240,
-      "rowsWritten": 2986423
+      "taskCount": 2330,
+      "rowsWritten": 3088244
     }
   ],
   "audits": [
     {
       "observationDate": "2020-08-25",
       "observedStockCount": 3972,
-      "derivedStockCount": 3972,
-      "observedOnlyCount": 0,
+      "derivedStockCount": 3970,
+      "observedOnlyCount": 2,
       "derivedOnlyCount": 0,
-      "status": "pass"
+      "status": "pass_boundary"
     },
     {
       "observationDate": "2021-08-25",
@@ -61,10 +61,10 @@
     {
       "observationDate": "2024-08-26",
       "observedStockCount": 5102,
-      "derivedStockCount": 5102,
-      "observedOnlyCount": 0,
+      "derivedStockCount": 5101,
+      "observedOnlyCount": 1,
       "derivedOnlyCount": 0,
-      "status": "pass"
+      "status": "pass_boundary"
     },
     {
       "observationDate": "2025-08-25",
@@ -84,7 +84,7 @@
     }
   ],
   "latestRun": {
-    "runId": "market-471d016f04d7461da285f1f05e76db07",
+    "runId": "market-92f5bec299014cdebeaf2048098ef760",
     "operation": "download-daily",
     "status": "running",
     "rowsWritten": 0,

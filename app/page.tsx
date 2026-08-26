@@ -433,7 +433,7 @@ export default function Home() {
         </div>
         <div className="minute-status-grid" aria-label="本地点时数据库存">
           <div><small>证券生命周期</small><strong>{marketInventory.stockCount.toLocaleString()}</strong><p>含 {marketInventory.delistedStockCount} 只退市股票</p></div>
-          <div><small>历史股票池核对</small><strong>{marketInventory.audits.filter((audit) => audit.status === "pass").length}/{marketInventory.audits.length}</strong><p>抽样日期与源数据零差异</p></div>
+          <div><small>历史股票池核对</small><strong>{marketInventory.audits.filter((audit) => ["pass", "pass_boundary"].includes(audit.status)).length}/{marketInventory.audits.length}</strong><p>按上市区间核对 · 停牌退市边界另记</p></div>
           <div><small>多年日线任务</small><strong>{marketTasksDone}/{marketTaskTotal}</strong><p>{marketInventory.dailyBarCount.toLocaleString()} 根 · 下载任务可恢复</p></div>
           <div><small>本地 SQLite</small><strong>{number(marketInventory.databaseBytes / 1024 / 1024, 1)} MB</strong><p>WAL · 幂等写入 · 不上传云端</p></div>
         </div>

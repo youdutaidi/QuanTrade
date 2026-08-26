@@ -23,7 +23,7 @@ def audit_market_database(config: MarketDataConfig, root: Path) -> dict[str, obj
         coverage = audit_daily_coverage(connection, config.adjustflag)
         integrity = _integrity_counts(connection)
     task_counts = {str(item["status"]): int(item["taskCount"]) for item in inventory["tasks"]}
-    audits_pass = bool(inventory["audits"]) and all(item["status"] == "pass" for item in inventory["audits"])
+    audits_pass = bool(inventory["audits"]) and all(item["status"] in {"pass", "pass_boundary"} for item in inventory["audits"])
     tasks_complete = task_counts.get("succeeded", 0) > 0 and sum(
         count for status, count in task_counts.items() if status != "succeeded"
     ) == 0

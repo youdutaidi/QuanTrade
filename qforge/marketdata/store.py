@@ -84,7 +84,7 @@ class MarketDataStore:
         params = [day, *stock_types, *(f"{market}.%" for market in markets)]
         with self.connect() as connection:
             observed = connection.execute(
-                f"""SELECT o.code FROM universe_observations o JOIN securities s ON s.code=o.code
+                f"""SELECT o.code,o.trade_status,s.out_date FROM universe_observations o JOIN securities s ON s.code=o.code
                 WHERE o.observation_date=? AND s.security_type IN ({placeholders}) AND ({observed_market_clause}) ORDER BY o.code""",
                 params,
             ).fetchall()
@@ -95,6 +95,7 @@ class MarketDataStore:
             ).fetchall()
         observed_codes = {str(row["code"]) for row in observed}
         derived_codes = {str(row["code"]) for row in derived}
+        boundary = {str(row["code"]) for row in observed if row["out_date"] == day and row["trade_status"] == "0"}
         payload = {
             "observationDate": day,
             "observedStockCount": len(observed_codes),
@@ -104,7 +105,7 @@ class MarketDataStore:
             "observedSha256": _code_hash(observed_codes),
             "derivedSha256": _code_hash(derived_codes),
         }
-        payload["status"] = "pass" if not (observed_codes ^ derived_codes) else "mismatch"
+        payload["status"] = _universe_verdict(observed_codes, derived_codes, boundary)
         with self.connect() as connection:
             connection.execute(
                 "INSERT OR REPLACE INTO universe_audits VALUES (?,?,?,?,?,?,?,?,?)",
@@ -298,6 +299,14 @@ def _scalar(value: object) -> object:
 
 def _code_hash(codes: set[str]) -> str:
     return hashlib.sha256("\n".join(sorted(codes)).encode()).hexdigest()
+
+
+def _universe_verdict(observed: set[str], derived: set[str], boundary: set[str]) -> str:
+    if observed == derived:
+        return "pass"
+    if observed - boundary == derived:
+        return "pass_boundary"
+    return "mismatch"
 
 
 _COUNTS_QUERY = """SELECT

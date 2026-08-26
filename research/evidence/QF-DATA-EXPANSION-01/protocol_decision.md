@@ -80,3 +80,19 @@
 - Gates: 49 tests passed; structure gate passed with zero findings. Full source
   completion, source replay and strategy verification remain pending.
 - Boundary source: <https://www.sse.com.cn/disclosure/announcement/listing/stock/c/c_20250718_10785880.shtml>
+
+## A6: reference replay after boundary migration
+
+- Replaying all seven saved reference snapshots under schema v2 exposed three
+  raw observations absent from the exclusive lifecycle view: sz.300090 and
+  sz.300156 on 2020-08-25; sz.002665 on 2024-08-26. Each source record has
+  `trade_status=0` and `out_date` exactly equal to the observation date.
+- These two audit dates are labeled `pass_boundary`, not raw equality. The
+  original observed-only counts and both hashes remain in SQLite. Five other
+  dates retain exact equality. A tradable boundary record still fails.
+- No prices, dates, or source observations were changed or deleted. The local
+  page no longer describes all seven comparisons as zero raw differences.
+- Structural gate: zero findings. Semantic gate: 50 tests passed. Local website
+  build passed; HTTP smoke returned 200. Full download and source replay remain
+  pending. The running A5 downloader still uses its frozen 77ce68f code; once it
+  finishes, completion must be rerun under the current admitted boundary audit.
