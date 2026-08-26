@@ -1,0 +1,10 @@
+{
+  "samePanel": true,
+  "sameStudy": true,
+  "sameReferences": true,
+  "sameScoreCoverage": true,
+  "sameDevelopmentRows": true,
+  "holdoutExcluded": true,
+  "correctedState": true,
+  "noPortfolioOutcomes": true
+}

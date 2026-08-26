@@ -90,6 +90,12 @@
   checks; known strong credential patterns have no findings. Captured action
   database has 721 requests and 571 events, explicitly incomplete. A new D3 draft
   upload is in progress; remote recovery and publication remain pending.
+- D3 upload subsequently completed: all six remote asset sizes and GitHub SHA256
+  values match the local files. Draft release ID `376928512`; frozen tag target
+  remains `ebce265f85f1ce76498104c60ccbee4ecd74a769`. The full archive is being
+  downloaded to `research/output/delivery/roundtrip-20260826-d3/`; do not publish
+  until the downloaded bytes and a fresh restore pass. No upload retry or source
+  data deletion was needed. Evidence: D3 `uploaded-assets.json` and `upload-hash-check.json`.
 
 ## Code-evolution record
 
@@ -469,7 +475,7 @@ data_goal:
 planned_strategy_goal:
   goal_id: QF-WALKFORWARD-01
   preparation:
-    state: configuration and synthetic-data implementation only; no market-outcome computation before data admission
+    state: frozen configuration and synthetic accounting/execution admitted; real development signal preparation admitted; economic market replay remains gated on source-action and execution validation
     baseline: f1d17d1
     owner_session: /root
     allowed_files:
@@ -547,6 +553,9 @@ planned_strategy_goal:
       real_attempt_A4: all 16 settings computed on 5820982 development rows, 5341 stocks and 1212 sessions in 20.73 seconds; peak RSS 3177234432 bytes, zero swaps; no holdout or portfolio outcome
       report_correction_A5: input evidence overwrote the feature report state label; retain A4 unchanged, strengthen the fixture with the real input-state field, place the workflow state after evidence merge, then rerun retained gates and a fresh real attempt
       admission_A5: strengthened counterexample fails before the merge correction; all 194 tests pass after correction, zero structural findings, maxima 40/249/325/31; real A6 replay admitted with unchanged inputs and equations
+      real_attempt_A6: 7ccec1f completed all 16 settings on the same 5820982 development rows and 5341 stocks; 19.97 seconds, peak RSS 3662610432 bytes, zero swaps; correct workflow state and identical input/reference/config fingerprints and score-coverage summaries versus A4
+      verdict: real full-development signal preparation supported and usable; no stock-universe reduction, amount zero-fill, source mutation, economic return, candidate selection or holdout evaluation
+      next_discriminator: complete and audit raw company-action coverage, resolve effective distributions without double counting, then admit their integration into the existing cash/share replay before any market-performance ranking
   decision: Test a frozen A-share family combining residual momentum, short-term reversal, low idiosyncratic volatility, and lottery-stock avoidance on the completed point-in-time database.
   hypothesis: a low-turnover composite that avoids high-MAX and high-idiosyncratic-volatility stocks is more stable than conventional raw momentum in the retail-dominated A-share market.
   candidate_families:
