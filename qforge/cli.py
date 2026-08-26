@@ -12,6 +12,7 @@ from .factors import factor_catalog
 from .marketdata.cli import register_market_commands, run_market_command
 from .minute.cli import register_minute_commands, run_minute_command
 from .pipeline import run_experiment
+from .walkforward.cli import register_walkforward_commands, run_walkforward_command
 
 
 def parser() -> argparse.ArgumentParser:
@@ -25,6 +26,7 @@ def parser() -> argparse.ArgumentParser:
     catalog.add_argument("--json", action="store_true")
     register_minute_commands(commands)
     register_market_commands(commands)
+    register_walkforward_commands(commands)
     return root
 
 
@@ -35,6 +37,8 @@ def main(argv: list[str] | None = None) -> int:
         return run_minute_command(args, root)
     if args.command == "market":
         return run_market_command(args, root)
+    if args.command == "walkforward":
+        return run_walkforward_command(args, root)
     if args.command == "catalog":
         _print_catalog(args.json)
         return 0

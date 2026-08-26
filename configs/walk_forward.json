@@ -1,0 +1,113 @@
+{
+  "experiment_id": "QF-WALKFORWARD-01",
+  "version": 1,
+  "data_config": "configs/market_data.json",
+  "data_manifest": "research/evidence/QF-DATA-EXPANSION-01/data_completion.json",
+  "benchmark": "sh.000300",
+  "periods": {
+    "discovery": ["2020-08-25", "2022-08-24"],
+    "folds": [
+      {"train_end": "2022-08-24", "test": ["2022-08-25", "2023-08-24"]},
+      {"train_end": "2023-08-24", "test": ["2023-08-25", "2024-08-24"]},
+      {"train_end": "2024-08-24", "test": ["2024-08-25", "2025-08-24"]}
+    ],
+    "holdout": ["2025-08-25", "2026-08-24"]
+  },
+  "grid": {
+    "residual_momentum": {"lookback": [60, 120, 252], "skip": [5, 21]},
+    "short_reversal": {"lookback": [5, 10, 20]},
+    "low_idiosyncratic_volatility": {"lookback": [20, 60]},
+    "low_maximum_return": {"lookback": [20, 60]},
+    "fixed_equal_composite": {"window": ["short", "medium", "long"]}
+  },
+  "rebalance_days": [5, 10, 20],
+  "top_n": [10, 20, 50],
+  "expected_candidates": 144,
+  "signals": {
+    "beta_lookback": 60,
+    "beta_lag": 1,
+    "remove_intercept": true,
+    "residual_momentum": "rolling_sum_divided_by_sample_standard_deviation",
+    "short_reversal": "negative_compounded_return",
+    "low_idiosyncratic_volatility": "negative_sample_standard_deviation",
+    "low_maximum_return": "negative_maximum_single_day_return",
+    "mad_clip": 5.0,
+    "std_ddof": 1,
+    "composite_windows": {
+      "short": {"momentum": 60, "skip": 5, "reversal": 5, "ivol": 20, "max": 20},
+      "medium": {"momentum": 120, "skip": 21, "reversal": 10, "ivol": 60, "max": 20},
+      "long": {"momentum": 252, "skip": 21, "reversal": 20, "ivol": 60, "max": 60}
+    }
+  },
+  "universe": {
+    "security_type": "1",
+    "prefixes": ["sh.60", "sh.68", "sz.00", "sz.30"],
+    "minimum_listing_sessions": 120,
+    "exclude_st": true,
+    "liquidity_lookback": 20,
+    "liquidity_lag": 1,
+    "minimum_median_amount_cny": 20000000.0
+  },
+  "execution": {
+    "initial_cash_cny": 1000000.0,
+    "max_stock_weight": 0.1,
+    "long_only": true,
+    "leverage": 1.0,
+    "signal": "completed_close_t",
+    "execution": "next_session_open",
+    "unfilled": "cancel_without_retry",
+    "stock_slot_weight": "one_over_requested_top_n",
+    "t_plus_one": true,
+    "commission_rate": 0.0003,
+    "minimum_commission_cny": 5.0,
+    "commission_includes_handling_and_regulatory": true,
+    "slippage_bps": 10.0,
+    "share_volume_participation": 0.005,
+    "volume_lookback": 20,
+    "volume_lag": 1,
+    "capacity_scope": "lagged_daily_volume_proxy_not_opening_queue_proof",
+    "corporate_action_scope": "separate_cash_share_ledger_required_before_verified_pnl",
+    "supported_dates": ["2020-08-25", "2026-08-24"],
+    "stamp_duty": [
+      {"effective": "2020-08-25", "rate": 0.001},
+      {"effective": "2023-08-28", "rate": 0.0005}
+    ],
+    "transfer_fee": [
+      {"effective": "2020-08-25", "rate": 0.00002},
+      {"effective": "2022-04-29", "rate": 0.00001}
+    ],
+    "mainboard_st_limit": [
+      {"effective": "2020-08-25", "rate": 0.05},
+      {"effective": "2026-07-06", "rate": 0.10}
+    ],
+    "board_rules": {
+      "main": {"minimum": 100, "step": 100, "max_limit_order": 1000000, "price_limit": 0.10},
+      "chinext": {"minimum": 100, "step": 100, "max_limit_order": 300000, "price_limit": 0.20},
+      "star": {"minimum": 200, "step": 1, "max_limit_order": 100000, "price_limit": 0.20}
+    }
+  },
+  "selection": {
+    "objective": "maximum_median_fold_cagr",
+    "scope": "three_chronological_development_folds_not_unbiased_selected_strategy_oos",
+    "unbiased_oos": "single_untouched_final_holdout_only",
+    "every_fold_positive": true,
+    "minimum_fold_drawdown": -0.35,
+    "tie_break": "candidate_id_ascending",
+    "holdout_openings": 1,
+    "bootstrap_replications": 2000,
+    "bootstrap_expected_block_sessions": 20,
+    "bootstrap_seed": 20260826,
+    "familywise_alpha": 0.05
+  },
+  "sources": {
+    "stamp_duty": "https://shanghai.chinatax.gov.cn/gate/big5/shanghai.chinatax.gov.cn/tax/zcfw/zcfgk/yhs/202308/t468451.html",
+    "transfer_fee_broker_implementation_notice": "https://www.xcsc.com/main/a/20220429/1022871784.shtml",
+    "current_fee_structure": "https://one.sse.com.cn/onething/gptz/",
+    "sse_st_limit_change": "https://www.sse.com.cn/aboutus/mediacenter/hotandd/c/c_20260424_10816474.shtml",
+    "szse_st_limit_change": "https://www.szse.cn/lawrules/service/member/t20260630_621404.html",
+    "star_lots": "https://edu.sse.com.cn/tib/ysptj/c/4869120.shtml",
+    "chinext_lots": "https://investor.szse.cn/knowledge/t20200721_579820.html",
+    "chinext_limits": "https://www.szse.cn/aboutus/trends/news/t20200821_580924.html",
+    "mainboard_lots": "https://investor.szse.cn/knowledge/t20180801_553963.html"
+  }
+}

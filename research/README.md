@@ -311,6 +311,26 @@ data_goal:
   status: candidate
 planned_strategy_goal:
   goal_id: QF-WALKFORWARD-01
+  preparation:
+    state: configuration and synthetic-data implementation only; no market-outcome computation before data admission
+    baseline: f1d17d1
+    owner_session: /root
+    allowed_files:
+      - configs/walk_forward.json
+      - qforge/walkforward/**
+      - qforge/cli.py
+      - tests/test_walkforward_*.py
+      - research/README.md
+      - research/evidence/QF-WALKFORWARD-01/**
+    cheapest_falsifier: prefix-invariance, historical-rule boundary, fixed-grid cardinality and holdout-overlap tests
+    retained_baseline: all existing daily, minute, validation and market-data tests; qforge minute status; local HTTP smoke
+    structure_gate: qforge package with function 50, class 300 and module 400 line limits
+    market_run_gate: completed market manifest and fingerprint must pass verify-panel; no live orders
+    empirical_experiment: QF-DATA-EXPANSION-01 remains the sole active empirical experiment during preparation
+    evidence: research/evidence/QF-WALKFORWARD-01/P1
+    result: 92 retained and new tests pass; zero structure findings; minute database status and local HTTP 200 preserved
+    frozen_config_sha256: f946362d7d5e71e2e023e5412cd3024bada5edcec5eddd1b18737eaf2afdeae4
+    claim_boundary: preparation admitted only; no new market return, portfolio replay, corporate-action P&L or verified strategy
   decision: Test a frozen A-share family combining residual momentum, short-term reversal, low idiosyncratic volatility, and lottery-stock avoidance on the completed point-in-time database.
   hypothesis: a low-turnover composite that avoids high-MAX and high-idiosyncratic-volatility stocks is more stable than conventional raw momentum in the retail-dominated A-share market.
   candidate_families:
@@ -359,9 +379,27 @@ planned_strategy_goal:
     eligibility: listed at t, at least 120 trading days old, non-ST, tradable, lagged 20-day median amount floor
     portfolio: long-only, equal weight, no leverage, maximum 10 percent per stock
     frictions: board lots, minimum commission, stamp duty, transfer fee, slippage, price limits, and T+1
+  exact_pre_outcome_specification:
+    canonical_config: configs/walk_forward.json
+    market_residual: lagged 60-session OLS intercept and beta against CSI300 price-index returns; no Fama-French replication claim
+    composite_windows: short uses momentum 60 skip 5, reversal 5, IVOL 20, MAX 20; medium uses 120 skip 21, 10, 60, 20; long uses 252 skip 21, 20, 60, 60
+    standardization: clip each cross-section to median plus or minus 5 raw MAD, then sample-standardize; zero MAD skips clipping; missing components excluded
+    liquidity: median raw amount over 20 completed sessions ending t-1 at least CNY 20000000
+    capital: CNY 1000000; unfilled stock slots remain cash; targets are 1 over requested top_n
+    brokerage: all-in commission 0.0003, minimum CNY 5 per filled order; includes handling and regulatory fees, excludes stamp and transfer
+    stamp_duty: seller 0.001 before 2023-08-28, 0.0005 thereafter
+    transfer_fee: both sides 0.00002 before 2022-04-29, 0.00001 thereafter
+    slippage: 10 basis points adverse to each side, rounded adversely to CNY 0.01
+    execution_capacity: at most 0.5 percent of lagged 20-session median raw share volume; this is a daily-data capacity proxy, not opening-auction queue proof
+    order_policy: next session only, sells before buys, cancel any unfilled quantity; no hidden retries; no same-day resale of new shares
+    limit_policy: conservative reject at the adverse opening limit or if modeled slippage exceeds that limit; reject unexplained out-of-band opens
+    corporate_actions: adjusted-price signals permitted; economic P&L cannot be certified without a separate cash and share event ledger
+    multiple_testing: stationary bootstrap with expected block 20 sessions, 2000 replications, seed 20260826; one-sided family-wise alpha 0.05
+    tie_break: descending score then ascending BaoStock symbol; selection ties resolve by candidate ID
   search_control:
     - the 144-candidate grid above is immutable before the first outcome is computed
     - candidate selection uses only discovery and the three walk-forward folds
+    - the three folds are development/selection evidence, not unbiased out-of-sample evidence for the winner; only the untouched final holdout may support that claim
     - untouched holdout is opened once for the selected candidate
     - family-wise performance receives a stationary-bootstrap multiple-testing correction
     - selection maximizes median fold CAGR subject to every fold being positive and no fold drawdown breaching -35 percent
@@ -372,6 +410,16 @@ planned_strategy_goal:
     - an independent order-ledger replay matches cash, positions, costs, and equity
   status: pending until QF-DATA-EXPANSION-01 is admitted
 ```
+
+## Frozen successor preparation
+
+`qforge walkforward plan --config configs/walk_forward.json` validates the
+144-candidate specification without reading market outcomes. The optional
+`--output PATH` writes a new, non-overwritable plan with its configuration
+fingerprint. Preparation implements 16 distinct signal settings expanded across
+nine portfolio schedules; it does not claim 144 independently discovered factors.
+The existing daily and minute engines are preserved. Portfolio replay and
+corporate-action cash/share verification remain separate admission gates.
 
 ## Local quick start
 
@@ -456,12 +504,14 @@ responses.
 
 - Database: `research/data/qforge_market.sqlite` (ignored by Git).
 - Reference layer: trade calendar, full security lifecycle, sampled historical
-  universe observations, and zero-difference lifecycle reconstruction audits.
+  universe observations, and explicit exact/boundary-exclusion reconstruction audits.
 - Market layer: unadjusted daily OHLCV, exchange pre-close and percentage
   change, trading status, ST flag, turnover, amount, and adjustment factors.
-- Research export: a synthetic total-return OHLC series uses BaoStock's
+- Research export: an adjusted-price OHLC feature chain uses BaoStock's
   exchange-adjusted `preclose`/`pctChg` fields so ex-dates do not create false
-  price crashes; raw amount and trading-state fields remain available.
+  price crashes; raw prices, amount and trading-state fields remain available.
+  This is not an economic total-return ledger: cash dividends, share changes,
+  rights and taxes require separate verification before any P&L claim.
 - Recovery: interrupted tasks return to `pending` with `--recover`; succeeded
   tasks are never fetched twice and all writes are idempotent.
 
