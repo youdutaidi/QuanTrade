@@ -1,0 +1,60 @@
+{
+  "database": "/Users/cailingling/Desktop/quant-intelligence-lab/research/data/qforge_market.sqlite",
+  "before": [
+    [
+      "failed",
+      3,
+      12
+    ],
+    [
+      "running",
+      3,
+      3919
+    ],
+    [
+      "succeeded",
+      1,
+      815
+    ],
+    [
+      "succeeded",
+      2,
+      1
+    ],
+    [
+      "succeeded",
+      3,
+      683
+    ]
+  ],
+  "after": [
+    [
+      "failed",
+      1,
+      12
+    ],
+    [
+      "pending",
+      0,
+      3919
+    ],
+    [
+      "succeeded",
+      1,
+      815
+    ],
+    [
+      "succeeded",
+      2,
+      1
+    ],
+    [
+      "succeeded",
+      3,
+      683
+    ]
+  ],
+  "dailyBarsBefore": 2021911,
+  "dailyBarsAfter": 2021911,
+  "dataRowsUnchanged": true
+}

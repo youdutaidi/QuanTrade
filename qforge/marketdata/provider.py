@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import signal
+import time
 from contextlib import contextmanager
 from types import ModuleType
 
@@ -23,11 +24,19 @@ class BaoStockMarketProvider:
             import baostock as bs
 
             self.module = bs
-        with _deadline(self.timeout_seconds):
-            response = self.module.login()
-        if response.error_code != "0":
-            raise RuntimeError(f"BaoStock login failed: {response.error_msg}")
-        return self
+        last_error: Exception | None = None
+        for attempt in range(3):
+            try:
+                with _deadline(self.timeout_seconds):
+                    response = self.module.login()
+                if response.error_code == "0":
+                    return self
+                last_error = RuntimeError(f"BaoStock login failed: {response.error_msg}")
+            except Exception as error:
+                last_error = error
+            if attempt < 2:
+                time.sleep(2**attempt)
+        raise RuntimeError("BaoStock login failed after three attempts") from last_error
 
     def __exit__(self, *_: object) -> None:
         if self.module is not None:

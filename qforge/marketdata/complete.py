@@ -9,17 +9,17 @@ from .audit import audit_market_database
 from .config import MarketDataConfig
 from .panel import export_research_panel
 from .service import download_daily, market_status
-from .store import MarketDataStore
 from .verify import verify_source_sample
 
 
 def complete_market_data(config: MarketDataConfig, root: Path) -> dict[str, object]:
     passes: list[dict[str, object]] = []
     for pass_index in range(1, config.retries + 1):
-        pending = MarketDataStore(root / config.database_path).pending_tasks(config.retries, None)
-        if not pending and pass_index > 1:
-            break
-        result = download_daily(config, root, recover=True)
+        try:
+            result = download_daily(config, root, recover=True)
+        except Exception as error:
+            passes.append({"pass": pass_index, "state": "failed", "error": repr(error)})
+            continue
         passes.append({
             "pass": pass_index,
             "selectedTasks": result["selectedTasks"],
@@ -33,7 +33,10 @@ def complete_market_data(config: MarketDataConfig, root: Path) -> dict[str, obje
     verification: dict[str, object] = {"sampleSize": 0, "allPass": False, "state": "skipped-until-data-ready"}
     panel: dict[str, object] | None = None
     if audit["dataReady"]:
-        verification = verify_source_sample(config, root, config.source_sample_size)
+        try:
+            verification = verify_source_sample(config, root, config.source_sample_size)
+        except Exception as error:
+            verification = {"sampleSize": 0, "allPass": False, "state": "failed", "error": repr(error)}
         _write_json(root / config.verification_output, verification)
         if verification["allPass"]:
             panel = export_research_panel(

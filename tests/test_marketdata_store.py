@@ -95,6 +95,8 @@ def test_claim_tasks_atomically_partitions_work(tmp_path) -> None:
     assert len(first) == 2
     assert len(second) == 1
     assert {task["task_key"] for task in first}.isdisjoint({task["task_key"] for task in second})
+    with store.connect() as connection:
+        assert connection.execute("SELECT SUM(attempts) FROM market_download_tasks").fetchone()[0] == 0
 
 
 def test_daily_tasks_include_configured_benchmark(tmp_path) -> None:

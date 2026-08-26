@@ -232,7 +232,7 @@ class MarketDataStore:
             tasks = [dict(row) for row in connection.execute(query, params).fetchall()]
             if tasks:
                 connection.executemany(
-                    "UPDATE market_download_tasks SET status='running',attempts=attempts+1,updated_at=? WHERE task_key=?",
+                    "UPDATE market_download_tasks SET status='running',updated_at=? WHERE task_key=?",
                     [(now_iso(), str(task["task_key"])) for task in tasks],
                 )
         return tasks

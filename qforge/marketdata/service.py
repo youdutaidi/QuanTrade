@@ -85,6 +85,7 @@ def _run_daily_tasks(
                 task = tasks[index]
                 index += 1
                 session_tasks += 1
+                store.mark_task_running(str(task["task_key"]))
                 try:
                     bars = provider.daily_bars(str(task["code"]), str(task["start_date"]), str(task["end_date"]), config.adjustflag)
                     factors = provider.adjustment_factors(str(task["code"]), str(task["start_date"]), str(task["end_date"]))
