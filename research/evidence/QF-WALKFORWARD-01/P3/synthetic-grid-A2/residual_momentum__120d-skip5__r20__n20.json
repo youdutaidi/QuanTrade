@@ -1,0 +1,81 @@
+{
+  "runId": "study-4db1c5c996244c85a111eee854c2532c",
+  "database": "/Users/cailingling/Desktop/quant-intelligence-lab/research/data/qforge_walkforward.sqlite",
+  "eventCount": 47,
+  "eventsSha256": "cdaeadae5a214b3102bb99fc03b666f3b01323536a203a0240a876cf70dbf804",
+  "kind": "synthetic",
+  "verifiedStrategy": false,
+  "candidateId": "residual_momentum__120d-skip5__r20__n20",
+  "audit": {
+    "allPass": true,
+    "checkedEvents": 47,
+    "snapshots": 20,
+    "allSessionsClosed": true,
+    "finalCash": 853326.84,
+    "finalEquity": 1001078.84,
+    "scope": "accounting replay only; source and strategy verification separate"
+  },
+  "metrics": {
+    "totalReturn": 0.0010788399999999143,
+    "annualizedReturn": null,
+    "maxDrawdown": -0.00021582052536883722,
+    "sharpe": 10.083338849114277,
+    "annualizedVolatility": 0.001347498644959368,
+    "calendarDays": 28,
+    "sessions": 20,
+    "initialEquity": 1000000.0,
+    "finalEquity": 1001078.84
+  },
+  "maxObservedStockWeight": 0.05092006539664748,
+  "staleValuationSessions": 0,
+  "decisions": [
+    {
+      "date": "2022-03-08",
+      "signalDate": "2022-03-07",
+      "equityBasis": 1000000.0,
+      "targets": {
+        "sz.300001": 0.05,
+        "sh.600000": 0.05,
+        "sz.000001": 0.05
+      },
+      "economicShares": {},
+      "desiredShares": {
+        "sh.600000": 4985,
+        "sz.000001": 2505,
+        "sz.300001": 1660
+      },
+      "referencePrices": {
+        "sh.600000": 10.03,
+        "sz.000001": 19.96,
+        "sz.300001": 30.11
+      },
+      "orders": [
+        {
+          "order_id": "residual_momentum__120d-skip5__r20__n20:2022-03-08:sz.300001",
+          "symbol": "sz.300001",
+          "side": "BUY",
+          "quantity": 1660,
+          "signal_date": "2022-03-07",
+          "execution_date": "2022-03-08"
+        },
+        {
+          "order_id": "residual_momentum__120d-skip5__r20__n20:2022-03-08:sh.600000",
+          "symbol": "sh.600000",
+          "side": "BUY",
+          "quantity": 4985,
+          "signal_date": "2022-03-07",
+          "execution_date": "2022-03-08"
+        },
+        {
+          "order_id": "residual_momentum__120d-skip5__r20__n20:2022-03-08:sz.000001",
+          "symbol": "sz.000001",
+          "side": "BUY",
+          "quantity": 2505,
+          "signal_date": "2022-03-07",
+          "execution_date": "2022-03-08"
+        }
+      ],
+      "sizingBasis": "prior-close equity and pre-opening reference, never actual open/close"
+    }
+  ]
+}

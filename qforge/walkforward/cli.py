@@ -10,6 +10,7 @@ from pathlib import Path
 
 from .specification import StudySpec
 from .demo import run_ledger_demo
+from .execution_demo import run_execution_demo
 from .inputs import verify_study_inputs
 
 
@@ -25,6 +26,10 @@ def register_walkforward_commands(commands: argparse._SubParsersAction) -> None:
     demo = actions.add_parser("ledger-demo", help="persist and independently replay a zero-network synthetic account")
     demo.add_argument("--config", required=True)
     demo.add_argument("--output", required=True, help="new evidence directory; refuses overwrite")
+    execution = actions.add_parser("execution-demo", help="zero-network frozen-factor to account execution and independent replay")
+    execution.add_argument("--config", required=True)
+    execution.add_argument("--output", required=True)
+    execution.add_argument("--all-candidates", action="store_true", help="exercise all 144 frozen candidates on synthetic bars only")
 
 
 def run_walkforward_command(args: argparse.Namespace, root: Path) -> int:
@@ -33,6 +38,10 @@ def run_walkforward_command(args: argparse.Namespace, root: Path) -> int:
         return _preflight(spec, root, root / args.plan)
     if args.walkforward_command == "ledger-demo":
         print(json.dumps(run_ledger_demo(spec, root, root / args.output), ensure_ascii=False, indent=2))
+        return 0
+    if args.walkforward_command == "execution-demo":
+        payload = run_execution_demo(spec, root, root / args.output, args.all_candidates)
+        print(json.dumps(payload, ensure_ascii=False, indent=2))
         return 0
     candidates = spec.candidates()
     payload = {

@@ -1,0 +1,133 @@
+{
+  "runId": "study-b14a7fc723d840e3ac1b6c1a6e15cc5b",
+  "database": "/Users/cailingling/Desktop/quant-intelligence-lab/research/data/qforge_walkforward.sqlite",
+  "eventCount": 50,
+  "eventsSha256": "e9d78f4844ebf4f53b93af666a18d899436013e14ddac4e4341498a9dff5180d",
+  "kind": "synthetic",
+  "verifiedStrategy": false,
+  "candidateId": "residual_momentum__120d-skip21__r10__n10",
+  "audit": {
+    "allPass": true,
+    "checkedEvents": 50,
+    "snapshots": 20,
+    "allSessionsClosed": true,
+    "finalCash": 700835.32,
+    "finalEquity": 1002143.32,
+    "scope": "accounting replay only; source and strategy verification separate"
+  },
+  "metrics": {
+    "totalReturn": 0.0021433200000000596,
+    "annualizedReturn": null,
+    "maxDrawdown": -0.000447938754613908,
+    "sharpe": 9.88331845989047,
+    "annualizedVolatility": 0.0027300462385142486,
+    "calendarDays": 28,
+    "sessions": 20,
+    "initialEquity": 1000000.0,
+    "finalEquity": 1002143.32
+  },
+  "maxObservedStockWeight": 0.10173195586435681,
+  "staleValuationSessions": 0,
+  "decisions": [
+    {
+      "date": "2022-03-08",
+      "signalDate": "2022-03-07",
+      "equityBasis": 1000000.0,
+      "targets": {
+        "sz.300001": 0.1,
+        "sh.600000": 0.1,
+        "sz.000001": 0.1
+      },
+      "economicShares": {},
+      "desiredShares": {
+        "sh.600000": 9970,
+        "sz.000001": 5010,
+        "sz.300001": 3321
+      },
+      "referencePrices": {
+        "sh.600000": 10.03,
+        "sz.000001": 19.96,
+        "sz.300001": 30.11
+      },
+      "orders": [
+        {
+          "order_id": "residual_momentum__120d-skip21__r10__n10:2022-03-08:sz.300001",
+          "symbol": "sz.300001",
+          "side": "BUY",
+          "quantity": 3321,
+          "signal_date": "2022-03-07",
+          "execution_date": "2022-03-08"
+        },
+        {
+          "order_id": "residual_momentum__120d-skip21__r10__n10:2022-03-08:sh.600000",
+          "symbol": "sh.600000",
+          "side": "BUY",
+          "quantity": 9970,
+          "signal_date": "2022-03-07",
+          "execution_date": "2022-03-08"
+        },
+        {
+          "order_id": "residual_momentum__120d-skip21__r10__n10:2022-03-08:sz.000001",
+          "symbol": "sz.000001",
+          "side": "BUY",
+          "quantity": 5010,
+          "signal_date": "2022-03-07",
+          "execution_date": "2022-03-08"
+        }
+      ],
+      "sizingBasis": "prior-close equity and pre-opening reference, never actual open/close"
+    },
+    {
+      "date": "2022-03-22",
+      "signalDate": "2022-03-21",
+      "equityBasis": 1001662.06,
+      "targets": {
+        "sz.300001": 0.1,
+        "sh.600000": 0.1,
+        "sz.000001": 0.1
+      },
+      "economicShares": {
+        "sz.300001": 3300,
+        "sh.600000": 10890,
+        "sz.000001": 5000
+      },
+      "desiredShares": {
+        "sh.600000": 11092,
+        "sz.000001": 4956,
+        "sz.300001": 3317
+      },
+      "referencePrices": {
+        "sh.600000": 9.03,
+        "sz.000001": 20.21,
+        "sz.300001": 30.19
+      },
+      "orders": [
+        {
+          "order_id": "residual_momentum__120d-skip21__r10__n10:2022-03-22:sz.000001",
+          "symbol": "sz.000001",
+          "side": "SELL",
+          "quantity": 44,
+          "signal_date": "2022-03-21",
+          "execution_date": "2022-03-22"
+        },
+        {
+          "order_id": "residual_momentum__120d-skip21__r10__n10:2022-03-22:sz.300001",
+          "symbol": "sz.300001",
+          "side": "BUY",
+          "quantity": 17,
+          "signal_date": "2022-03-21",
+          "execution_date": "2022-03-22"
+        },
+        {
+          "order_id": "residual_momentum__120d-skip21__r10__n10:2022-03-22:sh.600000",
+          "symbol": "sh.600000",
+          "side": "BUY",
+          "quantity": 202,
+          "signal_date": "2022-03-21",
+          "execution_date": "2022-03-22"
+        }
+      ],
+      "sizingBasis": "prior-close equity and pre-opening reference, never actual open/close"
+    }
+  ]
+}

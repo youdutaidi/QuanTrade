@@ -1,0 +1,45 @@
+{
+  "state": "restored-and-byte-verified",
+  "output": "/Users/cailingling/Desktop/quant-intelligence-lab/research/output/delivery/restored-20260826-d2",
+  "sha256": "0799eda5a445a1228f63168a304355e64ae821b84799e5099d15ddc55f34c94f",
+  "fileCount": 121,
+  "databases": {
+    "research/data/qforge_market.sqlite": {
+      "integrity": "ok",
+      "tableRows": {
+        "market_schema_version": 2,
+        "trade_calendar": 2191,
+        "securities": 8920,
+        "universe_observations": 39088,
+        "universe_audits": 7,
+        "daily_bars": 6065746,
+        "adjustment_factors": 20175,
+        "market_download_runs": 14,
+        "market_download_tasks": 5430
+      }
+    },
+    "research/data/qforge_minute.sqlite": {
+      "integrity": "ok",
+      "tableRows": {
+        "schema_version": 1,
+        "minute_bars": 116160,
+        "download_runs": 1,
+        "strategy_runs": 2,
+        "signals": 4828,
+        "orders": 2250,
+        "fills": 2248,
+        "position_snapshots": 1450,
+        "equity_snapshots": 484
+      }
+    },
+    "research/data/qforge_walkforward.sqlite": {
+      "integrity": "ok",
+      "tableRows": {
+        "study_runs": 1,
+        "study_ledger_events": 12
+      }
+    }
+  },
+  "codeCommit": "5368a6fe77aacec86e23a831338d82bd5b2a3ad5",
+  "claim": "recoverable data snapshot only; no strategy admission"
+}

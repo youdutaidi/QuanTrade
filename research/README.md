@@ -13,10 +13,10 @@
 - Inspect and preserve remote history; no force push or replacement of unrelated
   remote files. Code uses normal Git; database bundles may use the same repo's
   Releases because regular Git rejects individual files over 100 MiB.
-- The first data snapshot is uploaded as a draft, but download/restore
-  verification and the later full-dataset delivery remain pending. Verify
-  remote commit identity and downloaded asset hashes/restore integrity before
-  reporting delivery complete.
+- The first in-progress snapshot has passed remote download/restore verification
+  and is published at `https://github.com/youdutaidi/QuanTrade/releases/tag/data-20260826-d2`.
+  The later full-dataset delivery and strategy validation remain pending; this
+  recovery milestone does not complete the research objective.
 - Read-only remote check on 2026-08-26: repository is private, empty and the
   current account has ADMIN permission; SSH access succeeds. Local `origin`
   points to the requested repository. The first normal Git push of `main`
@@ -66,6 +66,11 @@
   The full archive is still downloading to `research/output/delivery/roundtrip-20260826-d2/`;
   do not publish before restoring it into a fresh directory and matching all
   hashes and SQLite inventories. Original A5 ingestion continues independently.
+- D2 subsequent closure: all six downloaded source/support assets matched;
+  121 members and all three SQLite inventories restored successfully into a new
+  directory. Two proof assets were added and all eight remote asset hashes checked.
+  Published 2026-08-26T06:28:50Z as a prerelease, not Latest; remote tag resolves
+  to the exact frozen source commit. Evidence: `research/evidence/DELIVERY-01/D2/`.
 
 ## Code-evolution record
 
@@ -427,6 +432,27 @@ planned_strategy_goal:
       state: synthetic accounting and input-admission semantics admitted; market integration pending
       results: 115 retained and new tests pass; zero structural findings; synthetic ledger persisted to SQLite and independently reloaded/replayed; real input preflight exits 2 until final data manifest exists
       evidence: research/evidence/QF-WALKFORWARD-01/P2
+    execution_preparation:
+      id: QF-WALKFORWARD-01-P3
+      baseline: e299f48
+      owner_session: /root
+      decision: connect the frozen causal scores to scheduled portfolio intents, dated opening fills and the existing cash/share account before the admitted real-data sweep
+      write_surface: qforge/walkforward/**, tests/test_walkforward_*.py, research/README.md, research/evidence/QF-WALKFORWARD-01/P3/**; append explicitly synthetic runs to research/data/qforge_walkforward.sqlite only after admission
+      scientific_choice_axis: unchanged P1 families, 144 candidates, development/holdout dates and execution costs; no market outcomes read during preparation
+      input_contract: explicit trading calendar and historical security lifecycles; adjusted-price signals, raw execution prices; missing listed bars or held delisting without settlement evidence fail closed
+      sizing_convention: rank at preceding completed close; budget from preceding account equity; quantity from current pre-opening reference price, never current raw open or close; account economic shares include pending bonus shares
+      ordering_convention: first evaluation session and each rebalance interval thereafter; sells in symbol order then buys in frozen signal rank order; unfilled remainder canceled until a new scheduled signal
+      lag_convention: execution volume_lag is measured from execution date, so lag 1 ends at preceding completed session; signal liquidity retains its existing t-minus-1 lag
+      concentration_convention: 10 percent is the submitted target-slot cap, not a guarantee against subsequent mark-to-market drift; realized concentration is reported
+      accounting_continuity: remove settled zero-share positions only at the following session open, with matching independent replay; earlier snapshots remain unchanged and pending-share claims are retained
+      reporting_convention: returns include initial entry costs and start from initial cash; actual-calendar CAGR uses the declared inclusive window and is omitted for windows shorter than one year; risk metrics use daily closing equity, not intraday extrema
+      cheapest_falsifier: change future prices or execution-day volume without changing earlier decisions; hand-check target quantities, fees, canceled orders, delayed distributions and first-day equity
+      admission_commands: retained pytest suite, structure gate, full frozen-grid synthetic execution smoke, persisted ledger reload and independent arithmetic replay
+      retained_baseline: all 156 existing tests, unchanged frozen strategy-config fingerprint, unchanged minute data and local website
+      state: execution-mechanics admitted; 168 retained/new tests pass and structure has zero findings; real-data workflow remains gated on daily completion and verified corporate-action inputs
+      formal_synthetic_attempt: synthetic-grid-A2 ran all 144 frozen candidates across 16 score settings; 7344 events persisted and independently reloaded/replayed; all short-window CAGR values deliberately omitted
+      evidence: research/evidence/QF-WALKFORWARD-01/P3
+      outcomes: semantic mismatch stops cutover; source or settlement gaps retain incomplete evidence without a return ranking; passing synthetic tests admits execution mechanics only
   decision: Test a frozen A-share family combining residual momentum, short-term reversal, low idiosyncratic volatility, and lottery-stock avoidance on the completed point-in-time database.
   hypothesis: a low-turnover composite that avoids high-MAX and high-idiosyncratic-volatility stocks is more stable than conventional raw momentum in the retail-dominated A-share market.
   candidate_families:

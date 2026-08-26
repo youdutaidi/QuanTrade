@@ -19,7 +19,7 @@ class OrderIntent:
 class OpeningQuote:
     symbol: str
     trade_date: str
-    raw_open: float
+    raw_open: float | None
     preclose: float
     is_st: bool
     tradeable: bool

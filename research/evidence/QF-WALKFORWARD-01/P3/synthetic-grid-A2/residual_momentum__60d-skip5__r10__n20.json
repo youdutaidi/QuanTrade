@@ -1,0 +1,133 @@
+{
+  "runId": "study-e9d668e26d954dcf97511884d000d5f8",
+  "database": "/Users/cailingling/Desktop/quant-intelligence-lab/research/data/qforge_walkforward.sqlite",
+  "eventCount": 50,
+  "eventsSha256": "d6dca210bf0f87dee10e89d2861a11badc98405c76ee7d55cf74cf9ad70cecec",
+  "kind": "synthetic",
+  "verifiedStrategy": false,
+  "candidateId": "residual_momentum__60d-skip5__r10__n20",
+  "audit": {
+    "allPass": true,
+    "checkedEvents": 50,
+    "snapshots": 20,
+    "allSessionsClosed": true,
+    "finalCash": 852417.82,
+    "finalEquity": 1001079.82,
+    "scope": "accounting replay only; source and strategy verification separate"
+  },
+  "metrics": {
+    "totalReturn": 0.0010798199999999536,
+    "annualizedReturn": null,
+    "maxDrawdown": -0.00021482182292520413,
+    "sharpe": 10.110994381014038,
+    "annualizedVolatility": 0.0013450326567223622,
+    "calendarDays": 28,
+    "sessions": 20,
+    "initialEquity": 1000000.0,
+    "finalEquity": 1001079.82
+  },
+  "maxObservedStockWeight": 0.05092001554881009,
+  "staleValuationSessions": 0,
+  "decisions": [
+    {
+      "date": "2022-03-08",
+      "signalDate": "2022-03-07",
+      "equityBasis": 1000000.0,
+      "targets": {
+        "sz.300001": 0.05,
+        "sh.600000": 0.05,
+        "sz.000001": 0.05
+      },
+      "economicShares": {},
+      "desiredShares": {
+        "sh.600000": 4985,
+        "sz.000001": 2505,
+        "sz.300001": 1660
+      },
+      "referencePrices": {
+        "sh.600000": 10.03,
+        "sz.000001": 19.96,
+        "sz.300001": 30.11
+      },
+      "orders": [
+        {
+          "order_id": "residual_momentum__60d-skip5__r10__n20:2022-03-08:sz.300001",
+          "symbol": "sz.300001",
+          "side": "BUY",
+          "quantity": 1660,
+          "signal_date": "2022-03-07",
+          "execution_date": "2022-03-08"
+        },
+        {
+          "order_id": "residual_momentum__60d-skip5__r10__n20:2022-03-08:sh.600000",
+          "symbol": "sh.600000",
+          "side": "BUY",
+          "quantity": 4985,
+          "signal_date": "2022-03-07",
+          "execution_date": "2022-03-08"
+        },
+        {
+          "order_id": "residual_momentum__60d-skip5__r10__n20:2022-03-08:sz.000001",
+          "symbol": "sz.000001",
+          "side": "BUY",
+          "quantity": 2505,
+          "signal_date": "2022-03-07",
+          "execution_date": "2022-03-08"
+        }
+      ],
+      "sizingBasis": "prior-close equity and pre-opening reference, never actual open/close"
+    },
+    {
+      "date": "2022-03-22",
+      "signalDate": "2022-03-21",
+      "equityBasis": 1000827.54,
+      "targets": {
+        "sh.600000": 0.05,
+        "sz.300001": 0.05,
+        "sz.000001": 0.05
+      },
+      "economicShares": {
+        "sz.300001": 1600,
+        "sh.600000": 5390,
+        "sz.000001": 2500
+      },
+      "desiredShares": {
+        "sh.600000": 5541,
+        "sz.000001": 2476,
+        "sz.300001": 1657
+      },
+      "referencePrices": {
+        "sh.600000": 9.03,
+        "sz.000001": 20.21,
+        "sz.300001": 30.19
+      },
+      "orders": [
+        {
+          "order_id": "residual_momentum__60d-skip5__r10__n20:2022-03-22:sz.000001",
+          "symbol": "sz.000001",
+          "side": "SELL",
+          "quantity": 24,
+          "signal_date": "2022-03-21",
+          "execution_date": "2022-03-22"
+        },
+        {
+          "order_id": "residual_momentum__60d-skip5__r10__n20:2022-03-22:sh.600000",
+          "symbol": "sh.600000",
+          "side": "BUY",
+          "quantity": 151,
+          "signal_date": "2022-03-21",
+          "execution_date": "2022-03-22"
+        },
+        {
+          "order_id": "residual_momentum__60d-skip5__r10__n20:2022-03-22:sz.300001",
+          "symbol": "sz.300001",
+          "side": "BUY",
+          "quantity": 57,
+          "signal_date": "2022-03-21",
+          "execution_date": "2022-03-22"
+        }
+      ],
+      "sizingBasis": "prior-close equity and pre-opening reference, never actual open/close"
+    }
+  ]
+}

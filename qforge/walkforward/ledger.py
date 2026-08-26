@@ -44,12 +44,19 @@ class PaperAccount:
     def positions(self) -> dict[str, Position]:
         return copy.deepcopy(self._positions)
 
+    @property
+    def economic_shares(self) -> dict[str, int]:
+        return {code: pos.quantity + self._pending_shares(code) for code, pos in self._positions.items()
+                if pos.quantity or self._pending_shares(code)}
+
     def begin_session(self, trade_date: str) -> None:
         if self._phase != "closed" or self._index + 1 >= len(self.sessions) or trade_date != self.sessions[self._index + 1]:
             raise ValueError("sessions must advance one at a time after closing")
         if not self._policy["supported_dates"][0] <= trade_date <= self._policy["supported_dates"][1]:
             raise ValueError("session outside the verified execution rule window")
         self._index += 1
+        self._positions = {code: position for code, position in self._positions.items()
+                           if position.quantity or self._pending_shares(code)}
         self.today, self._phase = trade_date, "open"
         self._ordered_symbols, self._action_references = set(), {}
         self._buy_seen = False
@@ -92,6 +99,13 @@ class PaperAccount:
             self._apply_fill(order, decision)
         self._emit("order", order=asdict(order), quote=asdict(quote), fill=asdict(decision))
         return asdict(decision)
+
+    def validate_opening_references(self, references: dict[str, float]) -> None:
+        if self._phase != "open" or self._ordered_symbols:
+            raise ValueError("opening reference validation must precede orders")
+        for symbol, quantity in self._record_quantities.items():
+            if quantity:
+                self._check_reference(symbol, references.get(symbol))
 
     def close_session(self, close_prices: dict[str, float], reference_prices: dict[str, float]) -> dict:
         if self._phase != "open":

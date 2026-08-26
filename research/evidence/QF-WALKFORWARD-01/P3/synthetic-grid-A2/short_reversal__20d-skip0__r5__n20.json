@@ -1,0 +1,237 @@
+{
+  "runId": "study-a1d152b5611c4c4abd891ef03019ede4",
+  "database": "/Users/cailingling/Desktop/quant-intelligence-lab/research/data/qforge_walkforward.sqlite",
+  "eventCount": 56,
+  "eventsSha256": "0a47d814d42e9e1a146a278b3ea3cb2f3bb9b432da4e1bdead7f99c6a72d00bb",
+  "kind": "synthetic",
+  "verifiedStrategy": false,
+  "candidateId": "short_reversal__20d-skip0__r5__n20",
+  "audit": {
+    "allPass": true,
+    "checkedEvents": 56,
+    "snapshots": 20,
+    "allSessionsClosed": true,
+    "finalCash": 852422.82,
+    "finalEquity": 1001084.82,
+    "scope": "accounting replay only; source and strategy verification separate"
+  },
+  "metrics": {
+    "totalReturn": 0.0010848199999999864,
+    "annualizedReturn": null,
+    "maxDrawdown": -0.00021482075021050928,
+    "sharpe": 10.06731752448351,
+    "annualizedVolatility": 0.0013571210412339683,
+    "calendarDays": 28,
+    "sessions": 20,
+    "initialEquity": 1000000.0,
+    "finalEquity": 1001084.82
+  },
+  "maxObservedStockWeight": 0.0509197612246283,
+  "staleValuationSessions": 0,
+  "decisions": [
+    {
+      "date": "2022-03-08",
+      "signalDate": "2022-03-07",
+      "equityBasis": 1000000.0,
+      "targets": {
+        "sh.600000": 0.05,
+        "sz.000001": 0.05,
+        "sz.300001": 0.05
+      },
+      "economicShares": {},
+      "desiredShares": {
+        "sh.600000": 4985,
+        "sz.000001": 2505,
+        "sz.300001": 1660
+      },
+      "referencePrices": {
+        "sh.600000": 10.03,
+        "sz.000001": 19.96,
+        "sz.300001": 30.11
+      },
+      "orders": [
+        {
+          "order_id": "short_reversal__20d-skip0__r5__n20:2022-03-08:sh.600000",
+          "symbol": "sh.600000",
+          "side": "BUY",
+          "quantity": 4985,
+          "signal_date": "2022-03-07",
+          "execution_date": "2022-03-08"
+        },
+        {
+          "order_id": "short_reversal__20d-skip0__r5__n20:2022-03-08:sz.000001",
+          "symbol": "sz.000001",
+          "side": "BUY",
+          "quantity": 2505,
+          "signal_date": "2022-03-07",
+          "execution_date": "2022-03-08"
+        },
+        {
+          "order_id": "short_reversal__20d-skip0__r5__n20:2022-03-08:sz.300001",
+          "symbol": "sz.300001",
+          "side": "BUY",
+          "quantity": 1660,
+          "signal_date": "2022-03-07",
+          "execution_date": "2022-03-08"
+        }
+      ],
+      "sizingBasis": "prior-close equity and pre-opening reference, never actual open/close"
+    },
+    {
+      "date": "2022-03-15",
+      "signalDate": "2022-03-14",
+      "equityBasis": 1000372.84,
+      "targets": {
+        "sh.600000": 0.05,
+        "sz.000001": 0.05,
+        "sz.300001": 0.05
+      },
+      "economicShares": {
+        "sh.600000": 5390,
+        "sz.000001": 2500,
+        "sz.300001": 1600
+      },
+      "desiredShares": {
+        "sh.600000": 5570,
+        "sz.000001": 2493,
+        "sz.300001": 1657
+      },
+      "referencePrices": {
+        "sh.600000": 8.98,
+        "sz.000001": 20.06,
+        "sz.300001": 30.18
+      },
+      "orders": [
+        {
+          "order_id": "short_reversal__20d-skip0__r5__n20:2022-03-15:sz.000001",
+          "symbol": "sz.000001",
+          "side": "SELL",
+          "quantity": 7,
+          "signal_date": "2022-03-14",
+          "execution_date": "2022-03-15"
+        },
+        {
+          "order_id": "short_reversal__20d-skip0__r5__n20:2022-03-15:sh.600000",
+          "symbol": "sh.600000",
+          "side": "BUY",
+          "quantity": 180,
+          "signal_date": "2022-03-14",
+          "execution_date": "2022-03-15"
+        },
+        {
+          "order_id": "short_reversal__20d-skip0__r5__n20:2022-03-15:sz.300001",
+          "symbol": "sz.300001",
+          "side": "BUY",
+          "quantity": 57,
+          "signal_date": "2022-03-14",
+          "execution_date": "2022-03-15"
+        }
+      ],
+      "sizingBasis": "prior-close equity and pre-opening reference, never actual open/close"
+    },
+    {
+      "date": "2022-03-22",
+      "signalDate": "2022-03-21",
+      "equityBasis": 1000826.52,
+      "targets": {
+        "sh.600000": 0.05,
+        "sz.000001": 0.05,
+        "sz.300001": 0.05
+      },
+      "economicShares": {
+        "sh.600000": 5490,
+        "sz.000001": 2500,
+        "sz.300001": 1600
+      },
+      "desiredShares": {
+        "sh.600000": 5541,
+        "sz.000001": 2476,
+        "sz.300001": 1657
+      },
+      "referencePrices": {
+        "sh.600000": 9.03,
+        "sz.000001": 20.21,
+        "sz.300001": 30.19
+      },
+      "orders": [
+        {
+          "order_id": "short_reversal__20d-skip0__r5__n20:2022-03-22:sz.000001",
+          "symbol": "sz.000001",
+          "side": "SELL",
+          "quantity": 24,
+          "signal_date": "2022-03-21",
+          "execution_date": "2022-03-22"
+        },
+        {
+          "order_id": "short_reversal__20d-skip0__r5__n20:2022-03-22:sh.600000",
+          "symbol": "sh.600000",
+          "side": "BUY",
+          "quantity": 51,
+          "signal_date": "2022-03-21",
+          "execution_date": "2022-03-22"
+        },
+        {
+          "order_id": "short_reversal__20d-skip0__r5__n20:2022-03-22:sz.300001",
+          "symbol": "sz.300001",
+          "side": "BUY",
+          "quantity": 57,
+          "signal_date": "2022-03-21",
+          "execution_date": "2022-03-22"
+        }
+      ],
+      "sizingBasis": "prior-close equity and pre-opening reference, never actual open/close"
+    },
+    {
+      "date": "2022-03-29",
+      "signalDate": "2022-03-28",
+      "equityBasis": 1001259.02,
+      "targets": {
+        "sz.300001": 0.05,
+        "sh.600000": 0.05,
+        "sz.000001": 0.05
+      },
+      "economicShares": {
+        "sh.600000": 5490,
+        "sz.000001": 2500,
+        "sz.300001": 1600
+      },
+      "desiredShares": {
+        "sh.600000": 5513,
+        "sz.000001": 2460,
+        "sz.300001": 1664
+      },
+      "referencePrices": {
+        "sh.600000": 9.08,
+        "sz.000001": 20.35,
+        "sz.300001": 30.07
+      },
+      "orders": [
+        {
+          "order_id": "short_reversal__20d-skip0__r5__n20:2022-03-29:sz.000001",
+          "symbol": "sz.000001",
+          "side": "SELL",
+          "quantity": 40,
+          "signal_date": "2022-03-28",
+          "execution_date": "2022-03-29"
+        },
+        {
+          "order_id": "short_reversal__20d-skip0__r5__n20:2022-03-29:sz.300001",
+          "symbol": "sz.300001",
+          "side": "BUY",
+          "quantity": 64,
+          "signal_date": "2022-03-28",
+          "execution_date": "2022-03-29"
+        },
+        {
+          "order_id": "short_reversal__20d-skip0__r5__n20:2022-03-29:sh.600000",
+          "symbol": "sh.600000",
+          "side": "BUY",
+          "quantity": 23,
+          "signal_date": "2022-03-28",
+          "execution_date": "2022-03-29"
+        }
+      ],
+      "sizingBasis": "prior-close equity and pre-opening reference, never actual open/close"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "state": "synthetic-execution-verified",
+  "marketOutcomesRead": false,
+  "verifiedStrategy": false,
+  "candidateCount": 144,
+  "signalSettings": 16,
+  "allLedgerReplaysPass": true,
+  "studySha256": "f946362d7d5e71e2e023e5412cd3024bada5edcec5eddd1b18737eaf2afdeae4",
+  "syntheticRows": 1680,
+  "claim": "execution mechanics only; no market P&L, source coverage or strategy admission"
+}

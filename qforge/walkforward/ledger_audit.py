@@ -47,6 +47,8 @@ def _open(state, event, policy):
     if state["phase"] != "closed" or index >= len(state["sessions"]) or event["date"] != state["sessions"][index]:
         raise ValueError("invalid session transition")
     state.update(index=index, date=event["date"], phase="open", bought=False, ordered=set(), references={}, closing=False)
+    pending = {claim["action"]["symbol"] for claim in state["claims"].values() if claim["shares"]}
+    state["positions"] = {code: position for code, position in state["positions"].items() if position["quantity"] or code in pending}
     state["record_quantities"] = {code: row["quantity"] for code, row in state["positions"].items()}
     for position in state["positions"].values():
         position["available"] = position["quantity"]

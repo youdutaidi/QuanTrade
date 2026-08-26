@@ -1,0 +1,237 @@
+{
+  "runId": "study-bebde4ded5f04993bd2cc2028756ad90",
+  "database": "/Users/cailingling/Desktop/quant-intelligence-lab/research/data/qforge_walkforward.sqlite",
+  "eventCount": 56,
+  "eventsSha256": "47ee266a32a47199ddb64cc2ef8f2c8078c3fbfe93faa123c8587f24c4a3b01f",
+  "kind": "synthetic",
+  "verifiedStrategy": false,
+  "candidateId": "residual_momentum__252d-skip5__r5__n50",
+  "audit": {
+    "allPass": true,
+    "checkedEvents": 56,
+    "snapshots": 20,
+    "allSessionsClosed": true,
+    "finalCash": 942226.69,
+    "finalEquity": 1000443.69,
+    "scope": "accounting replay only; source and strategy verification separate"
+  },
+  "metrics": {
+    "totalReturn": 0.0004436899999999966,
+    "annualizedReturn": null,
+    "maxDrawdown": -7.995812672856317e-05,
+    "sharpe": 10.52151799527695,
+    "annualizedVolatility": 0.0005312399011218747,
+    "calendarDays": 28,
+    "sessions": 20,
+    "initialEquity": 1000000.0,
+    "finalEquity": 1000443.69
+  },
+  "maxObservedStockWeight": 0.020380957173111863,
+  "staleValuationSessions": 0,
+  "decisions": [
+    {
+      "date": "2022-03-08",
+      "signalDate": "2022-03-07",
+      "equityBasis": 1000000.0,
+      "targets": {
+        "sz.300001": 0.02,
+        "sz.000001": 0.02,
+        "sh.600000": 0.02
+      },
+      "economicShares": {},
+      "desiredShares": {
+        "sh.600000": 1994,
+        "sz.000001": 1002,
+        "sz.300001": 664
+      },
+      "referencePrices": {
+        "sh.600000": 10.03,
+        "sz.000001": 19.96,
+        "sz.300001": 30.11
+      },
+      "orders": [
+        {
+          "order_id": "residual_momentum__252d-skip5__r5__n50:2022-03-08:sz.300001",
+          "symbol": "sz.300001",
+          "side": "BUY",
+          "quantity": 664,
+          "signal_date": "2022-03-07",
+          "execution_date": "2022-03-08"
+        },
+        {
+          "order_id": "residual_momentum__252d-skip5__r5__n50:2022-03-08:sz.000001",
+          "symbol": "sz.000001",
+          "side": "BUY",
+          "quantity": 1002,
+          "signal_date": "2022-03-07",
+          "execution_date": "2022-03-08"
+        },
+        {
+          "order_id": "residual_momentum__252d-skip5__r5__n50:2022-03-08:sh.600000",
+          "symbol": "sh.600000",
+          "side": "BUY",
+          "quantity": 1994,
+          "signal_date": "2022-03-07",
+          "execution_date": "2022-03-08"
+        }
+      ],
+      "sizingBasis": "prior-close equity and pre-opening reference, never actual open/close"
+    },
+    {
+      "date": "2022-03-15",
+      "signalDate": "2022-03-14",
+      "equityBasis": 1000146.71,
+      "targets": {
+        "sz.300001": 0.02,
+        "sh.600000": 0.02,
+        "sz.000001": 0.02
+      },
+      "economicShares": {
+        "sz.300001": 600,
+        "sz.000001": 1000,
+        "sh.600000": 2090
+      },
+      "desiredShares": {
+        "sh.600000": 2227,
+        "sz.000001": 997,
+        "sz.300001": 662
+      },
+      "referencePrices": {
+        "sh.600000": 8.98,
+        "sz.000001": 20.06,
+        "sz.300001": 30.18
+      },
+      "orders": [
+        {
+          "order_id": "residual_momentum__252d-skip5__r5__n50:2022-03-15:sz.000001",
+          "symbol": "sz.000001",
+          "side": "SELL",
+          "quantity": 3,
+          "signal_date": "2022-03-14",
+          "execution_date": "2022-03-15"
+        },
+        {
+          "order_id": "residual_momentum__252d-skip5__r5__n50:2022-03-15:sz.300001",
+          "symbol": "sz.300001",
+          "side": "BUY",
+          "quantity": 62,
+          "signal_date": "2022-03-14",
+          "execution_date": "2022-03-15"
+        },
+        {
+          "order_id": "residual_momentum__252d-skip5__r5__n50:2022-03-15:sh.600000",
+          "symbol": "sh.600000",
+          "side": "BUY",
+          "quantity": 137,
+          "signal_date": "2022-03-14",
+          "execution_date": "2022-03-15"
+        }
+      ],
+      "sizingBasis": "prior-close equity and pre-opening reference, never actual open/close"
+    },
+    {
+      "date": "2022-03-22",
+      "signalDate": "2022-03-21",
+      "equityBasis": 1000326.39,
+      "targets": {
+        "sh.600000": 0.02,
+        "sz.000001": 0.02,
+        "sz.300001": 0.02
+      },
+      "economicShares": {
+        "sz.300001": 600,
+        "sz.000001": 1000,
+        "sh.600000": 2190
+      },
+      "desiredShares": {
+        "sh.600000": 2215,
+        "sz.000001": 989,
+        "sz.300001": 662
+      },
+      "referencePrices": {
+        "sh.600000": 9.03,
+        "sz.000001": 20.21,
+        "sz.300001": 30.19
+      },
+      "orders": [
+        {
+          "order_id": "residual_momentum__252d-skip5__r5__n50:2022-03-22:sz.000001",
+          "symbol": "sz.000001",
+          "side": "SELL",
+          "quantity": 11,
+          "signal_date": "2022-03-21",
+          "execution_date": "2022-03-22"
+        },
+        {
+          "order_id": "residual_momentum__252d-skip5__r5__n50:2022-03-22:sh.600000",
+          "symbol": "sh.600000",
+          "side": "BUY",
+          "quantity": 25,
+          "signal_date": "2022-03-21",
+          "execution_date": "2022-03-22"
+        },
+        {
+          "order_id": "residual_momentum__252d-skip5__r5__n50:2022-03-22:sz.300001",
+          "symbol": "sz.300001",
+          "side": "BUY",
+          "quantity": 62,
+          "signal_date": "2022-03-21",
+          "execution_date": "2022-03-22"
+        }
+      ],
+      "sizingBasis": "prior-close equity and pre-opening reference, never actual open/close"
+    },
+    {
+      "date": "2022-03-29",
+      "signalDate": "2022-03-28",
+      "equityBasis": 1000503.89,
+      "targets": {
+        "sh.600000": 0.02,
+        "sz.000001": 0.02,
+        "sz.300001": 0.02
+      },
+      "economicShares": {
+        "sz.300001": 600,
+        "sz.000001": 1000,
+        "sh.600000": 2190
+      },
+      "desiredShares": {
+        "sh.600000": 2203,
+        "sz.000001": 983,
+        "sz.300001": 665
+      },
+      "referencePrices": {
+        "sh.600000": 9.08,
+        "sz.000001": 20.35,
+        "sz.300001": 30.07
+      },
+      "orders": [
+        {
+          "order_id": "residual_momentum__252d-skip5__r5__n50:2022-03-29:sz.000001",
+          "symbol": "sz.000001",
+          "side": "SELL",
+          "quantity": 17,
+          "signal_date": "2022-03-28",
+          "execution_date": "2022-03-29"
+        },
+        {
+          "order_id": "residual_momentum__252d-skip5__r5__n50:2022-03-29:sh.600000",
+          "symbol": "sh.600000",
+          "side": "BUY",
+          "quantity": 13,
+          "signal_date": "2022-03-28",
+          "execution_date": "2022-03-29"
+        },
+        {
+          "order_id": "residual_momentum__252d-skip5__r5__n50:2022-03-29:sz.300001",
+          "symbol": "sz.300001",
+          "side": "BUY",
+          "quantity": 65,
+          "signal_date": "2022-03-28",
+          "execution_date": "2022-03-29"
+        }
+      ],
+      "sizingBasis": "prior-close equity and pre-opening reference, never actual open/close"
+    }
+  ]
+}
