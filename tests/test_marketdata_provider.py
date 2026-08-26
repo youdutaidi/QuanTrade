@@ -70,3 +70,12 @@ def test_provider_rejects_wrong_response_identity(code, start, end, flag) -> Non
     ))
     with pytest.raises(ValueError):
         provider.daily_bars(code, start, end, flag)
+
+
+def test_adjustment_provider_rejects_wrong_security_code():
+    response = Response()
+    response.fields = ["code", "dividOperateDate", "foreAdjustFactor", "backAdjustFactor", "adjustFactor"]
+    response.rows = iter([["sh.600001", "2020-06-01", "0.9", "1.2", "1.02"]])
+    provider = BaoStockMarketProvider(module=SimpleNamespace(query_adjust_factor=lambda **kwargs: response))
+    with pytest.raises(ValueError, match="unexpected security"):
+        provider.adjustment_factors("sh.600000", "2020-01-01", "2020-12-31")

@@ -280,6 +280,14 @@ data_goal:
         result: structure-admitted and semantics-admitted; 50 tests passed; 5 exact snapshots and 2 explicit pass_boundary snapshots; local build and HTTP 200 passed
         real_panel_smoke: 40 deterministic available symbols and 51906 rows transformed with finite tradable OHLC and prefix invariance; this is not a strategy backtest or corporate-action P&L validation
         next_action: let the A5 single downloader finish, then rerun complete under the A6 audit; do not start a second BaoStock session
+      - id: QF-DATA-EXPANSION-01-A7
+        decision: make final data admission compare both bars and adjustment factors and export a bounded-memory, atomic, fingerprinted research panel
+        baseline: a7301e8
+        write_surface: qforge/marketdata/**, tests/test_marketdata_*.py, research/README.md, research/evidence/QF-DATA-EXPANSION-01/A7/**
+        scientific_choice_axis: unchanged data coverage; no strategy or selection parameter changes
+        cheapest_falsifier: corrupted factor values must fail replay; chunked export must equal the reference transform and preserve the previous artifact on failure
+        state: structure-admitted and semantics-admitted; 57 tests pass; pending real-data export cost check and final source replay
+        source_job: no second source session; A5 downloader continues under its frozen code
   cutover:
     criteria:
       - SQLite schema, idempotent upserts, checkpoint resume, and source normalization tests pass

@@ -63,3 +63,10 @@ def test_price_chain_is_prefix_invariant():
         adjusted_price_ohlcv(raw).reset_index(drop=True),
         adjusted_price_ohlcv(pd.concat([raw, future], ignore_index=True)).iloc[:1].reset_index(drop=True),
     )
+
+
+def test_zero_reference_price_cannot_create_silent_nan_open():
+    raw = price_sample(0)
+    raw.loc[0, "preclose"] = 0
+    with pytest.raises(ValueError, match="invalid adjusted prices"):
+        adjusted_price_ohlcv(raw)

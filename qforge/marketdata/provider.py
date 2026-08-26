@@ -88,6 +88,7 @@ class BaoStockMarketProvider:
         frame = self._query(response)
         if frame.empty:
             return pd.DataFrame(columns=["code", "operation_date", "fore_adjust_factor", "back_adjust_factor", "adjust_factor", "source"])
+        validate_identity_keys(frame, code, start, end, "dividOperateDate")
         result = frame.rename(
             columns={
                 "dividOperateDate": "operation_date",
@@ -120,16 +121,20 @@ class BaoStockMarketProvider:
 
 
 def validate_response_keys(frame: pd.DataFrame, code: str, start: str, end: str, adjustflag: int) -> None:
-    if not frame["code"].eq(code).all():
-        raise ValueError("BaoStock response contains an unexpected security code")
-    dates = pd.to_datetime(frame["date"], errors="raise")
-    if not dates.between(pd.Timestamp(start), pd.Timestamp(end)).all():
-        raise ValueError("BaoStock response contains a date outside the requested window")
-    if frame.duplicated(["code", "date"]).any():
-        raise ValueError("BaoStock response contains duplicate daily keys")
+    validate_identity_keys(frame, code, start, end, "date")
     flags = pd.to_numeric(frame["adjustflag"], errors="raise")
     if not flags.eq(adjustflag).all():
         raise ValueError("BaoStock response has an unexpected adjustment basis")
+
+
+def validate_identity_keys(frame: pd.DataFrame, code: str, start: str, end: str, date_field: str) -> None:
+    if not frame["code"].eq(code).all():
+        raise ValueError("BaoStock response contains an unexpected security code")
+    dates = pd.to_datetime(frame[date_field], errors="raise")
+    if not dates.between(pd.Timestamp(start), pd.Timestamp(end)).all():
+        raise ValueError("BaoStock response contains a date outside the requested window")
+    if frame.duplicated(["code", date_field]).any():
+        raise ValueError("BaoStock response contains duplicate keys")
 
 
 class ProviderTimeout(TimeoutError):

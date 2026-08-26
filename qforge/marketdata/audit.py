@@ -72,6 +72,12 @@ def _integrity_counts(connection: sqlite3.Connection) -> dict[str, int]:
                 LEFT JOIN securities s ON s.code=o.code WHERE s.code IS NULL"""),
             "invalidTradingStatus": _count(connection, """SELECT COUNT(*) FROM daily_bars
                 WHERE trade_status IS NULL OR trade_status NOT IN (0,1)"""),
+            "invalidAdjustmentFactors": _count(connection, """SELECT COUNT(*) FROM adjustment_factors
+                WHERE fore_adjust_factor IS NULL OR fore_adjust_factor<=0
+                OR back_adjust_factor IS NULL OR back_adjust_factor<=0
+                OR adjust_factor IS NULL OR adjust_factor<=0"""),
+            "unknownAdjustmentSymbols": _count(connection, """SELECT COUNT(*) FROM adjustment_factors f
+                LEFT JOIN securities s ON s.code=f.code WHERE s.code IS NULL"""),
     }
 
 

@@ -3,19 +3,43 @@
 from __future__ import annotations
 
 import sqlite3
+from collections.abc import Iterator
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
 
+from .export import write_panel_chunks
+
+
+RAW_DAILY_QUERY = """SELECT b.code,b.trade_date,b.open,b.high,b.low,b.close,b.preclose,b.volume,b.amount,
+b.turnover,b.trade_status,b.pct_change,b.is_st
+FROM daily_bars b JOIN listed_universe u ON u.trade_date=b.trade_date AND u.code=b.code
+WHERE b.trade_date BETWEEN ? AND ? AND b.adjustflag=?"""
+
 
 def load_raw_daily(path: str | Path, start: str, end: str, adjustflag: int = 3) -> pd.DataFrame:
-    query = """SELECT b.code,b.trade_date,b.open,b.high,b.low,b.close,b.preclose,b.volume,b.amount,
-    b.turnover,b.trade_status,b.pct_change,b.is_st
-    FROM daily_bars b JOIN listed_universe u ON u.trade_date=b.trade_date AND u.code=b.code
-    WHERE b.trade_date BETWEEN ? AND ? AND b.adjustflag=? ORDER BY b.code,b.trade_date"""
     with sqlite3.connect(path) as connection:
-        return pd.read_sql_query(query, connection, params=[start, end, adjustflag])
+        return pd.read_sql_query(RAW_DAILY_QUERY + " ORDER BY b.code,b.trade_date", connection, params=[start, end, adjustflag])
+
+
+def iter_raw_daily_chunks(
+    path: str | Path, start: str, end: str, adjustflag: int = 3, symbols_per_chunk: int = 100,
+) -> Iterator[pd.DataFrame]:
+    if symbols_per_chunk < 1:
+        raise ValueError("symbols per chunk must be positive")
+    with sqlite3.connect(path) as connection:
+        connection.execute("BEGIN")  # Every chunk observes one consistent SQLite snapshot.
+        codes = [row[0] for row in connection.execute(
+            "SELECT DISTINCT code FROM daily_bars WHERE trade_date BETWEEN ? AND ? AND adjustflag=? ORDER BY code",
+            (start, end, adjustflag),
+        )]
+        for offset in range(0, len(codes), symbols_per_chunk):
+            batch = codes[offset:offset + symbols_per_chunk]
+            query = RAW_DAILY_QUERY + f" AND b.code IN ({','.join('?' for _ in batch)}) ORDER BY b.code,b.trade_date"
+            frame = pd.read_sql_query(query, connection, params=[start, end, adjustflag, *batch])
+            if not frame.empty:
+                yield frame
 
 
 def adjusted_price_ohlcv(frame: pd.DataFrame) -> pd.DataFrame:
@@ -46,6 +70,9 @@ def adjusted_price_ohlcv(frame: pd.DataFrame) -> pd.DataFrame:
     result["close"] = adjusted_close
     suspended = pd.to_numeric(result["trade_status"], errors="coerce").ne(1)
     result.loc[suspended, ["open", "high", "low"]] = np.nan
+    prices = result.loc[~suspended, ["open", "high", "low", "close"]].to_numpy(dtype=float)
+    if not np.isfinite(prices).all() or (prices <= 0).any():
+        raise ValueError("invalid adjusted prices on a tradable day")
     result["volume"] = pd.to_numeric(result["volume"], errors="coerce").fillna(0)
     return result[_output_columns()]
 
@@ -73,21 +100,19 @@ def export_research_panel(
     start: str,
     end: str,
     adjustflag: int = 3,
+    symbols_per_chunk: int = 100,
 ) -> dict[str, object]:
     if adjustflag != 3:
         raise ValueError("research panel requires raw unadjusted bars (adjustflag=3)")
-    raw = load_raw_daily(database_path, start, end, adjustflag)
-    panel = adjusted_price_ohlcv(raw)
-    output = Path(output_path)
-    output.parent.mkdir(parents=True, exist_ok=True)
-    panel.to_parquet(output, index=False)
+    raw_chunks = iter_raw_daily_chunks(database_path, start, end, adjustflag, symbols_per_chunk)
+    metadata = {
+        "price_basis": "exchange_reference_price_chain", "corporate_actions_verified": "false",
+        "start": start, "end": end, "adjustflag": str(adjustflag),
+    }
+    stats = write_panel_chunks((adjusted_price_ohlcv(raw) for raw in raw_chunks), output_path, metadata)
     return {
-        "output": str(output),
-        "rows": len(panel),
-        "symbols": int(panel["symbol"].nunique()) if len(panel) else 0,
-        "firstDate": str(panel["date"].min().date()) if len(panel) else None,
-        "lastDate": str(panel["date"].max().date()) if len(panel) else None,
-        "bytes": output.stat().st_size,
+        **stats,
+        "symbolsPerChunk": symbols_per_chunk,
         "priceBasis": "exchange-reference-price chain; raw OHLC also retained",
         "corporateActionsVerified": False,
         "permittedUse": "signal research; not a cash/share P&L ledger",
