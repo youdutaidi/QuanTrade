@@ -1,0 +1,18 @@
+{
+  "function": {
+    "lines": 40,
+    "location": "qforge/marketdata/audit.py:17"
+  },
+  "class": {
+    "lines": 249,
+    "location": "qforge/marketdata/store.py:23"
+  },
+  "module": {
+    "lines": 325,
+    "location": "qforge/marketdata/store.py"
+  },
+  "script": {
+    "lines": 31,
+    "location": "research/data_workflows/verify_source_sample.py"
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "state": "restored-and-byte-verified",
+  "output": "/Users/cailingling/Desktop/quant-intelligence-lab/research/output/delivery/restored-20260826-d3",
+  "sha256": "f7ec5a289494292d8133577b0cf6cefc3508d6fd73e649eb6d56e52434a5e024",
+  "fileCount": 318,
+  "databases": {
+    "research/data/qforge_actions.sqlite": {
+      "integrity": "ok",
+      "tableRows": {
+        "action_scope": 1,
+        "action_tasks": 34476,
+        "action_runs": 3,
+        "action_requests": 721,
+        "action_events": 571
+      }
+    },
+    "research/data/qforge_market.sqlite": {
+      "integrity": "ok",
+      "tableRows": {
+        "market_schema_version": 2,
+        "trade_calendar": 2191,
+        "securities": 8920,
+        "universe_observations": 39088,
+        "universe_audits": 7,
+        "daily_bars": 7077020,
+        "adjustment_factors": 24831,
+        "market_download_runs": 16,
+        "market_download_tasks": 5430
+      }
+    },
+    "research/data/qforge_minute.sqlite": {
+      "integrity": "ok",
+      "tableRows": {
+        "schema_version": 1,
+        "minute_bars": 116160,
+        "download_runs": 1,
+        "strategy_runs": 2,
+        "signals": 4828,
+        "orders": 2250,
+        "fills": 2248,
+        "position_snapshots": 1450,
+        "equity_snapshots": 484
+      }
+    },
+    "research/data/qforge_walkforward.sqlite": {
+      "integrity": "ok",
+      "tableRows": {
+        "study_runs": 145,
+        "study_ledger_events": 7356
+      }
+    }
+  },
+  "codeCommit": "ebce265f85f1ce76498104c60ccbee4ecd74a769",
+  "claim": "recoverable data snapshot only; no strategy admission"
+}

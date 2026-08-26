@@ -96,6 +96,14 @@
   downloaded to `research/output/delivery/roundtrip-20260826-d3/`; do not publish
   until the downloaded bytes and a fresh restore pass. No upload retry or source
   data deletion was needed. Evidence: D3 `uploaded-assets.json` and `upload-hash-check.json`.
+- D3 recovery and publication passed: all six downloaded core assets match local
+  and GitHub bytes; 318 files and four complete SQLite inventories restored into
+  a new directory. Added two recovery proof assets and rechecked all eight remote
+  digests. Published 2026-08-26T07:37:11Z as a prerelease, not Latest; remote tag
+  resolves to the frozen `ebce265f85f1ce76498104c60ccbee4ecd74a769` commit.
+  Release: `https://github.com/youdutaidi/QuanTrade/releases/tag/data-20260826-d3`.
+  Original databases and D2 remain intact; capture-time dividends are still only
+  721 requests and 571 events. Root README points to this newer fixed snapshot.
 
 ## Code-evolution record
 
@@ -461,6 +469,25 @@ data_goal:
         verdict: supported within raw-archive consistency scope; capture-incomplete and CLI exit 2 are correct because 29111 tasks were pending and one running; no economic or strategy promotion
         source_counterexamples: 83 source rows share an ex-date within a response; development-only examples include both byte-identical duplicates and complementary or differing rows; never blindly sum them as separate payments
         next_discriminator: finish the unchanged source capture, rerun this audit on all planned tasks, and resolve company-action event identity and economic terms before portfolio consumption
+      - id: QF-DATA-EXPANSION-01-A13
+        decision: derive conservative gross dividend terms from checked raw records without certifying tax, settlement or portfolio returns
+        baseline: 198c5808f2a5a780d9ffb9162faf5de887922817
+        owner_session: /root
+        scientific_choice_axis: unchanged source scope and frozen strategy; company-action source interpretation only
+        write_surface: qforge/actions/terms.py, qforge/actions/terms_preview.py, qforge/actions/audit.py, qforge/actions/cli.py, tests/test_actions_terms.py, tests/test_actions_terms_preview.py, research/README.md, research/evidence/QF-DATA-EXPANSION-01/A13/**
+        running_baseline: A11 source capture keeps its loaded adapter; provider, service, store, normalization, locks, raw data and download scope remain unchanged
+        hypothesis: a full recognized per-ten-share plan plus agreeing nonblank numeric fields can establish source-consistent gross terms; exact or complementary duplicate records can be represented once only when all nonblank fields agree
+        conservative_policy: retain every raw row; conflicting fields, unsupported text, invalid dates, missing positive-leg settlement dates or numeric-description disagreement remain unresolved; absent legs are zero only inside a fully recognized complete description, never from numeric blanks alone
+        date_policy: require a canonical implementation announcement no later than record date, record date before ex-date, and payment/listing dates no earlier than ex-date for positive legs; this checks source chronology only, not authentic historical publication or investor settlement
+        cheapest_falsifier: duplicate rows must not double cash; conflicting or ambiguous plans must fail closed; tax branches must never be selected; a concurrent writer must not mix audit and interpretation snapshots; holdout action rows must not enter the fixed development preview
+        admission: retain all 194 baseline tests and pass structure before a real read-only preview from 2020-08-25 through 2025-08-24; no new source session, real account replay or strategy ranking
+        cutover: expose actions terms only after tests and structure pass; rollback target 198c5808; retain existing archive, audit and status behavior
+        claim_boundary: source-consistent gross terms only; ledgerReady and investorTaxVerified remain false; no fractional-share allocation, rights coverage, tax identity, official ex-price or independent-source certification
+        state: structure-admitted and semantics-admitted; 237 retained/new tests pass; admitted for the fixed real development-only preview
+        retained_mapping: all 194 baseline tests unchanged; 43 additive cases cover duplicate amounts, complementary blanks, conflicting fields, strict complete-plan parsing, exact Decimal legs, tax nonselection, chronology, corruption refusal, one-WAL-snapshot reads, out-of-window exclusion, unlocated dates, pending tasks and immutable reports
+        structure: zero findings; maximum function/class/module/script 40/249/325/31 lines; 6585 package lines and 89 workflow-script lines, ratio 0.0135; existing archive owns persisted state, interpretation is pure, and the read-only witness owns no economic account
+        launch_command: qforge actions terms --config configs/corporate_actions.json --start 2020-08-25 --end 2025-08-24 --output research/evidence/QF-DATA-EXPANSION-01/A13/real-preview-A4.json
+        real_preview: not executed yet; source economic ambiguities are expected to remain unresolved
   cutover:
     criteria:
       - SQLite schema, idempotent upserts, checkpoint resume, and source normalization tests pass

@@ -15,20 +15,27 @@ from .store import ActionStore, utc_now
 
 
 def audit_action_archive(path: str | Path, plan: dict, daily_input: dict) -> dict:
-    problems = {"counts": Counter(), "examples": []}
     with ActionStore(path).connect(readonly=True) as connection:
         connection.execute("BEGIN")
-        scope = connection.execute("SELECT scope_sha256,plan_json FROM action_scope WHERE singleton=1").fetchone()
-        snapshot_at = utc_now()
-        _check_scope(scope, plan, problems)
-        integrity = [row[0] for row in connection.execute("PRAGMA quick_check")]
-        foreign = connection.execute("PRAGMA foreign_key_check").fetchall()
-        if integrity != ["ok"] or foreign:
-            _problem(problems, "sqlite_integrity", {"quickCheck": integrity, "foreignKeys": len(foreign)})
-        tasks = _audit_tasks(connection, plan, problems)
-        sources = _audit_runs(connection, plan["scopeSha256"], daily_input, problems)
-        _audit_ownership(connection, problems)
-        responses = _audit_responses(connection, plan, problems)
+        return audit_action_connection(connection, path, plan, daily_input)
+
+
+def audit_action_connection(connection, path: str | Path, plan: dict, daily_input: dict) -> dict:
+    """Compose archive checks and later readers inside an existing transaction."""
+    if not connection.in_transaction:
+        raise ValueError("action audit requires an explicit read transaction")
+    problems = {"counts": Counter(), "examples": []}
+    scope = connection.execute("SELECT scope_sha256,plan_json FROM action_scope WHERE singleton=1").fetchone()
+    snapshot_at = utc_now()
+    _check_scope(scope, plan, problems)
+    integrity = [row[0] for row in connection.execute("PRAGMA quick_check")]
+    foreign = connection.execute("PRAGMA foreign_key_check").fetchall()
+    if integrity != ["ok"] or foreign:
+        _problem(problems, "sqlite_integrity", {"quickCheck": integrity, "foreignKeys": len(foreign)})
+    tasks = _audit_tasks(connection, plan, problems)
+    sources = _audit_runs(connection, plan["scopeSha256"], daily_input, problems)
+    _audit_ownership(connection, problems)
+    responses = _audit_responses(connection, plan, problems)
     valid = not problems["counts"]
     task_problems = {"invalid_expected_plan", "missing_planned_task", "unexpected_task"}
     complete = (bool(plan["tasks"]) and tasks == {"succeeded": len(plan["tasks"])}

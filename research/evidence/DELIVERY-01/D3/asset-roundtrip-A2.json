@@ -1,0 +1,41 @@
+{
+  "allPass": true,
+  "assets": [
+    {
+      "name": "delivery.json",
+      "bytes": 259,
+      "sha256": "fc7233c106f61e5860cad6ba0a4c7e03b7bf522759beb8cbd0529d96a9dab175",
+      "matches": true
+    },
+    {
+      "name": "manifest.json",
+      "bytes": 121986,
+      "sha256": "ee4f7fefe5bf02f8b0bc2542678f69016377e37612fa86328d3fcb749ecd4209",
+      "matches": true
+    },
+    {
+      "name": "python-packages.json",
+      "bytes": 1975,
+      "sha256": "fc9ceda31cfad08665084764d30f1726d00405760bc0b3f9b13ee8ae693474dd",
+      "matches": true
+    },
+    {
+      "name": "quant-data.tar.gz",
+      "bytes": 1166904403,
+      "sha256": "f7ec5a289494292d8133577b0cf6cefc3508d6fd73e649eb6d56e52434a5e024",
+      "matches": true
+    },
+    {
+      "name": "RESTORE.md",
+      "bytes": 4017,
+      "sha256": "417cb7c357d998ac872ada6b49311d7bac68283c890decd0a281e14743f21ab7",
+      "matches": true
+    },
+    {
+      "name": "runtime.json",
+      "bytes": 141,
+      "sha256": "497f4e7052c589fc60dd7f4419a87fad31973f7cbfa5125ac1afba8cc04afa2a",
+      "matches": true
+    }
+  ]
+}
