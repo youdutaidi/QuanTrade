@@ -1,0 +1,33 @@
+login success!
+{"progress": 1, "selectedTasks": 9, "code": "sh.600000", "year": 2021, "rowsWritten": 1, "failures": 0}
+{"progress": 2, "selectedTasks": 9, "code": "sh.600000", "year": 2022, "rowsWritten": 2, "failures": 0}
+{"progress": 3, "selectedTasks": 9, "code": "sh.600000", "year": 2023, "rowsWritten": 3, "failures": 0}
+{"progress": 4, "selectedTasks": 9, "code": "sh.600000", "year": 2024, "rowsWritten": 4, "failures": 0}
+{"progress": 5, "selectedTasks": 9, "code": "sh.600000", "year": 2025, "rowsWritten": 5, "failures": 0}
+{"progress": 6, "selectedTasks": 9, "code": "sh.600000", "year": 2026, "rowsWritten": 6, "failures": 0}
+{"progress": 7, "selectedTasks": 9, "code": "sh.600004", "year": 2020, "rowsWritten": 7, "failures": 0}
+{"progress": 8, "selectedTasks": 9, "code": "sh.600004", "year": 2021, "rowsWritten": 8, "failures": 0}
+{"progress": 9, "selectedTasks": 9, "code": "sh.600004", "year": 2022, "rowsWritten": 8, "failures": 0}
+logout success!
+{
+  "state": "incomplete",
+  "database": "/Users/cailingling/Desktop/quant-intelligence-lab/research/data/qforge_actions.sqlite",
+  "scopeSha256": "5983b1dc73827d5cbe7da6787f5c05858e1e38e1fdbe00291ba29c6079cc5ad8",
+  "tasks": {
+    "pending": 34466,
+    "succeeded": 10
+  },
+  "events": 9,
+  "requests": 10,
+  "queriedEmptyYears": 1,
+  "ledgerReady": false,
+  "investorTaxVerified": false,
+  "attemptedTasks": 9,
+  "rowsWritten": 8,
+  "failures": 0,
+  "runId": "actions-1eb535ab480a4a5ba493940c8cb12fa2",
+  "recoveredTasks": 0
+}
+real 1.88
+user 0.57
+sys 0.11

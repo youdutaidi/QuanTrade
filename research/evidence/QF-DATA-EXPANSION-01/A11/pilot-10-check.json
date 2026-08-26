@@ -1,0 +1,106 @@
+{
+  "requests": [
+    {
+      "request_id": "request-6397c4530a8d43ce813795340e092590",
+      "code": "sh.600000",
+      "year": 2020,
+      "row_count": 1,
+      "raw_sha256": "d56381a7d65337d5397cb07d258790f86f5f56d059541c4c91bc90d3c8708640"
+    },
+    {
+      "request_id": "request-d5e7ab1a74cf4fd5938f00e7539f9a6c",
+      "code": "sh.600000",
+      "year": 2021,
+      "row_count": 1,
+      "raw_sha256": "ab58b1687d9f30001ab75dd786e138f3ef7d8f64016b975e8f754432df57b824"
+    },
+    {
+      "request_id": "request-fffef54299cf43869afb1fe61c67c200",
+      "code": "sh.600000",
+      "year": 2022,
+      "row_count": 1,
+      "raw_sha256": "ef93a2567236cfe7ee9077c038649d360c6a1764027a7f6e70de252347ab5a3a"
+    },
+    {
+      "request_id": "request-4297cd2767e44fc88a7627a58bc734f5",
+      "code": "sh.600000",
+      "year": 2023,
+      "row_count": 1,
+      "raw_sha256": "108ec37e61df4c7ead91d335a434d36d408d5118881f44693403400a4bbf8dad"
+    },
+    {
+      "request_id": "request-af897593a52d42ec9f77e7c88e9f59b8",
+      "code": "sh.600000",
+      "year": 2024,
+      "row_count": 1,
+      "raw_sha256": "1f47e875a5fbd064b164d859ed83c0e416b80a72681d6a2d546a01d193ac0c4b"
+    },
+    {
+      "request_id": "request-47d6b62c80e24db8b290195a86a5e80c",
+      "code": "sh.600000",
+      "year": 2025,
+      "row_count": 1,
+      "raw_sha256": "97154a8a3e52216031e2953bd58efa8d4687e931177205ca3b272713f3e8b988"
+    },
+    {
+      "request_id": "request-280dc125eca9498a9a0075cdff6f76ff",
+      "code": "sh.600000",
+      "year": 2026,
+      "row_count": 1,
+      "raw_sha256": "5e6a0744f04a9d1df0ddea3c96f9ab7d2990251e6dad7ce82071a24f6727abf8"
+    },
+    {
+      "request_id": "request-740764b63e894cdbbec4fc4cea23c6c3",
+      "code": "sh.600004",
+      "year": 2020,
+      "row_count": 1,
+      "raw_sha256": "2f3efb38855edb72b38882c0162b6d3cdd9ca8c362578074b39ef1aa984ca462"
+    },
+    {
+      "request_id": "request-7f91a86fe4524227a8266019e3d67818",
+      "code": "sh.600004",
+      "year": 2021,
+      "row_count": 1,
+      "raw_sha256": "81aec86a35f0c1e6eda7a8beeaabff903ac11f74941b9a3a976c3c1b8fae1da1"
+    },
+    {
+      "request_id": "request-40eab6b6bec641b193ce724096dc2caf",
+      "code": "sh.600004",
+      "year": 2022,
+      "row_count": 0,
+      "raw_sha256": "c2a9a9ed0213c2b7408d5da724ec6c37c0b426f6afd0e06e29dbd625fb08276e"
+    }
+  ],
+  "rawHashesPass": true,
+  "rowCountsPass": true,
+  "integrityCheck": [
+    [
+      "ok"
+    ]
+  ],
+  "foreignKeyViolations": [],
+  "normalizedIssueCounts": {
+    "missing:dividStockMarketDate": 9,
+    "ambiguous:dividCashPsAfterTax": 9,
+    "missing:dividReserveToStockPs": 9
+  },
+  "ledgerReady": false,
+  "sourceSchemas": [
+    [
+      "code",
+      "dividPreNoticeDate",
+      "dividAgmPumDate",
+      "dividPlanAnnounceDate",
+      "dividPlanDate",
+      "dividRegistDate",
+      "dividOperateDate",
+      "dividPayDate",
+      "dividStockMarketDate",
+      "dividCashPsBeforeTax",
+      "dividCashPsAfterTax",
+      "dividStocksPs",
+      "dividCashStock",
+      "dividReserveToStockPs"
+    ]
+  ]
+}

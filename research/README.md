@@ -412,6 +412,10 @@ data_goal:
         claim_boundary: no inferred zero for blank fields, no selected tax branch, no certified economic cash/share event
         state: normalization semantics and structure admitted; 171 retained/new tests pass; real hash-verified reparse preserves original raw and historical projection bytes; nine-request pilot admitted
         continuity: retained 168 tests pass; daily panel SHA unchanged; no cash/share or tax policy changes; original normalized record remains recoverable
+        pilot_result: ten requests succeeded, nine raw events and one queried-empty year; all raw hashes and row counts match; SQLite integrity and foreign keys pass; nine-request extension cost 1.88 seconds including startup
+        source_gaps: all nine pilot events have ambiguous source after-tax expressions and blank reserve/listing fields; these remain unresolved, not defaulted to zero or a chosen tax rate
+        bulk_capture_admission: proceed with the remaining 34466 lifecycle-year tasks under 480dcac, one source session, 200 requests per batch, two-second batch pause, 90-second request deadline and at most three attempts per task; inspect early progress and stop on repeated identity or schema errors
+        bulk_claim_boundary: collection is permitted despite source economic ambiguities because raw bytes and nulls are preserved; capture completion is not economic-ledger or strategy admission
   cutover:
     criteria:
       - SQLite schema, idempotent upserts, checkpoint resume, and source normalization tests pass
