@@ -9,6 +9,8 @@ from dataclasses import asdict
 from pathlib import Path
 
 from .specification import StudySpec
+from .demo import run_ledger_demo
+from .inputs import verify_study_inputs
 
 
 def register_walkforward_commands(commands: argparse._SubParsersAction) -> None:
@@ -17,10 +19,21 @@ def register_walkforward_commands(commands: argparse._SubParsersAction) -> None:
     plan = actions.add_parser("plan", help="validate and print the frozen candidate plan without reading market outcomes")
     plan.add_argument("--config", required=True)
     plan.add_argument("--output", help="optional new immutable plan artifact; refuses overwrite")
+    preflight = actions.add_parser("preflight", help="verify completed data and frozen plan without reading outcomes")
+    preflight.add_argument("--config", required=True)
+    preflight.add_argument("--plan", required=True)
+    demo = actions.add_parser("ledger-demo", help="persist and independently replay a zero-network synthetic account")
+    demo.add_argument("--config", required=True)
+    demo.add_argument("--output", required=True, help="new evidence directory; refuses overwrite")
 
 
 def run_walkforward_command(args: argparse.Namespace, root: Path) -> int:
     spec = StudySpec.from_json(root / args.config)
+    if args.walkforward_command == "preflight":
+        return _preflight(spec, root, root / args.plan)
+    if args.walkforward_command == "ledger-demo":
+        print(json.dumps(run_ledger_demo(spec, root, root / args.output), ensure_ascii=False, indent=2))
+        return 0
     candidates = spec.candidates()
     payload = {
         "experimentId": spec.values["experiment_id"], "configSha256": spec.sha256,
@@ -37,4 +50,14 @@ def run_walkforward_command(args: argparse.Namespace, root: Path) -> int:
             json.dump(payload, output, ensure_ascii=False, indent=2, allow_nan=False)
     summary = {key: value for key, value in payload.items() if key != "candidates"}
     print(json.dumps(summary, ensure_ascii=False, indent=2, allow_nan=False))
+    return 0
+
+
+def _preflight(spec: StudySpec, root: Path, plan: Path) -> int:
+    try:
+        payload = verify_study_inputs(spec, root, plan)
+    except (OSError, ValueError, KeyError) as error:
+        print(json.dumps({"state": "not-admitted", "error": str(error), "marketOutcomesRead": False}, ensure_ascii=False, indent=2))
+        return 2
+    print(json.dumps({**payload, "marketOutcomesRead": False}, ensure_ascii=False, indent=2))
     return 0

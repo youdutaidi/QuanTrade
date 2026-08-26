@@ -1,0 +1,282 @@
+[
+  {
+    "sequence": 0,
+    "date": null,
+    "kind": "initial",
+    "cash": 1000000.0,
+    "sessions": [
+      "2026-07-01",
+      "2026-07-02",
+      "2026-07-03"
+    ],
+    "prior_session": "2026-06-30",
+    "policy": {
+      "initial_cash_cny": 1000000.0,
+      "max_stock_weight": 0.1,
+      "long_only": true,
+      "leverage": 1.0,
+      "signal": "completed_close_t",
+      "execution": "next_session_open",
+      "unfilled": "cancel_without_retry",
+      "stock_slot_weight": "one_over_requested_top_n",
+      "t_plus_one": true,
+      "commission_rate": 0.0003,
+      "minimum_commission_cny": 5.0,
+      "commission_includes_handling_and_regulatory": true,
+      "slippage_bps": 10.0,
+      "share_volume_participation": 0.005,
+      "volume_lookback": 20,
+      "volume_lag": 1,
+      "capacity_scope": "lagged_daily_volume_proxy_not_opening_queue_proof",
+      "corporate_action_scope": "separate_cash_share_ledger_required_before_verified_pnl",
+      "supported_dates": [
+        "2020-08-25",
+        "2026-08-24"
+      ],
+      "stamp_duty": [
+        {
+          "effective": "2020-08-25",
+          "rate": 0.001
+        },
+        {
+          "effective": "2023-08-28",
+          "rate": 0.0005
+        }
+      ],
+      "transfer_fee": [
+        {
+          "effective": "2020-08-25",
+          "rate": 2e-05
+        },
+        {
+          "effective": "2022-04-29",
+          "rate": 1e-05
+        }
+      ],
+      "mainboard_st_limit": [
+        {
+          "effective": "2020-08-25",
+          "rate": 0.05
+        },
+        {
+          "effective": "2026-07-06",
+          "rate": 0.1
+        }
+      ],
+      "board_rules": {
+        "main": {
+          "minimum": 100,
+          "step": 100,
+          "max_limit_order": 1000000,
+          "price_limit": 0.1
+        },
+        "chinext": {
+          "minimum": 100,
+          "step": 100,
+          "max_limit_order": 300000,
+          "price_limit": 0.2
+        },
+        "star": {
+          "minimum": 200,
+          "step": 1,
+          "max_limit_order": 100000,
+          "price_limit": 0.2
+        }
+      }
+    }
+  },
+  {
+    "sequence": 1,
+    "date": "2026-07-01",
+    "kind": "session_open"
+  },
+  {
+    "sequence": 2,
+    "date": "2026-07-01",
+    "kind": "order",
+    "order": {
+      "order_id": "demo-buy",
+      "symbol": "sh.600000",
+      "side": "BUY",
+      "quantity": 1000,
+      "signal_date": "2026-06-30",
+      "execution_date": "2026-07-01"
+    },
+    "quote": {
+      "symbol": "sh.600000",
+      "trade_date": "2026-07-01",
+      "raw_open": 10,
+      "preclose": 10,
+      "is_st": false,
+      "tradeable": true,
+      "capacity": 10000,
+      "capacity_asof": "2026-06-30"
+    },
+    "fill": {
+      "quantity": 1000,
+      "price": 10.01,
+      "commission": 5.0,
+      "stamp_duty": 0.0,
+      "transfer_fee": 0.1,
+      "reason": "filled"
+    }
+  },
+  {
+    "sequence": 3,
+    "date": "2026-07-01",
+    "kind": "session_close",
+    "marks": {
+      "sh.600000": 10.0
+    },
+    "reference_prices": {
+      "sh.600000": 10
+    },
+    "snapshot": {
+      "cash": 989984.9,
+      "cashReceivable": 0.0,
+      "marketValue": 10000.0,
+      "equity": 999984.9,
+      "positions": {
+        "sh.600000": {
+          "quantity": 1000,
+          "available": 0,
+          "last_price": 10.0
+        }
+      },
+      "pendingShares": {
+        "sh.600000": 0
+      },
+      "stalePrices": []
+    }
+  },
+  {
+    "sequence": 4,
+    "date": "2026-07-02",
+    "kind": "session_open"
+  },
+  {
+    "sequence": 5,
+    "date": "2026-07-02",
+    "kind": "distribution",
+    "action": {
+      "event_id": "demo-distribution",
+      "symbol": "sh.600000",
+      "record_date": "2026-07-01",
+      "ex_date": "2026-07-02",
+      "net_cash_per_share": 0.16,
+      "new_shares_per_share": 0.1,
+      "payment_date": "2026-07-03",
+      "shares_listing_date": "2026-07-03",
+      "official_reference_price": 8.91,
+      "evidence_id": "synthetic-fixture",
+      "tax_basis": "explicit synthetic net cash; not an investor tax determination"
+    },
+    "entitled_quantity": 1000,
+    "cash_receivable": 160.0,
+    "shares_receivable": 100
+  },
+  {
+    "sequence": 6,
+    "date": "2026-07-02",
+    "kind": "session_close",
+    "marks": {
+      "sh.600000": 8.91
+    },
+    "reference_prices": {
+      "sh.600000": 8.91
+    },
+    "snapshot": {
+      "cash": 989984.9,
+      "cashReceivable": 160.0,
+      "marketValue": 9801.0,
+      "equity": 999945.9,
+      "positions": {
+        "sh.600000": {
+          "quantity": 1000,
+          "available": 1000,
+          "last_price": 8.91
+        }
+      },
+      "pendingShares": {
+        "sh.600000": 100
+      },
+      "stalePrices": []
+    }
+  },
+  {
+    "sequence": 7,
+    "date": "2026-07-03",
+    "kind": "session_open"
+  },
+  {
+    "sequence": 8,
+    "date": "2026-07-03",
+    "kind": "shares_released",
+    "event_id": "demo-distribution",
+    "quantity": 100
+  },
+  {
+    "sequence": 9,
+    "date": "2026-07-03",
+    "kind": "order",
+    "order": {
+      "order_id": "demo-sell",
+      "symbol": "sh.600000",
+      "side": "SELL",
+      "quantity": 1100,
+      "signal_date": "2026-07-02",
+      "execution_date": "2026-07-03"
+    },
+    "quote": {
+      "symbol": "sh.600000",
+      "trade_date": "2026-07-03",
+      "raw_open": 9,
+      "preclose": 8.91,
+      "is_st": false,
+      "tradeable": true,
+      "capacity": 10000,
+      "capacity_asof": "2026-07-02"
+    },
+    "fill": {
+      "quantity": 1100,
+      "price": 8.99,
+      "commission": 5.0,
+      "stamp_duty": 4.94,
+      "transfer_fee": 0.1,
+      "reason": "filled"
+    }
+  },
+  {
+    "sequence": 10,
+    "date": "2026-07-03",
+    "kind": "cash_paid",
+    "event_id": "demo-distribution",
+    "amount": 160.0
+  },
+  {
+    "sequence": 11,
+    "date": "2026-07-03",
+    "kind": "session_close",
+    "marks": {},
+    "reference_prices": {
+      "sh.600000": 8.91
+    },
+    "snapshot": {
+      "cash": 1000023.86,
+      "cashReceivable": 0.0,
+      "marketValue": 0.0,
+      "equity": 1000023.86,
+      "positions": {
+        "sh.600000": {
+          "quantity": 0,
+          "available": 0,
+          "last_price": 8.91
+        }
+      },
+      "pendingShares": {
+        "sh.600000": 0
+      },
+      "stalePrices": []
+    }
+  }
+]

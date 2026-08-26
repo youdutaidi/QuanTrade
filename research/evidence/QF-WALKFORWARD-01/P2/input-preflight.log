@@ -1,0 +1,5 @@
+{
+  "state": "not-admitted",
+  "error": "[Errno 2] No such file or directory: '/Users/cailingling/Desktop/quant-intelligence-lab/research/evidence/QF-DATA-EXPANSION-01/data_completion.json'",
+  "marketOutcomesRead": false
+}

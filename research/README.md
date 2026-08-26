@@ -1,5 +1,24 @@
 # Q-Forge research contract
 
+## Final delivery requested by the user
+
+- Destination: `git@github.com:youdutaidi/QuanTrade.git` (requested 2026-08-26).
+- Delivery documentation may add the root `README.md`; the canonical experiment
+  and evolution record remains this file, not a second status tracker.
+- Deliver the complete local source, recoverable raw/derived data, configurations,
+  test evidence and backtest artifacts, with hashes and restore instructions.
+- Keep the local databases. Do not upload credentials, virtual environments,
+  dependency caches or transient WAL files. SQLite data must be captured with a
+  consistent backup/export, not by copying a changing database file alone.
+- Inspect and preserve remote history; no force push or replacement of unrelated
+  remote files. Code uses normal Git; database bundles may use the same repo's
+  Releases because regular Git rejects individual files over 100 MiB.
+- Upload remains pending. Verify remote commit identity and downloaded asset
+  hashes/restore integrity before reporting delivery complete.
+- Read-only remote check on 2026-08-26: repository is private, empty and the
+  current account has ADMIN permission; SSH access succeeds. Local `origin`
+  points to the requested repository. No code or data has been pushed yet.
+
 ## Code-evolution record
 
 ```yaml
@@ -331,6 +350,19 @@ planned_strategy_goal:
     result: 92 retained and new tests pass; zero structure findings; minute database status and local HTTP 200 preserved
     frozen_config_sha256: f946362d7d5e71e2e023e5412cd3024bada5edcec5eddd1b18737eaf2afdeae4
     claim_boundary: preparation admitted only; no new market return, portfolio replay, corporate-action P&L or verified strategy
+    next_preparation:
+      id: QF-WALKFORWARD-01-P2
+      baseline: be0c9f4
+      decision: admit only fingerprint-matched completed inputs and make a replayable cash/share accounting state machine before market-outcome execution
+      scientific_choice_axis: unchanged P1 factors, grid, fees, periods and selection; no new market data outcomes
+      write_surface: qforge/walkforward/**, tests/test_walkforward_*.py, research/README.md, research/evidence/QF-WALKFORWARD-01/P2/**
+      cheapest_falsifier: reject an incomplete or altered panel; reconcile a hand-calculated three-session ledger with first-day costs, T+1, delayed dividends and bonus shares
+      scope: synthetic accounting and input admission only; corporate-action source coverage and investor-specific dividend taxation are not inferred from adjusted prices
+      accounting_conventions: cash dividends remain receivables until payment-session close; bonus shares are valued from ex-date but cannot trade before listing; unknown fractional allocations and unresolved reference-price changes fail closed
+      outcomes: matching hand ledger supports accounting semantics only; mismatch refutes implementation; incomplete input blocks market execution; all old tests must remain passing
+      state: synthetic accounting and input-admission semantics admitted; market integration pending
+      results: 115 retained and new tests pass; zero structural findings; synthetic ledger persisted to SQLite and independently reloaded/replayed; real input preflight exits 2 until final data manifest exists
+      evidence: research/evidence/QF-WALKFORWARD-01/P2
   decision: Test a frozen A-share family combining residual momentum, short-term reversal, low idiosyncratic volatility, and lottery-stock avoidance on the completed point-in-time database.
   hypothesis: a low-turnover composite that avoids high-MAX and high-idiosyncratic-volatility stocks is more stable than conventional raw momentum in the retail-dominated A-share market.
   candidate_families:
@@ -420,6 +452,24 @@ fingerprint. Preparation implements 16 distinct signal settings expanded across
 nine portfolio schedules; it does not claim 144 independently discovered factors.
 The existing daily and minute engines are preserved. Portfolio replay and
 corporate-action cash/share verification remain separate admission gates.
+
+```bash
+# Refuses incomplete data and checks the original pre-outcome configuration.
+.venv/bin/qforge walkforward preflight --config configs/walk_forward.json \
+  --plan research/evidence/QF-WALKFORWARD-01/P1/frozen_plan.json
+
+# Synthetic accounting only. Use a new output directory for every attempt.
+.venv/bin/qforge walkforward ledger-demo --config configs/walk_forward.json \
+  --output research/output/ledger-demo-local
+```
+
+The ledger demo writes append-only runs and events to
+`research/data/qforge_walkforward.sqlite`. Cash dividends are separate from
+spendable cash until settlement; bonus shares remain unavailable until their
+listing date. Supplied net cash/tax and allocation evidence are explicit inputs,
+not inferred from the adjusted-price feature chain. Independent arithmetic
+replay does not independently validate the source prices or investor-specific
+tax treatment. No live order is sent.
 
 ## Local quick start
 

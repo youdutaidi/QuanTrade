@@ -1,0 +1,20 @@
+{
+  "runId": "study-2d5beb2d5fd14894aa6ad7f631bddb72",
+  "database": "/Users/cailingling/Desktop/quant-intelligence-lab/research/data/qforge_walkforward.sqlite",
+  "eventCount": 12,
+  "eventsSha256": "b09dcba56475328ec7a9b8b7c0c824e0d50d449536beb4a1ba3daacf65329ed3",
+  "kind": "synthetic",
+  "verifiedStrategy": false,
+  "configSha256": "f946362d7d5e71e2e023e5412cd3024bada5edcec5eddd1b18737eaf2afdeae4",
+  "accountingReplay": {
+    "allPass": true,
+    "checkedEvents": 12,
+    "snapshots": 3,
+    "allSessionsClosed": true,
+    "finalCash": 1000023.86,
+    "finalEquity": 1000023.86,
+    "scope": "accounting replay only; source and strategy verification separate"
+  },
+  "notMarketBacktest": true,
+  "scope": "synthetic cash/share semantics only; no strategy return or source-action/tax verification"
+}
